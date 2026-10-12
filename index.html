@@ -1,0 +1,1359 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tax Time 2026</title>
+<meta name="description" content="Step-by-step myTax walkthrough for the 2025–26 Australian tax return, with a refund estimator, pay calculator, Fair Work pay check and budget planner.">
+<meta name="theme-color" content="#0A5C42">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A5C42'/%3E%3Crect x='14' y='30' width='36' height='18' rx='4' fill='%23FFC72C'/%3E%3Ctext x='32' y='25' font-family='Arial' font-weight='900' font-size='16' text-anchor='middle' fill='%23FFFFFF'%3ETAX%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky green-and-gold header + tab bar; each tab is a working tool. Forms left, live result right on wide screens; result bar pinned to the bottom on phones. */
+:root {
+  --bg: #F3F6EE;
+  --surface: #FFFFFF;
+  --surface-2: #EAF0E3;
+  --ink: #0D1A13;
+  --ink-2: #3F4D45;
+  --muted: #66746B;
+  --line: #D5DDCF;
+  --brand: #0A5C42;
+  --brand-ink: #FFFFFF;
+  --brand-soft: #D9EEE3;
+  --gold: #FFC72C;
+  --on-gold: #241B00;
+  --gold-soft: #FFF0BF;
+  --hl: #FFD84D;
+  --good: #087A3B; --good-soft: #DCF3E4;
+  --bad: #B9322A;  --bad-soft: #FBE2DE;
+  --warn: #8F5400; --warn-soft: #FFEBC6;
+  --info: #1C5BA8; --info-soft: #E0EBF9;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --shadow: 0 1px 2px rgba(13,26,19,.06), 0 8px 24px rgba(13,26,19,.07);
+  --f-display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1411; --surface: #16201A; --surface-2: #1D2A22; --ink: #EAF1EC; --ink-2: #B8C6BD; --muted: #8B998F; --line: #2A3830;
+    --brand: #4FC79A; --brand-ink: #04140D; --brand-soft: #16352A; --gold: #FFC72C; --on-gold: #241B00; --gold-soft: #3A3112; --hl: rgba(255,199,44,.38);
+    --good: #4BD08B; --good-soft: #12301F; --bad: #FF8073; --bad-soft: #3A1915; --warn: #FFB547; --warn-soft: #382910; --info: #84B6F5; --info-soft: #15253B;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1411; --surface: #16201A; --surface-2: #1D2A22; --ink: #EAF1EC; --ink-2: #B8C6BD; --muted: #8B998F; --line: #2A3830;
+  --brand: #4FC79A; --brand-ink: #04140D; --brand-soft: #16352A; --gold: #FFC72C; --on-gold: #241B00; --gold-soft: #3A3112; --hl: rgba(255,199,44,.38);
+  --good: #4BD08B; --good-soft: #12301F; --bad: #FF8073; --bad-soft: #3A1915; --warn: #FFB547; --warn-soft: #382910; --info: #84B6F5; --info-soft: #15253B;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+a { color: var(--brand); text-underline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1140px; margin-inline: auto; padding-inline: 16px; }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.num, td, .money { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--f-mono); }
+.hl { background: linear-gradient(transparent 58%, var(--hl) 58%); padding-inline: .08em; }
+
+/* ---------- header ---------- */
+.top { background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-in { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px 20px; padding-block: 18px 16px; align-items: end; }
+.brand { font-family: var(--f-display); font-weight: 900; font-stretch: 125%; font-size: clamp(2rem, 7.4vw, 3.4rem); line-height: .92; letter-spacing: -.01em; text-transform: uppercase; }
+.brand .yr { display: inline-block; background: var(--gold); color: var(--on-gold); padding: .02em .16em .04em; border-radius: 6px; transform: rotate(-2deg); margin-left: .08em; }
+.sub { color: var(--ink-2); margin-top: 8px; max-width: 46ch; }
+.top-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.deadline { display: inline-flex; align-items: baseline; gap: 8px; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 14px; font-weight: 700; white-space: nowrap; }
+.deadline b { font-family: var(--f-display); font-stretch: 112%; font-size: 1.25rem; color: var(--gold); }
+.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 6px 12px; font: 600 13px var(--f-body); cursor: pointer; white-space: nowrap; }
+.ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+@media (max-width: 640px) {
+  .top-in { grid-template-columns: 1fr; align-items: start; }
+  .top-meta { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+/* ---------- tabs ---------- */
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.tabs-in { display: flex; gap: 6px; padding-block: 10px; overflow-x: auto; scrollbar-width: none; }
+.tab { flex: 1 0 auto; min-width: 64px; border: 0; background: transparent; color: var(--ink-2); font: 700 15px var(--f-body); padding: 10px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.tab .tn { font-family: var(--f-mono); font-size: 11px; font-weight: 600; opacity: .7; }
+.tab:hover { background: var(--surface-2); color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.tab[aria-selected="true"] .tn { color: var(--gold); opacity: 1; }
+@media (max-width: 480px) { .tab { padding: 10px 8px; font-size: 14px; } .tab .tn { display: none; } }
+
+/* ---------- panels ---------- */
+main { padding-block: 26px 60px; }
+.panel { display: grid; gap: 22px; }
+.panel-head { display: grid; gap: 8px; }
+.eyebrow { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
+.panel-head h2 { font-family: var(--f-display); font-weight: 850; font-stretch: 112%; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.05; }
+.lede { color: var(--ink-2); max-width: 64ch; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.box h3 { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.15rem; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.stick { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 74px); display: grid; gap: 16px; }
+@media (max-width: 900px) { .split { grid-template-columns: minmax(0,1fr); } .stick { position: static; } }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: 700 15px var(--f-body); cursor: pointer; text-decoration: none; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.small { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- callouts (STE: warning / caution / note) ---------- */
+.callout { border: 2px solid var(--c); background: var(--cs); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.callout .tag { font: 600 11.5px var(--f-mono); letter-spacing: .12em; color: var(--c); }
+.callout.warning { --c: var(--bad); --cs: var(--bad-soft); }
+.callout.caution { --c: var(--warn); --cs: var(--warn-soft); }
+.callout.note { --c: var(--info); --cs: var(--info-soft); border-width: 0 0 0 4px; border-radius: 4px 10px 10px 4px; }
+
+/* ---------- guide ---------- */
+.progress { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px 20px; align-items: center; }
+.meter { height: 14px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
+.meter > i { display: block; height: 100%; width: 0; background: var(--brand); border-radius: 999px; transition: width .35s ease; }
+.progress .count { font-family: var(--f-display); font-stretch: 112%; font-weight: 850; font-size: 1.6rem; }
+.progress .count small { font: 600 14px var(--f-body); color: var(--muted); }
+.phase { display: grid; gap: 6px; }
+.phase-h { display: flex; align-items: baseline; gap: 12px; font-family: var(--f-display); font-stretch: 112%; font-weight: 850; font-size: 1.35rem; padding-block: 18px 6px; border-bottom: 3px solid var(--ink); }
+.phase-k { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.steps { list-style: none; margin: 0; padding: 0; }
+.step { display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 14px; padding-block: 18px; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
+.step-num { font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: 2.6rem; line-height: .9; color: var(--ink); width: 64px; height: 56px; display: grid; place-items: center; border-radius: 12px; background: var(--surface); border: 2px solid var(--ink); }
+.step[data-done="true"] .step-num { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.step-body { display: grid; gap: 10px; min-width: 0; }
+.step-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.step-head h4 { font-family: var(--f-display); font-stretch: 106%; font-weight: 800; font-size: 1.2rem; line-height: 1.2; padding-top: 4px; }
+.step[data-done="true"] .step-head h4 { color: var(--muted); }
+.done { flex: none; display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 12px 6px 8px; font-weight: 700; font-size: 14px; cursor: pointer; background: var(--surface); user-select: none; }
+.done input { width: 20px; height: 20px; accent-color: var(--brand); margin: 0; }
+.step[data-done="true"] .done { border-color: var(--brand); color: var(--brand); }
+.instr { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; max-width: 70ch; }
+.instr li::marker { color: var(--brand); font-weight: 700; }
+@media (max-width: 520px) {
+  .step { grid-template-columns: 44px minmax(0,1fr); gap: 12px; }
+  .step-num { width: 44px; height: 44px; font-size: 1.7rem; border-radius: 10px; }
+  .step-head { flex-direction: column; gap: 8px; }
+}
+.checklist { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 8px; }
+.ck { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; }
+.ck input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--brand); flex: none; }
+.ck:has(input:checked) { background: var(--brand-soft); border-color: transparent; }
+.ck:has(input:checked) span { text-decoration: line-through; text-decoration-color: var(--brand); color: var(--ink-2); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+tr:last-child td { border-bottom: 0; }
+.code { display: inline-block; font: 600 12px var(--f-mono); padding: 2px 7px; border-radius: 6px; background: var(--ink); color: var(--bg); white-space: nowrap; }
+.ded-table td:nth-child(2) { min-width: 150px; font-weight: 700; }
+.ded-table td:nth-child(3) { min-width: 230px; }
+.ded-table td:nth-child(4) { min-width: 200px; color: var(--ink-2); }
+
+/* ---------- forms ---------- */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 14px; }
+legend { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.15rem; padding: 0; margin-bottom: 4px; display: flex; gap: 10px; align-items: baseline; }
+legend .eyebrow { font-size: 11px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px 14px; }
+.f { display: grid; gap: 5px; min-width: 0; align-content: start; }
+.f label, .f .lab { font-weight: 700; font-size: 14.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.f .hint { color: var(--muted); font-size: 13px; line-height: 1.4; }
+input[type="number"], input[type="text"], select { width: 100%; min-height: 46px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 9px 12px; font: 400 16px var(--f-body); font-variant-numeric: tabular-nums; }
+input[type="number"]:focus, input[type="text"]:focus, select:focus { border-color: var(--brand); outline: 3px solid color-mix(in srgb, var(--brand) 25%, transparent); outline-offset: 0; }
+.money-in { position: relative; }
+.money-in::before { content: "$"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 700; pointer-events: none; }
+.money-in input { padding-left: 26px; }
+.toggle { display: flex; gap: 10px; align-items: center; min-height: 46px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; font-weight: 700; font-size: 14.5px; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--brand); margin: 0; flex: none; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 4px; gap: 2px; flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; color: var(--ink-2); font: 700 14px var(--f-body); padding: 7px 13px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.formbox { display: grid; gap: 26px; }
+.examples { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: space-between; background: var(--gold-soft); border: 1.5px dashed color-mix(in srgb, var(--gold) 70%, var(--ink) 10%); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+
+/* ---------- result card ---------- */
+.result { background: var(--brand); color: var(--brand-ink); border-radius: 18px; padding: 20px; display: grid; gap: 14px; box-shadow: var(--shadow); }
+.result .k { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.result .big { font-family: var(--f-display); font-stretch: 118%; font-weight: 900; font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; }
+.result .bigsub { font-weight: 700; opacity: .9; }
+.result.pay-owing { background: var(--bad); }
+.result .pill { justify-self: start; background: var(--gold); color: var(--on-gold); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: 14px; }
+.lines { display: grid; gap: 0; }
+.line { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; padding-block: 8px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.line .lab { display: flex; gap: 8px; align-items: baseline; min-width: 0; flex-wrap: wrap; }
+.line .val { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; }
+.line.minus .val { color: var(--good); }
+.line.total { border-bottom: 0; border-top: 3px solid var(--ink); font-size: 1.05rem; padding-top: 10px; }
+.line.sub .lab { color: var(--muted); font-size: 14px; padding-left: 12px; }
+.line.sub .val { font-weight: 400; color: var(--muted); font-size: 14px; }
+.rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rate { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; }
+.rate b { display: block; font-family: var(--f-display); font-stretch: 112%; font-size: 1.5rem; line-height: 1.1; }
+.rate span { font-size: 13px; color: var(--muted); }
+details.more { border-top: 1px solid var(--line); padding-top: 10px; }
+details.more summary { cursor: pointer; font-weight: 700; color: var(--brand); }
+details.more[open] summary { margin-bottom: 10px; }
+.small { font-size: 13.5px; color: var(--muted); }
+
+/* ---------- split bar chart ---------- */
+.splitbar { display: flex; gap: 2px; height: 26px; border-radius: 6px; overflow: hidden; }
+.splitbar > div { min-width: 2px; height: 100%; cursor: default; }
+.splitbar > div:first-child { border-radius: 4px 0 0 4px; }
+.splitbar > div:last-child { border-radius: 0 4px 4px 0; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 6px 14px; font-size: 14px; }
+.legend div { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); padding: 6px 10px; border-radius: 8px; font-size: 13px; font-weight: 700; box-shadow: var(--shadow); white-space: nowrap; }
+
+/* ---------- pay table ---------- */
+.paytable td:not(:first-child), .paytable th:not(:first-child) { text-align: right; }
+.paytable td:first-child { font-weight: 700; }
+.paytable tr.on td { background: var(--gold-soft); }
+.paytable .net { font-weight: 700; }
+
+/* ---------- award ---------- */
+.mw { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.mw .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 2px; }
+.mw .tile.lead { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.mw .tile .v { font-family: var(--f-display); font-stretch: 115%; font-weight: 900; font-size: 1.9rem; line-height: 1.05; }
+.mw .tile.lead .v { color: var(--gold); }
+.mw .tile .l { font-size: 13.5px; opacity: .8; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: 14px; }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.info { background: var(--info-soft); color: var(--info); }
+.award-card { display: grid; gap: 8px; background: var(--surface-2); border-radius: 12px; padding: 14px; }
+.award-card .an { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.2rem; }
+.numlist { margin: 0; padding: 0; list-style: none; counter-reset: n; display: grid; gap: 10px; }
+.numlist li { counter-increment: n; display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; align-items: start; }
+.numlist li::before { content: counter(n); font-family: var(--f-display); font-stretch: 120%; font-weight: 900; font-size: 1.05rem; width: 30px; height: 30px; border-radius: 8px; background: var(--ink); color: var(--bg); display: grid; place-items: center; }
+
+/* ---------- budget ---------- */
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.tile2 { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.tile2 .l { font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.tile2 .v { font-family: var(--f-display); font-stretch: 112%; font-weight: 900; font-size: clamp(1.3rem, 4.6vw, 2rem); line-height: 1.1; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.tile2.left { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.tile2.left .l { color: inherit; opacity: .85; }
+.tile2.short { background: var(--bad); border-color: var(--bad); color: var(--brand-ink); }
+.tile2.short .l { color: inherit; opacity: .9; }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr 1fr; } .tiles .tile2.left, .tiles .tile2.short { grid-column: 1 / -1; } }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: minmax(90px, 34%) minmax(0,1fr) auto; gap: 10px; align-items: center; font-size: 14px; }
+.bar .bt { height: 16px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.bar .bt i { display: block; height: 100%; background: var(--s1); border-radius: 0 4px 4px 0; }
+.bar .bv { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 72px; text-align: right; }
+.bar .bn { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.cat > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto 20px; gap: 12px; align-items: center; padding: 14px 16px; font-family: var(--f-display); font-stretch: 106%; font-weight: 800; font-size: 1.05rem; }
+.cat > summary::-webkit-details-marker { display: none; }
+.cat > summary::after { content: "+"; font-family: var(--f-mono); font-size: 20px; color: var(--muted); text-align: center; }
+.cat[open] > summary::after { content: "–"; }
+.cat > summary .ct { font-family: var(--f-body); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+.cat.income > summary .ct { color: var(--good); }
+.cat-body { padding: 0 16px 14px; display: grid; gap: 8px; }
+.brow { display: grid; grid-template-columns: minmax(0,1fr) 130px 150px; gap: 8px; align-items: center; }
+.brow label { font-size: 14.5px; min-width: 0; }
+.brow input, .brow select { min-height: 42px; }
+@media (max-width: 560px) { .brow { grid-template-columns: 1fr 1fr; } .brow label { grid-column: 1 / -1; font-weight: 700; } }
+.addrow { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding-top: 6px; border-top: 1px dashed var(--line); }
+.confirm { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--bad-soft); border: 2px solid var(--bad); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+.toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 700; z-index: 60; box-shadow: var(--shadow); max-width: calc(100% - 32px); text-align: center; }
+
+/* ---------- live bar (phones) ---------- */
+.livebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--ink); color: var(--bg); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.livebar .lk { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
+.livebar .lv { font-family: var(--f-display); font-stretch: 112%; font-weight: 900; font-size: 1.4rem; line-height: 1.1; }
+.livebar .lv.good { color: var(--gold); }
+.livebar button { background: var(--gold); color: var(--on-gold); border: 0; border-radius: 999px; padding: 8px 14px; font: 700 14px var(--f-body); cursor: pointer; }
+@media (min-width: 901px) { .livebar { display: none; } }
+@media (max-width: 900px) { body.has-livebar main { padding-bottom: 110px; } }
+
+.foot { padding-block: 26px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; display: grid; gap: 10px; }
+.foot ul { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div>
+      <h1 class="brand">Tax time <span class="yr">2026</span></h1>
+      <p class="sub">Lodge your 2025–26 return in myTax, one step at a time. Pay, award and budget tools are built in.</p>
+    </div>
+    <div class="top-meta">
+      <span class="deadline" id="deadline"><b>–</b> days to lodge</span>
+      <button class="ghost" id="themeBtn" type="button">Dim mode</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Tools">
+  <div class="wrap tabs-in" role="tablist">
+    <button class="tab" role="tab" data-tab="guide" id="tabbtn-guide"><span class="tn">01</span>Guide</button>
+    <button class="tab" role="tab" data-tab="refund" id="tabbtn-refund"><span class="tn">02</span>Refund</button>
+    <button class="tab" role="tab" data-tab="pay" id="tabbtn-pay"><span class="tn">03</span>Pay</button>
+    <button class="tab" role="tab" data-tab="award" id="tabbtn-award"><span class="tn">04</span>Award</button>
+    <button class="tab" role="tab" data-tab="budget" id="tabbtn-budget"><span class="tn">05</span>Budget</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= GUIDE ================= -->
+<section class="panel" id="tab-guide" role="tabpanel" aria-labelledby="tabbtn-guide">
+  <div class="panel-head">
+    <span class="eyebrow">myTax walkthrough · 2025–26 return</span>
+    <h2>Lodge your return in 18 steps</h2>
+    <p class="lede">Do the steps in order. Tick each step when you finish it. Your ticks stay on this device, so you can stop and come back.</p>
+  </div>
+  <div class="box progress">
+    <div class="meter" aria-hidden="true"><i id="meterFill"></i></div>
+    <div class="count" id="stepCount">0 <small>of 18 done</small></div>
+    <div class="btn-row" style="grid-column: 1 / -1">
+      <button class="btn primary small" id="nextStepBtn" type="button">Go to my next step</button>
+      <button class="btn small" id="resetGuideBtn" type="button">Clear ticks</button>
+    </div>
+    <div id="guideConfirm" hidden style="grid-column: 1 / -1"></div>
+  </div>
+  <div id="guideSteps"></div>
+</section>
+
+<!-- ================= REFUND ================= -->
+<section class="panel" id="tab-refund" role="tabpanel" aria-labelledby="tabbtn-refund" hidden>
+  <div class="panel-head">
+    <span class="eyebrow">Refund estimator · ATO rates</span>
+    <h2>Estimate your refund before you lodge</h2>
+    <p class="lede">Enter the amounts from your income statements and records. The labels match the sections in myTax. Use the result to check the figure myTax gives you.</p>
+  </div>
+  <div class="split">
+    <form class="box formbox" id="estForm" autocomplete="off">
+      <fieldset>
+        <legend>About you</legend>
+        <div class="fields">
+          <div class="f"><label for="est-year">Income year</label>
+            <select id="est-year" name="year"><option value="2025-26">2025–26 (lodge now)</option><option value="2026-27">2026–27 (plan ahead)</option></select></div>
+          <div class="f"><label for="est-res">Tax residency</label>
+            <select id="est-res" name="res"><option value="resident">Australian resident</option><option value="foreign">Foreign resident</option><option value="whm">Working holiday maker</option></select></div>
+          <div class="f"><label for="est-medEx">Medicare levy exemption</label>
+            <select id="est-medEx" name="medEx"><option value="none">No exemption</option><option value="half">Half exemption</option><option value="full">Full exemption</option></select></div>
+          <div class="f"><span class="lab">Study loan</span>
+            <label class="toggle" for="est-help"><input type="checkbox" id="est-help" name="help"> I have a HELP or other study loan</label></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Income <span class="eyebrow">myTax: Income</span></legend>
+        <div class="fields">
+          <div class="f"><label for="est-salary"><span class="code">1</span> Salary or wages</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-salary" name="salary"></div>
+            <span class="hint">Gross amount, all employers.</span></div>
+          <div class="f"><label for="est-withheld"><span class="code">1</span> Tax withheld</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-withheld" name="withheld"></div>
+            <span class="hint">Total from all income statements.</span></div>
+          <div class="f"><label for="est-allow"><span class="code">2</span> Allowances and tips</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-allow" name="allow"></div></div>
+          <div class="f"><label for="est-interest"><span class="code">10</span> Gross interest</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-interest" name="interest"></div></div>
+          <div class="f"><label for="est-div"><span class="code">11</span> Dividends</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-div" name="div"></div>
+            <span class="hint">Franked plus unfranked amounts.</span></div>
+          <div class="f"><label for="est-frank"><span class="code">11</span> Franking credits</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-frank" name="frank"></div></div>
+          <div class="f"><label for="est-other"><span class="code">Supp</span> Other net income</label>
+            <div class="money-in"><input type="number" inputmode="decimal" step="any" id="est-other" name="other"></div>
+            <span class="hint">Rent, ABN work, capital gains. Net amount.</span></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Deductions <span class="eyebrow">myTax: Deductions</span></legend>
+        <div class="fields">
+          <div class="f"><label for="est-carMethod"><span class="code">D1</span> Car expenses method</label>
+            <select id="est-carMethod" name="carMethod"><option value="cpk">Cents per kilometre</option><option value="actual">Logbook (actual costs)</option></select></div>
+          <div class="f" id="wrap-km"><label for="est-km">Work kilometres</label>
+            <input type="number" inputmode="decimal" min="0" step="any" id="est-km" name="km">
+            <span class="hint" id="kmHint">88c a km, up to 5,000 km.</span></div>
+          <div class="f" id="wrap-carActual" hidden><label for="est-carActual">Work share of car costs</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-carActual" name="carActual"></div></div>
+          <div class="f"><label for="est-travel"><span class="code">D2</span> Work travel</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-travel" name="travel"></div></div>
+          <div class="f"><label for="est-clothing"><span class="code">D3</span> Clothing and laundry</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-clothing" name="clothing"></div></div>
+          <div class="f"><label for="est-selfEd"><span class="code">D4</span> Self-education</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-selfEd" name="selfEd"></div></div>
+          <div class="f"><label for="est-wfhHours"><span class="code">D5</span> Hours worked from home</label>
+            <input type="number" inputmode="decimal" min="0" step="any" id="est-wfhHours" name="wfhHours">
+            <span class="hint" id="wfhHint">Fixed rate: 70c an hour.</span></div>
+          <div class="f"><label for="est-otherWre"><span class="code">D5</span> Other work expenses</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-otherWre" name="otherWre"></div>
+            <span class="hint">Work share of phone, tools, subscriptions.</span></div>
+          <div class="f"><label for="est-union"><span class="code">D5</span> Union and professional fees</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-union" name="union"></div></div>
+          <div class="f"><label for="est-invDed"><span class="code">D7–8</span> Interest and dividend deductions</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-invDed" name="invDed"></div></div>
+          <div class="f"><label for="est-gifts"><span class="code">D9</span> Gifts and donations</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-gifts" name="gifts"></div></div>
+          <div class="f"><label for="est-taxAff"><span class="code">D10</span> Cost of managing tax affairs</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-taxAff" name="taxAff"></div></div>
+          <div class="f"><label for="est-psc"><span class="code">D12</span> Personal super contributions</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-psc" name="psc"></div>
+            <span class="hint">Only with your fund's notice of intent acknowledgement.</span></div>
+        </div>
+        <div class="callout note" id="stdNote" hidden><span class="tag">NOTE</span><span>From 2026–27 the ATO applies a standard deduction of up to $1,000. Work expenses you claim reduce it dollar for dollar. Union fees do not.</span></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Health cover and income tests <span class="eyebrow">myTax: Medicare, IT</span></legend>
+        <div class="fields">
+          <div class="f"><label for="est-phi">Private hospital cover</label>
+            <select id="est-phi" name="phi"><option value="yes">Yes, all year</option><option value="no">No, or part of the year</option></select></div>
+          <div class="f"><label for="est-family">Family status for the surcharge</label>
+            <select id="est-family" name="family"><option value="single">Single</option><option value="family">Spouse or dependent children</option></select></div>
+          <div class="f" id="wrap-spouse" hidden><label for="est-spouse">Spouse's income for MLS</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-spouse" name="spouse"></div></div>
+          <div class="f" id="wrap-kids" hidden><label for="est-kids">Dependent children</label>
+            <input type="number" inputmode="numeric" min="0" step="1" id="est-kids" name="kids"></div>
+          <div class="f"><label for="est-rfb"><span class="code">IT1</span> Reportable fringe benefits</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-rfb" name="rfb"></div></div>
+          <div class="f"><label for="est-resc"><span class="code">IT2</span> Reportable employer super</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="est-resc" name="resc"></div>
+            <span class="hint">Salary sacrifice to super. See your income statement.</span></div>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="stick">
+      <div class="result" id="estResult" aria-live="polite">
+        <span class="k" id="estYearK">Estimate · 2025–26</span>
+        <div class="big money" id="estBig">$0</div>
+        <div class="bigsub" id="estBigSub">Estimated refund</div>
+      </div>
+      <div class="box" style="display:grid; gap:14px">
+        <h3>How the estimate works</h3>
+        <div class="lines" id="estLines"></div>
+        <div class="rates">
+          <div class="rate"><b id="estEff">0%</b><span>Average tax rate</span></div>
+          <div class="rate"><b id="estMarg">0%</b><span>Tax on your next dollar</span></div>
+        </div>
+        <details class="more">
+          <summary>Tax by bracket</summary>
+          <div class="tablewrap"><table><thead><tr><th>Income band</th><th>Rate</th><th style="text-align:right">Tax</th></tr></thead><tbody id="estBrackets"></tbody></table></div>
+        </details>
+        <p class="small" id="estAssume">Estimate only. myTax works out your final result. The ATO also applies rules this tool does not model, such as part-year residency and some offsets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAY ================= -->
+<section class="panel" id="tab-pay" role="tabpanel" aria-labelledby="tabbtn-pay" hidden>
+  <div class="panel-head">
+    <span class="eyebrow">Pay calculator · take-home pay</span>
+    <h2>What lands in your account each payday</h2>
+    <p class="lede">Enter your pay in any period. The tool converts it to every other period and takes out income tax, Medicare, the surcharge and study loan repayments.</p>
+  </div>
+  <div class="split">
+    <form class="box formbox" id="payForm" autocomplete="off">
+      <fieldset>
+        <legend>Your pay</legend>
+        <div class="fields">
+          <div class="f"><label for="pay-amt">Pay amount</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="pay-amt" name="amt"></div></div>
+          <div class="f"><label for="pay-freq">Paid per</label>
+            <select id="pay-freq" name="freq"><option value="hour">Hour</option><option value="day">Day</option><option value="week">Week</option><option value="fortnight">Fortnight</option><option value="month">Month</option><option value="year">Year</option></select></div>
+          <div class="f"><label for="pay-year">Income year</label>
+            <select id="pay-year" name="year"><option value="2026-27">2026–27 (this year)</option><option value="2025-26">2025–26</option></select></div>
+          <div class="f"><label for="pay-hpw">Hours per week</label>
+            <input type="number" inputmode="decimal" min="1" step="any" id="pay-hpw" name="hpw"></div>
+          <div class="f"><label for="pay-dpw">Days per week</label>
+            <input type="number" inputmode="decimal" min="1" max="7" step="any" id="pay-dpw" name="dpw"></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Super</legend>
+        <div class="fields">
+          <div class="f"><label for="pay-superRate">Super rate (%)</label>
+            <input type="number" inputmode="decimal" min="0" step="any" id="pay-superRate" name="superRate">
+            <span class="hint">Super guarantee is 12%.</span></div>
+          <div class="f"><label for="pay-salSac">Salary sacrifice to super (per year)</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="pay-salSac" name="salSac"></div></div>
+          <div class="f"><span class="lab">Package</span>
+            <label class="toggle" for="pay-incSuper"><input type="checkbox" id="pay-incSuper" name="incSuper"> My amount includes super</label></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Overtime</legend>
+        <div class="fields">
+          <div class="f"><label for="pay-otHours">Overtime hours per week</label>
+            <input type="number" inputmode="decimal" min="0" step="any" id="pay-otHours" name="otHours"></div>
+          <div class="f"><label for="pay-otMult">Overtime rate</label>
+            <select id="pay-otMult" name="otMult"><option value="1.5">Time and a half (1.5×)</option><option value="2">Double time (2×)</option><option value="2.5">Double time and a half (2.5×)</option><option value="1">Ordinary rate (1×)</option></select></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Tax settings</legend>
+        <div class="fields">
+          <div class="f"><label for="pay-res">Tax residency</label>
+            <select id="pay-res" name="res"><option value="resident">Australian resident</option><option value="foreign">Foreign resident</option><option value="whm">Working holiday maker</option></select></div>
+          <div class="f"><label for="pay-phi">Private hospital cover</label>
+            <select id="pay-phi" name="phi"><option value="yes">Yes</option><option value="no">No</option></select></div>
+          <div class="f"><label for="pay-medEx">Medicare levy exemption</label>
+            <select id="pay-medEx" name="medEx"><option value="none">No exemption</option><option value="half">Half exemption</option><option value="full">Full exemption</option></select></div>
+          <div class="f"><span class="lab">Tax-free threshold</span>
+            <label class="toggle" for="pay-tft"><input type="checkbox" id="pay-tft" name="tft"> I claim it from this employer</label></div>
+          <div class="f"><span class="lab">Study loan</span>
+            <label class="toggle" for="pay-help"><input type="checkbox" id="pay-help" name="help"> I have a HELP or other study loan</label></div>
+          <div class="f" id="wrap-std"><span class="lab">Tax-time view</span>
+            <label class="toggle" for="pay-std"><input type="checkbox" id="pay-std" name="std"> Include the $1,000 standard deduction</label></div>
+        </div>
+        <div class="callout note"><span class="tag">NOTE</span><span>Untick the tax-free threshold for a second job. The tool then shows roughly what your employer withholds. Your real tax is settled when you lodge.</span></div>
+      </fieldset>
+    </form>
+
+    <div class="stick">
+      <div class="result" id="payResult" aria-live="polite">
+        <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center">
+          <span class="k" id="payK">Take-home · 2026–27</span>
+          <div class="seg" id="paySeg" role="group" aria-label="Show take-home per">
+            <button type="button" data-p="week" aria-pressed="false">Week</button>
+            <button type="button" data-p="fortnight" aria-pressed="true">Fortnight</button>
+            <button type="button" data-p="month" aria-pressed="false">Month</button>
+            <button type="button" data-p="year" aria-pressed="false">Year</button>
+          </div>
+        </div>
+        <div class="big money" id="payBig">$0</div>
+        <div class="bigsub" id="payBigSub">per fortnight, after tax</div>
+        <span class="pill" id="payCompare"></span>
+      </div>
+      <div class="box" style="display:grid; gap:14px">
+        <h3>Where each dollar goes</h3>
+        <div class="splitbar" id="paySplit" role="img" aria-label="Split of gross pay"></div>
+        <div class="legend" id="payLegend"></div>
+        <div class="tablewrap"><table class="paytable"><thead><tr><th>Per</th><th>Gross</th><th>Tax</th><th>Take-home</th></tr></thead><tbody id="payTable"></tbody></table></div>
+        <div class="rates">
+          <div class="rate"><b id="payEff">0%</b><span>Average tax rate</span></div>
+          <div class="rate"><b id="payMarg">0%</b><span>Tax on your next dollar</span></div>
+        </div>
+        <p class="small" id="paySuper"></p>
+        <div class="btn-row"><button class="btn primary" type="button" id="payToBudget">Use this take-home in my budget</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AWARD ================= -->
+<section class="panel" id="tab-award" role="tabpanel" aria-labelledby="tabbtn-award" hidden>
+  <div class="panel-head">
+    <span class="eyebrow">Fair Work check · from 1 July 2026</span>
+    <h2>Are you paid the right rate?</h2>
+    <p class="lede">Most employees are covered by an award. The award sets your minimum pay, penalty rates and allowances. Check your rate here, then confirm it with the Fair Work Pay Calculator.</p>
+  </div>
+  <div class="mw">
+    <div class="tile lead"><span class="l">National Minimum Wage, per hour</span><span class="v num">$26.44</span><span class="l">From 1 July 2026</span></div>
+    <div class="tile"><span class="l">Per 38-hour week</span><span class="v num">$1,004.90</span><span class="l">Up from $948.00</span></div>
+    <div class="tile"><span class="l">Casual minimum, per hour</span><span class="v num">$33.05</span><span class="l">Includes 25% casual loading</span></div>
+    <div class="tile"><span class="l">Award minimum rates</span><span class="v num">+4.75%</span><span class="l">From the first full pay period on or after 1 July 2026</span></div>
+  </div>
+  <div class="grid2">
+    <div class="box" style="display:grid; gap:14px">
+      <h3>Check your hourly rate</h3>
+      <div class="fields">
+        <div class="f"><label for="aw-rate">Your base rate per hour</label>
+          <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="aw-rate"></div>
+          <span class="hint">Before tax. Do not include penalty rates.</span></div>
+        <div class="f"><label for="aw-type">Employment type</label>
+          <select id="aw-type"><option value="perm">Full-time or part-time</option><option value="casual">Casual</option></select></div>
+        <div class="f"><label for="aw-last">Your rate before 1 July 2026 (optional)</label>
+          <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="aw-last"></div></div>
+      </div>
+      <div id="awOut" style="display:grid; gap:10px" aria-live="polite"></div>
+      <div class="callout note"><span class="tag">NOTE</span><span>Junior, apprentice, trainee and supported wage rates can be lower. Your award rate is often higher than the National Minimum Wage.</span></div>
+    </div>
+    <div class="box" style="display:grid; gap:14px">
+      <h3>Find your likely award</h3>
+      <div class="f"><label for="aw-ind">What kind of work do you do?</label>
+        <select id="aw-ind"></select></div>
+      <div class="award-card" id="awCard"></div>
+      <div class="btn-row">
+        <a class="btn primary" href="https://calculate.fairwork.gov.au/FindYourAward" target="_blank" rel="noopener">Open Fair Work Pay Calculator</a>
+        <a class="btn" href="https://www.fairwork.gov.au/employment-conditions/awards/list-of-awards" target="_blank" rel="noopener">List of awards</a>
+      </div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="box" style="display:grid; gap:14px">
+      <h3>Check your pay, step by step</h3>
+      <ol class="numlist">
+        <li><span><b>Find your award.</b> Use the list above or the Fair Work Pay Calculator.</span></li>
+        <li><span><b>Find your classification level.</b> Read the level descriptions in the award. Match them to the work you do.</span></li>
+        <li><span><b>Compare your base rate.</b> Compare the award rate with the rate on your payslip.</span></li>
+        <li><span><b>Check extra pay.</b> Check penalty rates, overtime and allowances for each shift.</span></li>
+        <li><span><b>Check your payslip.</b> Your employer must give you a payslip within 1 working day of payday.</span></li>
+        <li><span><b>Act on underpayment.</b> Speak to your employer first. Keep notes. Then phone the Fair Work Ombudsman on <span class="num">13 13 94</span>.</span></li>
+      </ol>
+    </div>
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Payday Super started 1 July 2026</h3>
+      <p>Your employer must now pay your super each payday, not each quarter. Your fund must receive it within 7 business days after payday.</p>
+      <ol class="numlist">
+        <li><span>Open your super fund app or ATO online services.</span></li>
+        <li><span>Compare each deposit with the super amount on your payslip.</span></li>
+        <li><span>If a payment is missing, ask your employer. Then tell the ATO.</span></li>
+      </ol>
+      <div class="callout note"><span class="tag">NOTE</span><span>Super guarantee stays at 12%. From 1 July 2026 it is worked out on "qualifying earnings".</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUDGET ================= -->
+<section class="panel" id="tab-budget" role="tabpanel" aria-labelledby="tabbtn-budget" hidden>
+  <div class="panel-head">
+    <span class="eyebrow">Budget planner · Moneysmart categories</span>
+    <h2>Where your money goes</h2>
+    <p class="lede">Enter each amount with how often you pay it. The planner converts everything to one period. It saves on this device only.</p>
+  </div>
+  <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center">
+    <div class="seg" id="budSeg" role="group" aria-label="Show totals per">
+      <button type="button" data-p="week" aria-pressed="false">Week</button>
+      <button type="button" data-p="fortnight" aria-pressed="false">Fortnight</button>
+      <button type="button" data-p="month" aria-pressed="true">Month</button>
+      <button type="button" data-p="year" aria-pressed="false">Year</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn small" type="button" id="budFromPay">Use take-home from Pay tab</button>
+      <button class="btn small" type="button" id="budReset">Clear all amounts</button>
+    </div>
+  </div>
+  <div id="budConfirm" hidden></div>
+  <div class="tiles">
+    <div class="tile2"><span class="l">Income</span><span class="v" id="budInc">$0</span></div>
+    <div class="tile2"><span class="l">Spending</span><span class="v" id="budExp">$0</span></div>
+    <div class="tile2 left" id="budLeftTile"><span class="l" id="budLeftL">Left over</span><span class="v" id="budLeft">$0</span></div>
+  </div>
+  <div class="split">
+    <div style="display:grid; gap:10px" id="budCats"></div>
+    <div class="stick">
+      <div class="box" style="display:grid; gap:14px">
+        <h3>Spending by category</h3>
+        <div class="bars" id="budBars"></div>
+        <p class="small" id="budRate"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap foot">
+  <p><b>Your figures stay on your device.</b> They are saved in your browser only. This page sends nothing anywhere. Fonts load from Google Fonts.</p>
+  <p><b>Estimates only.</b> This tool is not tax, legal or financial advice. Check your result in myTax, or ask a registered tax agent. Figures checked 13 October 2026 against these pages:</p>
+  <ul>
+    <li><a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" target="_blank" rel="noopener">ATO resident tax rates</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-foreign-residents" target="_blank" rel="noopener">foreign residents</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-working-holiday-makers" target="_blank" rel="noopener">working holiday makers</a></li>
+    <li><a href="https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-reduction/medicare-levy-reduction-for-low-income-earners" target="_blank" rel="noopener">Medicare levy reduction</a> · <a href="https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy-surcharge/medicare-levy-surcharge-income-thresholds-and-rates" target="_blank" rel="noopener">Medicare levy surcharge</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/study-and-training-support-loans-rates-and-repayment-thresholds" target="_blank" rel="noopener">study loan thresholds</a></li>
+    <li><a href="https://www.ato.gov.au/individuals-and-families/your-tax-return/how-to-lodge-your-tax-return/lodge-your-tax-return-online-with-mytax" target="_blank" rel="noopener">Lodge with myTax</a> · <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses" target="_blank" rel="noopener">Standard deduction (2026–27)</a></li>
+    <li><a href="https://www.fairwork.gov.au/about-us/workplace-laws/annual-wage-review/annual-wage-review-2026" target="_blank" rel="noopener">Fair Work Annual Wage Review 2026</a> · <a href="https://www.ato.gov.au/businesses-and-organisations/super-for-employers/payday-super/about-payday-super" target="_blank" rel="noopener">Payday Super</a> · <a href="https://moneysmart.gov.au/budgeting/budget-planner" target="_blank" rel="noopener">Moneysmart budget planner</a></li>
+  </ul>
+</footer>
+
+<div class="livebar" id="livebar" hidden>
+  <div><div class="lk" id="liveK">Estimated refund</div><div class="lv" id="liveV">$0</div></div>
+  <button type="button" id="liveBtn">See breakdown</button>
+</div>
+<div class="tip" id="tip" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/*CALC-START*/
+const YEARS = {
+  '2025-26': {
+    label: '2025–26',
+    res: [[18200, 0], [45000, 0.16], [135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    foreign: [[135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    whm: [[45000, 0.15], [135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    medLow: 28011, medHigh: 35013, medProvisional: false,
+    mlsSingle: [101000, 118000, 158000], mlsFamily: [202000, 236000, 316000],
+    help: { t1: 67000, t2: 125000, b2: 8700, t3: 179285 },
+    cpk: 0.88, wfh: 0.70, stdDed: 0
+  },
+  '2026-27': {
+    label: '2026–27',
+    res: [[18200, 0], [45000, 0.15], [135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    foreign: [[135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    whm: [[45000, 0.15], [135000, 0.30], [190000, 0.37], [Infinity, 0.45]],
+    medLow: 28011, medHigh: 35013, medProvisional: true,
+    mlsSingle: [105000, 123000, 164000], mlsFamily: [210000, 246000, 328000],
+    help: { t1: 69528, t2: 129717, b2: 9028, t3: 186050 },
+    cpk: 0.91, wfh: 0.70, stdDed: 1000
+  }
+};
+const MLS_RATES = [0, 0.01, 0.0125, 0.015];
+
+function bracketRows(income, table) {
+  const rows = []; let lower = 0;
+  for (const [upper, rate] of table) {
+    const slice = Math.max(0, Math.min(income, upper) - lower);
+    rows.push({ lower, upper, rate, slice, tax: slice * rate });
+    if (income <= upper) break;
+    lower = upper;
+  }
+  return rows;
+}
+function incomeTax(income, table) { return bracketRows(income, table).reduce((s, r) => s + r.tax, 0); }
+function marginalRate(income, table) { for (const [u, r] of table) { if (income < u) return r; } return table[table.length - 1][1]; }
+function litoFor(ti) {
+  if (ti <= 37500) return 700;
+  if (ti <= 45000) return 700 - 0.05 * (ti - 37500);
+  if (ti <= 66667) return Math.max(0, 325 - 0.015 * (ti - 45000));
+  return 0;
+}
+function medicareLevy(ti, Y, exFrac) {
+  if (ti <= Y.medLow) return 0;
+  return Math.min(0.02 * ti, 0.1 * (ti - Y.medLow)) * (1 - exFrac);
+}
+function mlsCalc(mlsIncome, base, Y, family, kids) {
+  const th = family ? Y.mlsFamily.map(t => t + 1500 * Math.max(0, kids - 1)) : Y.mlsSingle;
+  let tier = 0;
+  if (mlsIncome > th[2]) tier = 3; else if (mlsIncome > th[1]) tier = 2; else if (mlsIncome > th[0]) tier = 1;
+  return { tier, rate: MLS_RATES[tier], amount: base * MLS_RATES[tier], th };
+}
+function helpRepay(ri, Y) {
+  const h = Y.help;
+  if (ri <= h.t1) return 0;
+  if (ri <= h.t2) return 0.15 * (ri - h.t1);
+  if (ri <= h.t3) return h.b2 + 0.17 * (ri - h.t2);
+  return 0.10 * ri;
+}
+function tableFor(Y, res) { return res === 'resident' ? Y.res : res === 'whm' ? Y.whm : Y.foreign; }
+function exFracOf(v) { return v === 'full' ? 1 : v === 'half' ? 0.5 : 0; }
+
+function estimate(f) {
+  const Y = YEARS[f.year] || YEARS['2025-26'];
+  const resident = f.res === 'resident';
+  const table = tableFor(Y, f.res);
+  const labour = f.salary + f.allow;
+  const frank = resident ? f.frank : 0;
+  const totalIncome = f.salary + f.allow + f.interest + f.div + frank + f.other;
+  const d1 = f.carMethod === 'cpk' ? Math.min(Math.max(f.km, 0), 5000) * Y.cpk : f.carActual;
+  const wfhAmt = f.wfhHours * Y.wfh;
+  const d5 = wfhAmt + f.otherWre + f.union;
+  const wre = d1 + f.travel + f.clothing + f.selfEd + wfhAmt + f.otherWre;
+  const std = (Y.stdDed && resident && labour > 0) ? Math.max(0, Math.min(Y.stdDed, labour) - wre) : 0;
+  const deds = [
+    ['D1', 'Car expenses', d1], ['D2', 'Work travel', f.travel], ['D3', 'Clothing and laundry', f.clothing],
+    ['D4', 'Self-education', f.selfEd], ['D5', 'Other work expenses', d5], ['STD', 'Standard deduction', std],
+    ['D7–8', 'Investment deductions', f.invDed], ['D9', 'Gifts and donations', f.gifts],
+    ['D10', 'Managing tax affairs', f.taxAff], ['D12', 'Personal super', f.psc]
+  ];
+  const totalDed = deds.reduce((s, d) => s + d[2], 0);
+  const ti = Math.max(0, Math.floor(totalIncome - totalDed));
+  const rows = bracketRows(ti, table);
+  const grossTax = rows.reduce((s, r) => s + r.tax, 0);
+  const lito = resident ? Math.min(litoFor(ti), grossTax) : 0;
+  const ml = resident ? medicareLevy(ti, Y, exFracOf(f.medEx)) : 0;
+  const fam = f.family === 'family';
+  const mlsIncome = ti + f.rfb + f.resc + f.psc + (fam ? f.spouse : 0);
+  const mls = (resident && f.phi === 'no') ? mlsCalc(mlsIncome, ti + f.rfb, Y, fam, f.kids) : { tier: 0, rate: 0, amount: 0 };
+  const ri = ti + f.rfb + f.resc + f.psc;
+  const help = f.help ? helpRepay(ri, Y) : 0;
+  const liability = grossTax - lito + ml + mls.amount + help;
+  const result = liability - frank - f.withheld;
+  const marg = marginalRate(ti, table) + (resident && ti > Y.medHigh ? 0.02 * (1 - exFracOf(f.medEx)) : 0);
+  return { Y, resident, totalIncome, deds, totalDed, std, ti, rows, grossTax, lito, ml, mls, mlsIncome, help, ri, frank, withheld: f.withheld, liability, result, marg };
+}
+
+function payCalc(p, yearKey) {
+  const Y = YEARS[yearKey || p.year] || YEARS['2026-27'];
+  const resident = p.res === 'resident';
+  const table = tableFor(Y, p.res);
+  const hpw = p.hpw > 0 ? p.hpw : 38, dpw = p.dpw > 0 ? p.dpw : 5;
+  const mult = { hour: hpw * 52, day: dpw * 52, week: 52, fortnight: 26, month: 12, year: 1 }[p.freq] || 1;
+  const entered = p.amt * mult;
+  const rate = Math.max(0, p.superRate) / 100;
+  const base = p.incSuper ? entered / (1 + rate) : entered;
+  const sg = base * rate;
+  const hourly = base / (hpw * 52);
+  const ot = Math.max(0, p.otHours) * hourly * p.otMult * 52;
+  const gross = base + ot;
+  const salSac = Math.min(Math.max(0, p.salSac), gross);
+  const std = (p.std && Y.stdDed && resident) ? Math.min(Y.stdDed, gross - salSac) : 0;
+  const ti = Math.max(0, gross - salSac - std);
+  const ex = exFracOf(p.medEx);
+  let tax, lito = 0, ml = 0;
+  if (resident && !p.tft) {
+    tax = incomeTax(ti + 18200, table);
+    ml = 0.02 * ti * (1 - ex);
+  } else {
+    const g = incomeTax(ti, table);
+    lito = resident ? Math.min(litoFor(ti), g) : 0;
+    tax = g - lito;
+    ml = resident ? medicareLevy(ti, Y, ex) : 0;
+  }
+  const mls = (resident && p.phi === 'no') ? mlsCalc(ti + salSac, ti, Y, false, 0).amount : 0;
+  const help = p.help ? helpRepay(ti + salSac, Y) : 0;
+  const net = gross - salSac - tax - ml - mls - help;
+  const totalTax = tax + ml + mls;
+  const marg = marginalRate(ti, table) + (resident && ti > Y.medHigh ? 0.02 * (1 - ex) : 0);
+  return { Y, gross, base, ot, sg, salSac, std, ti, tax, lito, ml, mls, help, net, totalTax, hpw, dpw, marg };
+}
+/*CALC-END*/
+
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('tt26.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('tt26.' + k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem('tt26.' + k); } catch (e) {} }
+};
+const fmt0 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0, minimumFractionDigits: 0 });
+const fmt2 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 2, minimumFractionDigits: 2 });
+const money = v => fmt0.format(Math.round(v));
+const money2 = v => fmt2.format(v);
+const pct = v => (Math.round(v * 1000) / 10).toFixed(1).replace(/\.0$/, '') + '%';
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2600); }
+
+/* ---------- theme ---------- */
+(function theme() {
+  const root = document.documentElement;
+  const apply = m => { root.dataset.theme = m; $('#themeBtn').textContent = m === 'dark' ? 'Bright mode' : 'Dim mode'; };
+  apply(store.get('theme', 'light'));
+  $('#themeBtn').addEventListener('click', () => { const m = root.dataset.theme === 'dark' ? 'light' : 'dark'; apply(m); store.set('theme', m); });
+})();
+
+/* ---------- deadline ---------- */
+(function deadline() {
+  const due = new Date('2026-10-31T23:59:59+11:00');
+  const days = Math.ceil((due - new Date()) / 86400000);
+  const el = $('#deadline');
+  if (days > 1) el.innerHTML = `<b>${days}</b> days to lodge · due 31 Oct`;
+  else if (days === 1) el.innerHTML = `<b>1</b> day to lodge · due 31 Oct`;
+  else el.innerHTML = `<b>!</b> 31 Oct has passed · lodge now`;
+})();
+
+/* ---------- tabs ---------- */
+const TABS = ['guide', 'refund', 'pay', 'award', 'budget'];
+function openTab(name, focus) {
+  if (!TABS.includes(name)) name = 'guide';
+  TABS.forEach(t => {
+    $('#tab-' + t).hidden = t !== name;
+    const b = $('#tabbtn-' + t); b.setAttribute('aria-selected', t === name ? 'true' : 'false'); b.tabIndex = t === name ? 0 : -1;
+  });
+  store.set('tab', name);
+  updateLivebar(name);
+  if (focus) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+$$('.tab').forEach(b => b.addEventListener('click', () => openTab(b.dataset.tab, true)));
+$('.tabs-in').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const i = TABS.indexOf(store.get('tab', 'guide'));
+  const n = TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length];
+  openTab(n); $('#tabbtn-' + n).focus();
+});
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip');
+document.addEventListener('pointermove', e => {
+  const t = e.target.closest && e.target.closest('[data-tip]');
+  if (!t) { tip.hidden = true; return; }
+  tip.textContent = t.dataset.tip; tip.hidden = false;
+  const w = tip.offsetWidth;
+  tip.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, e.clientX - w / 2)) + 'px';
+  tip.style.top = (e.clientY - 42) + 'px';
+});
+document.addEventListener('pointerleave', () => tip.hidden = true);
+
+/* =========================================================
+   GUIDE
+   ========================================================= */
+const DED_TABLE = `
+<div class="tablewrap"><table class="ded-table"><thead><tr><th>Label</th><th>What it covers</th><th>How to claim (2025–26)</th><th>Do not claim</th></tr></thead><tbody>
+<tr><td><span class="code">D1</span></td><td>Work-related car expenses</td><td>Cents per km: 88c × work km, up to 5,000 km. Or the logbook method.</td><td>Trips between home and your usual workplace.</td></tr>
+<tr><td><span class="code">D2</span></td><td>Work-related travel</td><td>Fares, tolls, parking, rideshare and overnight costs for work trips.</td><td>Your normal trip to and from work.</td></tr>
+<tr><td><span class="code">D3</span></td><td>Clothing, laundry and dry-cleaning</td><td>Uniforms, protective and occupation-specific clothing. Laundry: $1 a load (work clothes only), 50c a mixed load.</td><td>Plain clothes, even if your employer tells you to wear them.</td></tr>
+<tr><td><span class="code">D4</span></td><td>Self-education</td><td>Course fees, textbooks and travel for study about your current job.</td><td>Study for a new career.</td></tr>
+<tr><td><span class="code">D5</span></td><td>Other work-related expenses</td><td>Working from home: 70c an hour (fixed rate). Work share of phone and internet. Tools, union fees, subscriptions.</td><td>Items over $300 in one year. Claim their decline in value instead.</td></tr>
+<tr><td><span class="code">D7–8</span></td><td>Interest and dividend deductions</td><td>Interest on money borrowed to buy shares. Investment account fees.</td><td>Costs for private assets.</td></tr>
+<tr><td><span class="code">D9</span></td><td>Gifts or donations</td><td>$2 or more to a deductible gift recipient. Keep the receipt.</td><td>Raffle tickets, gala dinners, gifts with a benefit.</td></tr>
+<tr><td><span class="code">D10</span></td><td>Cost of managing tax affairs</td><td>Tax agent fees and travel to your agent.</td><td>Fees paid by someone else.</td></tr>
+<tr><td><span class="code">D12</span></td><td>Personal super contributions</td><td>After-tax amounts you paid into super.</td><td>Any amount without your fund's notice of intent acknowledgement.</td></tr>
+</tbody></table></div>`;
+
+const CHECKLIST = [
+  ['inc', 'Income statement from each employer, marked "Tax ready"'],
+  ['int', 'Bank interest amounts'],
+  ['div', 'Dividend statements with franking credits'],
+  ['phi', 'Private health insurance statement'],
+  ['gov', 'Centrelink or other government payment statements'],
+  ['rec', 'Receipts and invoices for work expenses'],
+  ['wfh', 'Record of the hours you worked from home'],
+  ['car', 'Car trip record or logbook'],
+  ['don', 'Donation receipts ($2 or more)'],
+  ['oth', 'Records of other income: ABN, rent, crypto, foreign'],
+  ['bank', 'Your BSB and account number'],
+  ['sp', "Your spouse's income, if you had a spouse"],
+  ['noi', 'Super fund acknowledgement, if you claim personal super']
+];
+
+const PHASES = [
+  { name: 'Get ready', steps: [
+    { id: 's1', title: 'Check your deadline',
+      before: [['caution', 'The ATO can charge a penalty if you lodge late.']],
+      body: ['Lodge your 2025–26 return by 31 October 2026.', 'To use a registered tax agent, contact the agent before 31 October. The agent can get you a later date.'] },
+    { id: 's2', title: 'Collect your records',
+      body: ['Use this checklist. Tick each item when you have it.'], extra: 'checklist' },
+    { id: 's3', title: 'Make sure your income is tax ready',
+      body: ['Sign in to ATO online services. Find your income statements.', 'Make sure each statement shows "Tax ready".'],
+      after: [['note', 'Employers must finalise income statements by 14 July. If a statement is not tax ready, speak to your employer.']] }
+  ]},
+  { name: 'Sign in', steps: [
+    { id: 's4', title: 'Sign in to myGov',
+      before: [['caution', 'Type my.gov.au into your browser yourself. Do not use links in emails or text messages. Scammers copy ATO and myGov messages.']],
+      body: ['Go to <a href="https://my.gov.au" target="_blank" rel="noopener">my.gov.au</a>.', 'Sign in with your myGov details or with myID.'] },
+    { id: 's5', title: 'Open the ATO service',
+      body: ['Select <b>ATO</b> from your linked services.', 'If the ATO is not linked, select <b>Link a service</b>. Answer the identity questions.'],
+      after: [['note', 'If you cannot link the ATO, phone 13 28 61. Ask for a linking code.']] },
+    { id: 's6', title: 'Open your 2026 tax return',
+      body: ['Select <b>Manage tax returns</b> from the Quick links.', 'Select <b>Prepare</b> next to the 2026 return. Select <b>Resume</b> if you started it before.'],
+      after: [['note', 'The ATO calls your 2025–26 return the "2026 tax return".']] }
+  ]},
+  { name: 'Set up the return', steps: [
+    { id: 's7', title: 'Check your personal details',
+      before: [['caution', 'A new bank account can delay your refund. The ATO can hold the refund for extra checks.']],
+      body: ['Check your phone number, email and postal address.', 'Check your bank account. The ATO pays your refund into this account.'] },
+    { id: 's8', title: 'Personalise your return',
+      body: ['Answer the questions about your year.', 'Select each type of income and deduction that applies to you.', 'If you had a spouse at any time in the year, select that option.', 'Select <b>Save and continue</b>.'] }
+  ]},
+  { name: 'Income', steps: [
+    { id: 's9', title: 'Check your pre-filled income',
+      before: [['warning', 'Declare all your income. This includes cash jobs, ABN work, rent, crypto and foreign income. The ATO matches data from many sources.']],
+      body: ['Open the Income section.', 'Compare each income statement with your last payslip of the year.', 'Compare interest and dividends with your bank and share statements.'] },
+    { id: 's10', title: 'Add missing income',
+      body: ['Select <b>Add</b> for each amount that is not pre-filled.', 'Enter the gross amount and any tax withheld.', 'Use the <a href="#refund" data-goto="refund">Refund tab</a> to see how each amount changes your result.'] }
+  ]},
+  { name: 'Deductions', steps: [
+    { id: 's11', title: 'Add your deductions',
+      body: ['Open the Deductions section.', 'Add each expense to the correct label. Use the table below.', 'In the description, write the method you used. Example: "Fixed rate, 384 hours".'],
+      after: [['note', 'You can claim an expense only if you meet all 3 rules. 1: You paid for it and nobody paid you back. 2: It is directly related to earning your income. 3: You have a record of it.']],
+      extra: 'deductions' },
+    { id: 's12', title: 'Check your records',
+      body: ['Make sure you have a record for each claim.', 'Keep your records for 5 years from the date you lodge.'],
+      after: [['note', 'For 2025–26, if your total work expenses are $300 or less, you do not need written evidence. You must still show how you worked out the claim. This rule ends from 2026–27.']] }
+  ]},
+  { name: 'Medicare and health cover', steps: [
+    { id: 's13', title: 'Check your private health insurance',
+      body: ['Open the Medicare and private health insurance section.', 'Make sure the policy details match your health fund statement.', 'If you had no private hospital cover for the full year, answer the surcharge questions.'],
+      after: [['note', 'In 2025–26, the Medicare levy surcharge applies without hospital cover when income for MLS purposes is over $101,000 (singles) or $202,000 (families).']] },
+    { id: 's14', title: 'Check spouse and dependant details',
+      body: ['If you had a spouse, enter their details.', "Enter your spouse's income for the income tests.", 'Enter the number of dependent children.'] }
+  ]},
+  { name: 'Review and lodge', steps: [
+    { id: 's15', title: 'Calculate your result',
+      body: ['Select <b>Calculate</b> to see your estimate.', 'Compare it with the <a href="#refund" data-goto="refund">Refund tab</a> in this tool.', 'If the two results are very different, check each section again.'] },
+    { id: 's16', title: 'Lodge your return',
+      before: [['warning', 'You are responsible for your return. Lodge only when each amount is correct.']],
+      body: ['Read each message that myTax shows.', 'Read the declaration. Tick the box.', 'Select <b>Lodge</b>.'] },
+    { id: 's17', title: 'Keep your receipt',
+      body: ['Write down the receipt number on the screen.', 'Check your email for the lodgment receipt.'] }
+  ]},
+  { name: 'After you lodge', steps: [
+    { id: 's18', title: 'Track your return and read your notice',
+      body: ['Check the status in <b>Manage tax returns</b>.', 'Most online returns process within 2 weeks.', 'Read your notice of assessment in your myGov Inbox.', 'If you owe tax, pay by the due date on the notice.'],
+      after: [['note', 'If you find a mistake after you lodge, you can amend your return in myTax.']] }
+  ]}
+];
+const ALL_STEPS = PHASES.flatMap(p => p.steps.map(s => s.id));
+let guideState = store.get('guide', { done: {}, check: {} });
+
+function callout(type, text) { return `<div class="callout ${type}"><span class="tag">${type.toUpperCase()}</span><span>${text}</span></div>`; }
+function renderGuide() {
+  let n = 0;
+  $('#guideSteps').innerHTML = PHASES.map((ph, pi) => `
+    <section class="phase"><h3 class="phase-h"><span class="phase-k">Phase ${pi + 1}</span>${ph.name}</h3>
+    <ol class="steps">${ph.steps.map(s => {
+      n++;
+      const done = !!guideState.done[s.id];
+      let extra = '';
+      if (s.extra === 'checklist') extra = `<div class="checklist">${CHECKLIST.map(([k, t]) => `<label class="ck" for="ck-${k}"><input type="checkbox" id="ck-${k}" data-ck="${k}" ${guideState.check[k] ? 'checked' : ''}><span>${esc(t)}</span></label>`).join('')}</div>`;
+      if (s.extra === 'deductions') extra = DED_TABLE;
+      return `<li class="step" id="step-${s.id}" data-done="${done}">
+        <div class="step-num" aria-hidden="true">${n}</div>
+        <div class="step-body">
+          <div class="step-head"><h4>${s.title}</h4><label class="done" for="chk-${s.id}"><input type="checkbox" id="chk-${s.id}" data-step="${s.id}" ${done ? 'checked' : ''}> Done</label></div>
+          ${(s.before || []).map(c => callout(c[0], c[1])).join('')}
+          <ul class="instr">${s.body.map(b => `<li>${b}</li>`).join('')}</ul>
+          ${extra}
+          ${(s.after || []).map(c => callout(c[0], c[1])).join('')}
+        </div></li>`;
+    }).join('')}</ol></section>`).join('');
+  updateProgress();
+}
+function updateProgress() {
+  const d = ALL_STEPS.filter(id => guideState.done[id]).length;
+  $('#meterFill').style.width = (d / ALL_STEPS.length * 100) + '%';
+  $('#stepCount').innerHTML = `${d} <small>of ${ALL_STEPS.length} done</small>`;
+  $('#nextStepBtn').textContent = d === ALL_STEPS.length ? 'All steps done' : 'Go to my next step';
+}
+$('#guideSteps').addEventListener('change', e => {
+  const s = e.target.dataset.step, k = e.target.dataset.ck;
+  if (s) { guideState.done[s] = e.target.checked; $('#step-' + s).dataset.done = e.target.checked; updateProgress(); }
+  if (k) guideState.check[k] = e.target.checked;
+  store.set('guide', guideState);
+});
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-goto]');
+  if (g) { e.preventDefault(); openTab(g.dataset.goto, true); }
+});
+$('#nextStepBtn').addEventListener('click', () => {
+  const id = ALL_STEPS.find(i => !guideState.done[i]);
+  if (!id) return;
+  const el = $('#step-' + id);
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => $('#chk-' + id).focus({ preventScroll: true }), 400);
+});
+$('#resetGuideBtn').addEventListener('click', () => {
+  const c = $('#guideConfirm');
+  c.innerHTML = `<div class="confirm"><span>Clear all ticks in the guide?</span><button class="btn small" type="button" id="gYes">Clear ticks</button><button class="btn small" type="button" id="gNo">Keep them</button></div>`;
+  c.hidden = false;
+  $('#gYes').onclick = () => { guideState = { done: {}, check: {} }; store.set('guide', guideState); renderGuide(); c.hidden = true; toast('Ticks cleared'); };
+  $('#gNo').onclick = () => { c.hidden = true; };
+});
+
+/* =========================================================
+   REFUND ESTIMATOR
+   ========================================================= */
+const EST_DEFAULT = { year: '2025-26', res: 'resident', medEx: 'none', help: false, salary: 0, withheld: 0, allow: 0, interest: 0, div: 0, frank: 0, other: 0,
+  carMethod: 'cpk', km: 0, carActual: 0, travel: 0, clothing: 0, selfEd: 0, wfhHours: 0, otherWre: 0, union: 0, invDed: 0, gifts: 0, taxAff: 0, psc: 0,
+  phi: 'yes', family: 'single', spouse: 0, kids: 0, rfb: 0, resc: 0 };
+let estData = Object.assign({}, EST_DEFAULT, store.get('est', {}));
+
+function fillForm(form, data, prefix) {
+  for (const [k, v] of Object.entries(data)) {
+    const el = $('#' + prefix + k); if (!el) continue;
+    if (el.type === 'checkbox') el.checked = !!v; else el.value = (typeof v === 'number' && v === 0 && el.type === 'number') ? '' : v;
+  }
+}
+function readForm(prefix, template) {
+  const o = {};
+  for (const [k, v] of Object.entries(template)) {
+    const el = $('#' + prefix + k); if (!el) { o[k] = v; continue; }
+    if (el.type === 'checkbox') o[k] = el.checked;
+    else if (typeof v === 'number') o[k] = num(el.value);
+    else o[k] = el.value;
+  }
+  return o;
+}
+let lastEst = null;
+function renderEstimate() {
+  const f = readForm('est-', EST_DEFAULT);
+  const Y = YEARS[f.year];
+  $('#wrap-km').hidden = f.carMethod !== 'cpk';
+  $('#wrap-carActual').hidden = f.carMethod === 'cpk';
+  $('#wrap-spouse').hidden = $('#wrap-kids').hidden = f.family !== 'family';
+  $('#kmHint').textContent = `${Math.round(Y.cpk * 100)}c a km, up to 5,000 km.` + (f.km > 5000 ? ' Only 5,000 km counts.' : '');
+  $('#wfhHint').textContent = `Fixed rate: ${Math.round(Y.wfh * 100)}c an hour = ${money2(f.wfhHours * Y.wfh)}.`;
+  $('#stdNote').hidden = !Y.stdDed;
+  const r = estimate(f); lastEst = r;
+  const refund = r.result < 0;
+  $('#estResult').classList.toggle('pay-owing', !refund && r.result > 0.5);
+  r.empty = r.totalIncome === 0 && r.withheld === 0;
+  $('#estYearK').textContent = 'Estimate · ' + Y.label;
+  $('#estBig').textContent = money(Math.abs(r.result));
+  $('#estBigSub').textContent = r.empty ? 'Enter your income and tax withheld to start' : Math.abs(r.result) < 0.5 ? 'You break even' : refund ? 'Estimated refund' : 'Estimated amount to pay';
+  const L = [];
+  const line = (lab, val, cls = '', code = '') => L.push(`<div class="line ${cls}"><span class="lab">${code ? `<span class="code">${code}</span>` : ''}${lab}</span><span class="val">${val}</span></div>`);
+  line('Total income', money(r.totalIncome));
+  r.deds.filter(d => d[2] > 0).forEach(d => line(d[1], '−' + money(d[2]), 'sub', ''));
+  line('Total deductions', '−' + money(r.totalDed));
+  line('<b>Taxable income</b>', '<b>' + money(r.ti) + '</b>');
+  line('Tax on taxable income', money(r.grossTax));
+  if (r.lito > 0) line('Low income tax offset', '−' + money(r.lito), 'minus');
+  if (r.resident) line('Medicare levy', money(r.ml));
+  if (r.mls.amount > 0) line(`Medicare levy surcharge (${pct(r.mls.rate)})`, money(r.mls.amount));
+  if (f.help) line('Study loan repayment', money(r.help));
+  if (r.frank > 0) line('Franking credits', '−' + money(r.frank), 'minus');
+  line('Tax withheld', '−' + money(r.withheld), 'minus');
+  line(refund ? '<b>Estimated refund</b>' : '<b>Estimated amount to pay</b>', '<b>' + money(Math.abs(r.result)) + '</b>', 'total');
+  $('#estLines').innerHTML = L.join('');
+  const eff = r.ti > 0 ? r.liability / r.ti : 0;
+  $('#estEff').textContent = pct(Math.max(0, eff));
+  $('#estMarg').textContent = pct(r.marg);
+  $('#estBrackets').innerHTML = r.rows.map(row => `<tr><td>${money(row.lower)} – ${row.upper === Infinity ? 'and over' : money(row.upper)}</td><td>${pct(row.rate)}</td><td style="text-align:right">${money(row.tax)}</td></tr>`).join('');
+  let a = 'Estimate only. myTax works out your final result. The tool does not model part-year residency, family Medicare thresholds or other offsets.';
+  if (Y.medProvisional) a += ' 2026–27 Medicare low-income thresholds are not out yet, so 2025–26 figures are used.';
+  if (!r.resident) a += ' Foreign residents and working holiday makers pay no Medicare levy and get no low income tax offset.';
+  $('#estAssume').textContent = a;
+  updateLivebar();
+}
+function onEstInput() { estData = readForm('est-', EST_DEFAULT); store.set('est', estData); renderEstimate(); }
+$('#estForm').addEventListener('input', onEstInput);
+$('#estForm').addEventListener('change', onEstInput);
+$('#estForm').addEventListener('submit', e => e.preventDefault());
+
+/* =========================================================
+   PAY CALCULATOR
+   ========================================================= */
+const PAY_DEFAULT = { amt: 0, freq: 'year', year: '2026-27', hpw: 38, dpw: 5, superRate: 12, salSac: 0, incSuper: false, otHours: 0, otMult: '1.5', res: 'resident', phi: 'yes', medEx: 'none', tft: true, help: false, std: false };
+let payData = Object.assign({}, PAY_DEFAULT, store.get('pay', {}));
+let payView = store.get('payView', 'fortnight');
+let lastPay = null;
+function payInputs() {
+  const p = readForm('pay-', PAY_DEFAULT);
+  p.otMult = num(p.otMult) || 1.5;
+  return p;
+}
+function renderPay() {
+  const p = payInputs();
+  const r = payCalc(p); lastPay = r;
+  const Y = r.Y;
+  $('#wrap-std').hidden = !Y.stdDed;
+  const div = { week: 52, fortnight: 26, month: 12, year: 1 };
+  $('#payK').textContent = 'Take-home · ' + Y.label;
+  $('#payBig').textContent = money(r.net / div[payView]);
+  const payEmpty = r.gross === 0;
+  $('#payBigSub').textContent = payEmpty ? 'Enter your pay to see your take-home' : `per ${payView}, after tax`;
+  $$('#paySeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === payView ? 'true' : 'false'));
+  const otherKey = p.year === '2026-27' ? '2025-26' : '2026-27';
+  const o = payCalc(p, otherKey);
+  const diff = p.year === '2026-27' ? r.net - o.net : o.net - r.net;
+  $('#payCompare').textContent = Math.abs(diff) < 1 ? 'Same take-home in 2025–26 and 2026–27' : `${money(Math.abs(diff))} a year ${diff > 0 ? 'more' : 'less'} in 2026–27 than 2025–26`;
+  // split bar
+  const segs = [
+    ['Take-home', r.net, 'var(--s1)'], ['Income tax', r.tax, 'var(--s2)'], ['Medicare levy', r.ml, 'var(--s3)'],
+    ['Surcharge (MLS)', r.mls, 'var(--s4)'], ['Study loan', r.help, 'var(--s5)']
+  ].filter(s => s[1] > 0.5);
+  const tot = segs.reduce((s, x) => s + x[1], 0) || 1;
+  $('#paySplit').innerHTML = segs.map(s => `<div style="flex:${s[1] / tot}; background:${s[2]}" data-tip="${s[0]}: ${money(s[1])} a year (${pct(s[1] / tot)})"></div>`).join('');
+  $('#payLegend').innerHTML = segs.map(s => `<div><i style="background:${s[2]}"></i><span>${s[0]}</span><b>${pct(s[1] / tot)}</b></div>`).join('');
+  $('#payCompare').hidden = payEmpty;
+  if (payEmpty) $('#payLegend').innerHTML = '<div class="small" style="grid-column:1/-1">The split shows when you enter your pay.</div>';
+  if (r.salSac > 0) $('#payLegend').insertAdjacentHTML('beforeend', `<div class="small" style="grid-column:1/-1">Salary sacrifice of ${money(r.salSac)} goes to super before tax.</div>`);
+  // table
+  const periods = [['Year', 1], ['Month', 12], ['Fortnight', 26], ['Week', 52], ['Day', 52 * r.dpw], ['Hour', 52 * r.hpw]];
+  const ded = r.totalTax + r.help;
+  $('#payTable').innerHTML = periods.map(([n, d]) => `<tr class="${n.toLowerCase() === payView ? 'on' : ''}"><td>${n}</td><td>${money2(r.gross / d)}</td><td>${money2(ded / d)}</td><td class="net">${money2(r.net / d)}</td></tr>`).join('');
+  const eff = r.gross > 0 ? (r.totalTax + r.help) / r.gross : 0;
+  $('#payEff').textContent = pct(eff);
+  $('#payMarg').textContent = pct(r.marg);
+  let s = `Employer super: ${money(r.sg)} a year (${money(r.sg / 26)} a fortnight), paid each payday into your fund.`;
+  if (r.salSac > 0) s += ` Plus your salary sacrifice of ${money(r.salSac)}.`;
+  if (r.std > 0) s += ` Includes the ${money(r.std)} standard deduction, which you get when you lodge.`;
+  if (!p.tft && p.res === 'resident') s += ' No tax-free threshold: tax shown is an estimate of withholding.';
+  $('#paySuper').textContent = payEmpty ? '' : s;
+  updateLivebar();
+}
+function onPayInput() { payData = readForm('pay-', PAY_DEFAULT); store.set('pay', payData); renderPay(); }
+$('#payForm').addEventListener('input', onPayInput);
+$('#payForm').addEventListener('change', onPayInput);
+$('#payForm').addEventListener('submit', e => e.preventDefault());
+$('#paySeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; payView = b.dataset.p; store.set('payView', payView); renderPay(); });
+
+/* =========================================================
+   AWARD
+   ========================================================= */
+const NMW = 26.44, CASUAL = 1.25, AWR = 0.0475;
+const AWARDS = [
+  ['Shops and supermarkets', 'General Retail Industry Award', 'MA000004'],
+  ['Pubs, hotels, bars and clubs', 'Hospitality Industry (General) Award', 'MA000009'],
+  ['Cafés and restaurants', 'Restaurant Industry Award', 'MA000119'],
+  ['Fast food and takeaway', 'Fast Food Industry Award', 'MA000003'],
+  ['Office and admin work', 'Clerks — Private Sector Award', 'MA000002'],
+  ['Building and construction sites', 'Building and Construction General On-site Award', 'MA000020'],
+  ['Electrical contracting', 'Electrical, Electronic and Communications Contracting Award', 'MA000025'],
+  ['Plumbing', 'Plumbing and Fire Sprinklers Award', 'MA000036'],
+  ['Manufacturing and engineering', 'Manufacturing and Associated Industries and Occupations Award', 'MA000010'],
+  ['Truck driving and distribution', 'Road Transport and Distribution Award', 'MA000038'],
+  ['Warehousing and wholesale', 'Storage Services and Wholesale Award', 'MA000084'],
+  ['Mining', 'Mining Industry Award', 'MA000011'],
+  ['Car repair, service and sales', 'Vehicle Repair, Services and Retail Award', 'MA000089'],
+  ['Aged care', 'Aged Care Award', 'MA000018'],
+  ['Disability and community services', 'Social, Community, Home Care and Disability Services Industry Award', 'MA000100'],
+  ['Nursing', 'Nurses Award', 'MA000034'],
+  ['Allied health and medical support', 'Health Professionals and Support Services Award', 'MA000027'],
+  ['Childcare and early learning', "Children's Services Award", 'MA000120'],
+  ['Cleaning', 'Cleaning Services Award', 'MA000022'],
+  ['Security', 'Security Services Industry Award', 'MA000016'],
+  ['Hair and beauty', 'Hair and Beauty Industry Award', 'MA000005'],
+  ['Farm and station work', 'Pastoral Award', 'MA000035'],
+  ['Fruit, vegetable and nursery growing', 'Horticulture Award', 'MA000028'],
+  ['Gyms and fitness', 'Fitness Industry Award', 'MA000094'],
+  ['Pharmacy', 'Pharmacy Industry Award', 'MA000012'],
+  ['Banking and insurance', 'Banking, Finance and Insurance Award', 'MA000019'],
+  ['Real estate', 'Real Estate Industry Award', 'MA000106']
+];
+$('#aw-ind').innerHTML = AWARDS.map((a, i) => `<option value="${i}">${esc(a[0])}</option>`).join('');
+function renderAward() {
+  const a = AWARDS[num($('#aw-ind').value)] || AWARDS[0];
+  $('#awCard').innerHTML = `<span class="eyebrow">Likely award</span><span class="an">${esc(a[1])}</span><span><span class="code">${a[2]}</span></span><span class="small">Search the code in the Fair Work Pay Calculator to see your classification and rates. Your employer may use an enterprise agreement instead.</span>`;
+  const rate = num($('#aw-rate').value), casual = $('#aw-type').value === 'casual', last = num($('#aw-last').value);
+  const floor = casual ? NMW * CASUAL : NMW;
+  const out = [];
+  if (rate > 0) {
+    if (rate + 0.004 < floor) out.push(`<span class="chip bad">✕ Below the minimum</span><span>Your rate is ${money2(floor - rate)} an hour under the ${casual ? 'casual ' : ''}National Minimum Wage of ${money2(floor)}. Check your award and speak to your employer.</span>`);
+    else out.push(`<span class="chip good">✓ At or above the minimum</span><span>Your rate is ${money2(rate - floor)} an hour over the ${casual ? 'casual ' : ''}National Minimum Wage (${money2(floor)}). Your award rate may still be higher.</span>`);
+  } else out.push(`<span class="chip info">Enter your rate</span><span>Find your base hourly rate on your payslip.</span>`);
+  if (last > 0) {
+    const exp = last * (1 + AWR);
+    if (rate > 0 && rate + 0.004 < exp) out.push(`<span class="chip bad">✕ Pay rise may be missing</span><span>If you were on the award minimum, your rate should now be at least ${money2(exp)} (+4.75%). Ask your employer to check.</span>`);
+    else out.push(`<span class="chip good">✓ Rise looks passed on</span><span>A 4.75% rise on ${money2(last)} is ${money2(exp)}.</span>`);
+  }
+  $('#awOut').innerHTML = out.map(x => `<div style="display:grid; gap:4px">${x}</div>`).join('');
+  store.set('award', { ind: $('#aw-ind').value, rate: $('#aw-rate').value, type: $('#aw-type').value, last: $('#aw-last').value });
+}
+['aw-ind', 'aw-rate', 'aw-type', 'aw-last'].forEach(id => { $('#' + id).addEventListener('input', renderAward); $('#' + id).addEventListener('change', renderAward); });
+(function () { const a = store.get('award', null); if (a) { $('#aw-ind').value = a.ind; $('#aw-rate').value = a.rate; $('#aw-type').value = a.type; $('#aw-last').value = a.last; } })();
+
+/* =========================================================
+   BUDGET
+   ========================================================= */
+const FREQ = { W: ['per week', 52], F: ['per fortnight', 26], M: ['per month', 12], Q: ['per quarter', 4], Y: ['per year', 1] };
+const PER = { week: 52, fortnight: 26, month: 12, year: 1 };
+const CATS = [
+  { id: 'income', name: 'Income', income: true, items: [['pay', 'Your take-home pay'], ['partner', "Partner's take-home pay"], ['bonus', 'Bonuses and overtime'], ['invest', 'Savings and investment income'], ['govt', 'Centrelink and family payments'], ['childsup', 'Child support received'], ['other', 'Other income']] },
+  { id: 'home', name: 'Home and utilities', items: [['rent', 'Mortgage or rent'], ['strata', 'Body corporate fees'], ['rates', 'Council rates'], ['furniture', 'Furniture and appliances'], ['repairs', 'Repairs and maintenance'], ['power', 'Electricity'], ['gas', 'Gas'], ['water', 'Water'], ['internet', 'Internet'], ['mobile', 'Mobile phone']] },
+  { id: 'fin', name: 'Insurance and financial', items: [['carins', 'Car insurance'], ['homeins', 'Home and contents insurance'], ['life', 'Life and income insurance'], ['health', 'Health insurance'], ['carloan', 'Car loan'], ['cc', 'Credit card repayments'], ['loans', 'Other loans'], ['savings', 'Savings'], ['super', 'Extra super contributions'], ['charity', 'Donations']] },
+  { id: 'groc', name: 'Groceries', items: [['supermarket', 'Supermarket'], ['fruit', 'Fruit and veg'], ['butcher', 'Butcher and fish'], ['bakery', 'Bakery'], ['petfood', 'Pet food']] },
+  { id: 'personal', name: 'Personal and medical', items: [['toiletries', 'Toiletries'], ['hair', 'Hair and beauty'], ['meds', 'Medicines'], ['doctor', 'Doctor and dentist'], ['glasses', 'Glasses and eye care'], ['clothes', 'Clothes and shoes'], ['tech', 'Computers and gadgets'], ['gym', 'Sport and gym'], ['edu', 'Education'], ['vet', 'Pet care and vet']] },
+  { id: 'fun', name: 'Entertainment and eating out', items: [['coffee', 'Coffee and tea'], ['lunch', 'Lunches bought'], ['takeaway', 'Takeaway and snacks'], ['alcohol', 'Drinks and alcohol'], ['smokes', 'Cigarettes and vapes'], ['dining', 'Restaurants'], ['stream', 'Streaming and subscriptions'], ['events', 'Movies, concerts and events'], ['holidays', 'Holidays'], ['gifts', 'Gifts and celebrations']] },
+  { id: 'transport', name: 'Transport', items: [['fuel', 'Fuel'], ['publict', 'Public transport'], ['tolls', 'Tolls and parking'], ['rego', 'Registration and licence'], ['service', 'Servicing and repairs'], ['fines', 'Fines']] },
+  { id: 'kids', name: 'Children', items: [['care', 'Childcare'], ['school', 'School fees'], ['uniforms', 'Uniforms and school needs'], ['activities', 'Sport and activities'], ['babysit', 'Babysitting'], ['toys', 'Toys and baby products'], ['csp', 'Child support paid']] }
+];
+let bud = store.get('budget', null) || { period: 'month', items: {}, custom: {} };
+bud.period = PER[bud.period] ? bud.period : 'month'; bud.items = bud.items || {}; bud.custom = bud.custom || {};
+
+function catItems(c) { return c.items.concat((bud.custom[c.id] || []).map(x => [x[0], x[1], true])); }
+function annual(key) { const v = bud.items[key]; return v ? num(v[0]) * FREQ[v[1] || 'M'][1] : 0; }
+function freqSelect(id, val) { return `<select id="${id}" aria-label="How often">${Object.entries(FREQ).map(([k, [l]]) => `<option value="${k}" ${k === val ? 'selected' : ''}>${l}</option>`).join('')}</select>`; }
+function renderBudgetForm() {
+  $('#budCats').innerHTML = CATS.map((c, ci) => `
+    <details class="cat ${c.income ? 'income' : ''}" ${ci < 2 ? 'open' : ''} data-cat="${c.id}">
+      <summary><span>${c.name}</span><span class="ct" id="ct-${c.id}">$0</span></summary>
+      <div class="cat-body">
+        ${catItems(c).map(([k, label]) => {
+          const key = c.id + '.' + k, v = bud.items[key] || ['', c.income ? 'F' : 'M'], id = 'b-' + c.id + '-' + k;
+          return `<div class="brow"><label for="${id}">${esc(label)}</label><div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="${id}" data-key="${key}" value="${v[0] === '' || v[0] === 0 ? '' : v[0]}"></div>${freqSelect(id + '-f', v[1])}</div>`;
+        }).join('')}
+        <div class="addrow"><input type="text" id="add-${c.id}" placeholder="Add your own item" aria-label="New item in ${c.name}"><button class="btn small" type="button" data-add="${c.id}">Add</button></div>
+      </div>
+    </details>`).join('');
+  $$('#budCats select').forEach(s => s.dataset.key = s.id.replace(/^b-/, '').replace(/-f$/, '').replace('-', '.'));
+}
+function renderBudgetTotals() {
+  const d = PER[bud.period];
+  let inc = 0, exp = 0; const catTotals = [];
+  CATS.forEach(c => {
+    const t = catItems(c).reduce((s, [k]) => s + annual(c.id + '.' + k), 0);
+    $('#ct-' + c.id).textContent = money(t / d);
+    if (c.income) inc += t; else { exp += t; catTotals.push([c.name, t]); }
+  });
+  $('#budInc').textContent = money(inc / d);
+  $('#budExp').textContent = money(exp / d);
+  const left = inc - exp;
+  $('#budLeft').textContent = (left < 0 ? '−' : '') + money(Math.abs(left) / d);
+  $('#budLeftL').textContent = left < 0 ? 'Shortfall' : 'Left over';
+  $('#budLeftTile').className = 'tile2 ' + (left < 0 ? 'short' : 'left');
+  $$('#budSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === bud.period ? 'true' : 'false'));
+  const max = Math.max(1, ...catTotals.map(c => c[1]));
+  const shown = catTotals.filter(c => c[1] > 0).sort((a, b) => b[1] - a[1]);
+  $('#budBars').innerHTML = shown.length ? shown.map(([n, t]) => `<div class="bar" data-tip="${esc(n)}: ${exp ? pct(t / exp) : '0%'} of spending"><span class="bn">${esc(n)}</span><span class="bt"><i style="width:${(t / max * 100).toFixed(1)}%"></i></span><span class="bv">${money(t / d)}</span></div>`).join('') : '<p class="small">Add spending amounts to see your categories here.</p>';
+  const per = bud.period;
+  $('#budRate').textContent = inc > 0 ? `You spend ${pct(exp / inc)} of your income. Amounts are per ${per}.` : `Add your income to compare it with your spending. Amounts are per ${per}.`;
+}
+function saveBudget() { store.set('budget', bud); }
+$('#budCats').addEventListener('input', e => {
+  const el = e.target; if (!el.id || !el.id.startsWith('b-')) return;
+  const key = el.dataset.key || el.id.replace(/^b-/, '').replace(/-f$/, '').replace('-', '.');
+  const isF = el.tagName === 'SELECT';
+  const cur = bud.items[key] || ['', 'M'];
+  if (isF) cur[1] = el.value; else { cur[0] = el.value === '' ? '' : num(el.value); if (!bud.items[key]) cur[1] = $('#' + el.id + '-f').value; }
+  bud.items[key] = cur; saveBudget(); renderBudgetTotals();
+});
+$('#budCats').addEventListener('click', e => {
+  const b = e.target.closest('[data-add]'); if (!b) return;
+  const cid = b.dataset.add, inp = $('#add-' + cid), label = inp.value.trim();
+  if (!label) { inp.focus(); return; }
+  const k = 'c' + Date.now().toString(36);
+  (bud.custom[cid] = bud.custom[cid] || []).push([k, label]);
+  saveBudget(); renderBudgetForm(); $(`details[data-cat="${cid}"]`).open = true; renderBudgetTotals();
+  const ni = $('#b-' + cid + '-' + k); if (ni) ni.focus();
+  toast(`Added "${label}"`);
+});
+$('#budCats').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id && e.target.id.startsWith('add-')) { e.preventDefault(); $(`[data-add="${e.target.id.slice(4)}"]`).click(); } });
+$('#budSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; bud.period = b.dataset.p; store.set('budget', bud); renderBudgetTotals(); });
+function budgetConfirm(msg, yesLabel, fn) {
+  const c = $('#budConfirm');
+  c.innerHTML = `<div class="confirm"><span>${msg}</span><button class="btn small" type="button" id="bYes">${yesLabel}</button><button class="btn small" type="button" id="bNo">Cancel</button></div>`;
+  c.hidden = false;
+  $('#bYes').onclick = () => { c.hidden = true; fn(); };
+  $('#bNo').onclick = () => { c.hidden = true; };
+}
+function blankBudget() { bud = { period: bud.period, items: {}, custom: {} }; store.set('budget', bud); renderBudgetForm(); renderBudgetTotals(); toast('Budget cleared'); }
+$('#budReset').addEventListener('click', () => budgetConfirm('Clear every amount in your budget?', 'Clear amounts', blankBudget));
+function useTakeHome() {
+  if (!lastPay) renderPay();
+  const f = Math.round(lastPay.net / 26);
+  bud.items['income.pay'] = [f, 'F']; saveBudget();
+  renderBudgetForm(); renderBudgetTotals();
+  openTab('budget', true);
+  toast(`Take-home set to ${money(f)} a fortnight`);
+}
+$('#budFromPay').addEventListener('click', useTakeHome);
+$('#payToBudget').addEventListener('click', useTakeHome);
+
+/* ---------- live bar (phones) ---------- */
+function updateLivebar(tab) {
+  tab = tab || store.get('tab', 'guide');
+  const lb = $('#livebar');
+  const show = tab === 'refund' || tab === 'pay';
+  lb.hidden = !show; document.body.classList.toggle('has-livebar', show);
+  if (tab === 'refund' && lastEst) {
+    const refund = lastEst.result < 0;
+    $('#liveK').textContent = lastEst.empty ? 'Refund estimate' : Math.abs(lastEst.result) < 0.5 ? 'You break even' : refund ? 'Estimated refund' : 'Estimated to pay';
+    $('#liveV').textContent = money(Math.abs(lastEst.result));
+    $('#liveV').className = 'lv ' + (refund ? 'good' : '');
+    $('#liveBtn').dataset.target = 'estResult';
+  } else if (tab === 'pay' && lastPay) {
+    const d = { week: 52, fortnight: 26, month: 12, year: 1 }[payView];
+    $('#liveK').textContent = 'Take-home per ' + payView;
+    $('#liveV').textContent = money(lastPay.net / d);
+    $('#liveV').className = 'lv good';
+    $('#liveBtn').dataset.target = 'payResult';
+  }
+}
+$('#liveBtn').addEventListener('click', e => { const t = $('#' + e.currentTarget.dataset.target); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+
+/* ---------- boot ---------- */
+renderGuide();
+fillForm(null, estData, 'est-'); renderEstimate();
+fillForm(null, payData, 'pay-'); renderPay();
+renderAward();
+renderBudgetForm(); renderBudgetTotals();
+const hash = (location.hash || '').replace('#', '');
+openTab(TABS.includes(hash) ? hash : store.get('tab', 'guide'));
+</script>
+</body>
+</html>
