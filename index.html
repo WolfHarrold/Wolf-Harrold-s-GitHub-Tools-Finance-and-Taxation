@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tax Time 2026</title>
-<meta name="description" content="Step-by-step myTax walkthrough for the 2025–26 Australian tax return, with a refund estimator, pay calculator, Fair Work pay check and budget planner.">
+<title>Wolf Harrold's GitHub Tools - Finance and Taxation</title>
+<meta name="description" content="Victorian stamp duty, land tax, car duty and long service leave calculators, a myTax walkthrough, refund estimator, pay calculator, budget planner and more tax, super and family tools.">
 <meta name="theme-color" content="#0A5C42">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A5C42'/%3E%3Crect x='14' y='30' width='36' height='18' rx='4' fill='%23FFC72C'/%3E%3Ctext x='32' y='25' font-family='Arial' font-weight='900' font-size='16' text-anchor='middle' fill='%23FFFFFF'%3ETAX%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A5C42'/%3E%3Crect x='14' y='30' width='36' height='18' rx='4' fill='%23FFC72C'/%3E%3Ctext x='32' y='25' font-family='Arial' font-weight='900' font-size='16' text-anchor='middle' fill='%23FFFFFF'%3EWH%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -292,6 +292,90 @@ details.more[open] summary { margin-bottom: 10px; }
 
 .foot { padding-block: 26px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; display: grid; gap: 10px; }
 .foot ul { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; }
+/* ---------- badges, chips, actions ---------- */
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--f-mono); letter-spacing: .04em; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+.badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { border: 1.5px solid var(--line); background: var(--surface-2); color: var(--ink-2); font: 700 13px var(--f-body); font-variant-numeric: tabular-nums; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.chips button:hover { border-color: var(--brand); color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions .btn { min-height: 38px; padding: 6px 12px; font-size: 14px; }
+.actions .btn svg { width: 16px; height: 16px; flex: none; }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.statuses { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- tools hub ---------- */
+.hubbar { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.searchbox { position: relative; }
+.searchbox input { width: 100%; min-height: 50px; border: 2px solid var(--ink); background: var(--surface); color: var(--ink); border-radius: 12px; padding: 10px 14px 10px 44px; font: 400 17px var(--f-body); }
+.searchbox input:focus { outline: 3px solid color-mix(in srgb, var(--brand) 30%, transparent); outline-offset: 0; }
+.searchbox svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+.seg.cats { display: flex; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; border-radius: 999px; }
+.seg.cats button { flex: none; }
+.toolgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 12px; }
+.tcard { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 6px; text-align: left; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px 12px; cursor: pointer; color: var(--ink); font: inherit; min-width: 0; }
+.tcard:hover { border-color: var(--ink); }
+.tcard .tk { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); padding-right: 36px; }
+.tcard .tn2 { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.12rem; line-height: 1.2; padding-right: 30px; }
+.tcard .tb { color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.tcard .tg { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.tcard.link { background: var(--surface-2); border-style: dashed; }
+.tcard.feature { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tcard.feature .tk { color: var(--gold); }
+.tcard.feature .tb, .tcard.feature .tg { color: color-mix(in srgb, var(--bg) 80%, transparent); }
+.star { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; display: grid; place-items: center; }
+.star:hover { background: var(--surface-2); color: var(--ink); }
+.star[aria-pressed="true"] { color: #D99A00; }
+.tcard.feature .star { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.tcard.feature .star:hover { background: color-mix(in srgb, var(--bg) 15%, transparent); }
+.toolhead { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.toolhead .btn[aria-pressed="true"] { border-color: #D99A00; color: var(--ink); }
+.toolhead .btn .s { color: #D99A00; font-size: 18px; line-height: 1; }
+.related { display: flex; flex-wrap: wrap; gap: 8px; }
+.related a { font-weight: 700; font-size: 14px; padding: 6px 12px; border-radius: 999px; background: var(--surface-2); text-decoration: none; color: var(--ink); }
+.related a:hover { background: var(--brand-soft); }
+.nores { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 22px; text-align: center; color: var(--muted); grid-column: 1 / -1; }
+.keyfig td:nth-child(2) { font-weight: 700; white-space: nowrap; }
+.keyfig td:nth-child(3) { white-space: nowrap; }
+
+/* ---------- saved ---------- */
+.hist { display: grid; gap: 10px; }
+.hcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 8px; }
+.hcard .hh { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; align-items: baseline; }
+.hcard .ht { font-family: var(--f-display); font-stretch: 106%; font-weight: 800; font-size: 1.05rem; min-width: 0; }
+.hcard .hv { font-family: var(--f-display); font-stretch: 112%; font-weight: 900; font-size: 1.3rem; font-variant-numeric: tabular-nums; text-align: right; }
+.hcard .hm { font-size: 13px; color: var(--muted); grid-column: 1 / -1; }
+.empty { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 22px; text-align: center; color: var(--muted); }
+
+/* ---------- faq ---------- */
+.faq { display: grid; gap: 8px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.faq summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: minmax(0,1fr) 20px; gap: 12px; padding: 14px 16px; font-family: var(--f-display); font-stretch: 104%; font-weight: 800; font-size: 1.02rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); font-size: 20px; color: var(--muted); text-align: center; line-height: 1.2; }
+.faq details[open] summary::after { content: "–"; }
+.faq .a { padding: 0 16px 14px; color: var(--ink-2); max-width: 72ch; display: grid; gap: 8px; }
+.faq-h { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.25rem; }
+.line.sec { border-bottom: 0; padding-top: 14px; padding-bottom: 2px; }
+.line.sec .lab { font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
+.line.bad .val { color: var(--bad); }
+
+/* ---------- print ---------- */
+.print-only { display: none; }
+@media print {
+  :root, body { background: #fff !important; color: #000 !important; }
+  .top-meta, .badges, .tabs, .livebar, .toast, .tip, .actions, form.formbox, .foot, #toolHub, .toolhead, .examples, .chips, .btn-row, .faq-wrap, #tab-guide .progress, .seg { display: none !important; }
+  .print-only { display: block; margin-bottom: 14px; }
+  main { padding-block: 10px; }
+  .split { grid-template-columns: 1fr; }
+  .stick { position: static; }
+  .result { background: #fff !important; color: #000 !important; border: 3px solid #000; box-shadow: none; }
+  .result .pill { border: 1px solid #000; }
+  .box, .tablewrap { border-color: #999; }
+}
+.brand .owner { display: block; font-size: clamp(.95rem, 2.4vw, 1.12rem); font-stretch: 112%; font-weight: 800; letter-spacing: .06em; color: var(--brand); line-height: 1.2; margin-bottom: 8px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -300,8 +384,9 @@ details.more[open] summary { margin-bottom: 10px; }
 <header class="top">
   <div class="wrap top-in">
     <div>
-      <h1 class="brand">Tax time <span class="yr">2026</span></h1>
-      <p class="sub">Lodge your 2025–26 return in myTax, one step at a time. Pay, award and budget tools are built in.</p>
+      <h1 class="brand"><span class="owner">Wolf Harrold's GitHub Tools<span class="vh"> - </span></span>Finance and <span class="yr">Taxation</span></h1>
+      <p class="sub">Money and tax tools built for Victoria. Lodge your 2025–26 return in myTax, check your pay and Centrelink rate, and work out stamp duty, land tax, car costs and long service leave.</p>
+      <div class="badges"><span class="badge"><i></i>Built for Victoria</span><span class="badge">Updated for 2026–27</span><span class="badge">Figures checked 13 Oct 2026</span><span class="badge">Stays on your device</span></div>
     </div>
     <div class="top-meta">
       <span class="deadline" id="deadline"><b>–</b> days to lodge</span>
@@ -317,6 +402,8 @@ details.more[open] summary { margin-bottom: 10px; }
     <button class="tab" role="tab" data-tab="pay" id="tabbtn-pay"><span class="tn">03</span>Pay</button>
     <button class="tab" role="tab" data-tab="award" id="tabbtn-award"><span class="tn">04</span>Award</button>
     <button class="tab" role="tab" data-tab="budget" id="tabbtn-budget"><span class="tn">05</span>Budget</button>
+    <button class="tab" role="tab" data-tab="tools" id="tabbtn-tools"><span class="tn">06</span>Tools</button>
+    <button class="tab" role="tab" data-tab="saved" id="tabbtn-saved"><span class="tn">07</span>Saved</button>
   </div>
 </nav>
 
@@ -466,6 +553,17 @@ details.more[open] summary { margin-bottom: 10px; }
       </div>
     </div>
   </div>
+
+  <div class="faq-wrap" style="display:grid; gap:12px">
+    <h3 class="faq-h">Refund questions</h3>
+    <div class="faq">
+      <details><summary>When is my tax return due?</summary><div class="a"><p>Lodge your 2025–26 return by 31 October 2026 if you do it yourself. A registered tax agent can lodge later if you are on their client list before 31 October.</p></div></details>
+      <details><summary>Why is the estimate different from myTax?</summary><div class="a"><p>myTax uses the exact figures from your employer, bank and health fund. It also applies offsets and rules this tool does not include. Use the myTax figure as your final result.</p></div></details>
+      <details><summary>What is the Medicare levy surcharge?</summary><div class="a"><p>An extra 1% to 1.5% for people without private hospital cover whose income is over the threshold. It is separate from the 2% Medicare levy.</p></div></details>
+      <details><summary>How does a study loan change my refund?</summary><div class="a"><p>The ATO adds your compulsory study loan repayment to your tax bill. It is not a penalty. It reduces your loan balance.</p></div></details>
+      <details><summary>What records do I need?</summary><div class="a"><p>Keep records for every claim. The working from home fixed rate needs a record of the hours you worked from home. The cents per kilometre method needs a way to show how you worked out your work kilometres, such as a diary.</p></div></details>
+    </div>
+  </div>
 </section>
 
 <!-- ================= PAY ================= -->
@@ -560,6 +658,16 @@ details.more[open] summary { margin-bottom: 10px; }
         <p class="small" id="paySuper"></p>
         <div class="btn-row"><button class="btn primary" type="button" id="payToBudget">Use this take-home in my budget</button></div>
       </div>
+    </div>
+  </div>
+
+  <div class="faq-wrap" style="display:grid; gap:12px">
+    <h3 class="faq-h">Pay questions</h3>
+    <div class="faq">
+      <details><summary>Why is my payslip different?</summary><div class="a"><p>Employers use ATO withholding tables, which round each pay. Salary sacrifice, extra super and other deductions also change the amount. Use <b>Payslip check</b> in the Tools tab to compare one payslip.</p></div></details>
+      <details><summary>Should I claim the tax-free threshold?</summary><div class="a"><p>Claim it from one employer only, usually the one that pays you the most. If you claim it from two employers, too little tax is withheld and you can get a tax bill.</p></div></details>
+      <details><summary>Is super included in my pay?</summary><div class="a"><p>Usually not. Your employer pays the 12% super guarantee on top of your pay, into your fund, each payday. Tick <b>My amount includes super</b> if your salary package includes it.</p></div></details>
+      <details><summary>Is overtime taxed more?</summary><div class="a"><p>No. Overtime is taxed at the same rates as other income. A large pay can have more tax withheld because the tables treat it like a higher yearly income. You get back any extra when you lodge.</p></div></details>
     </div>
   </div>
 </section>
@@ -665,6 +773,55 @@ details.more[open] summary { margin-bottom: 10px; }
   </div>
 </section>
 
+<!-- ================= TOOLS ================= -->
+<section class="panel" id="tab-tools" role="tabpanel" aria-labelledby="tabbtn-tools" hidden>
+  <div id="toolHub" style="display:grid; gap:22px">
+    <div class="panel-head">
+      <span class="eyebrow">Calculators · Victoria and Australia · 2026–27</span>
+      <h2>Calculators</h2>
+      <p class="lede">Victorian property, car and work calculators come first, then tax, pay, super, family and money. Results update as you type. Star the ones you use most, and save any result to come back to.</p>
+    </div>
+    <div class="hubbar">
+      <div class="searchbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="toolSearch" placeholder="Search, for example GST, bonus or super" aria-label="Search calculators" autocomplete="off">
+      </div>
+      <div class="seg cats" id="toolCats" role="group" aria-label="Show calculators for">
+        <button type="button" data-c="all" aria-pressed="true">All</button>
+        <button type="button" data-c="star" aria-pressed="false">★ Starred</button>
+        <button type="button" data-c="vic" aria-pressed="false">Victoria</button>
+        <button type="button" data-c="tax" aria-pressed="false">Tax</button>
+        <button type="button" data-c="pay" aria-pressed="false">Pay and work</button>
+        <button type="button" data-c="super" aria-pressed="false">Super</button>
+        <button type="button" data-c="family" aria-pressed="false">Family and Centrelink</button>
+        <button type="button" data-c="money" aria-pressed="false">Money</button>
+      </div>
+    </div>
+    <div class="toolgrid" id="toolGrid"></div>
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Key figures for 2026–27</h3>
+      <p class="small">The rates the calculators use. Checked 13 October 2026.</p>
+      <div class="tablewrap"><table class="keyfig"><thead><tr><th>Item</th><th>Figure</th><th>From</th><th>Source</th></tr></thead><tbody id="keyFigures"></tbody></table></div>
+    </div>
+  </div>
+  <div id="toolView" hidden style="display:grid; gap:22px"></div>
+</section>
+
+<!-- ================= SAVED ================= -->
+<section class="panel" id="tab-saved" role="tabpanel" aria-labelledby="tabbtn-saved" hidden>
+  <div class="panel-head">
+    <span class="eyebrow">Saved results · this device</span>
+    <h2>Your saved results</h2>
+    <p class="lede">Press <b>Save</b> on any result to keep it here. Results you save in the Basic Rate Calculator show here too. They stay in this browser only.</p>
+  </div>
+  <div class="btn-row">
+    <button class="btn small" type="button" id="savedCsv">Export all as CSV</button>
+    <button class="btn small" type="button" id="savedClear">Clear saved results</button>
+  </div>
+  <div id="savedConfirm" hidden></div>
+  <div class="hist" id="savedList"></div>
+</section>
+
 </main>
 
 <footer class="wrap foot">
@@ -674,6 +831,9 @@ details.more[open] summary { margin-bottom: 10px; }
     <li><a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" target="_blank" rel="noopener">ATO resident tax rates</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-foreign-residents" target="_blank" rel="noopener">foreign residents</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-working-holiday-makers" target="_blank" rel="noopener">working holiday makers</a></li>
     <li><a href="https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-reduction/medicare-levy-reduction-for-low-income-earners" target="_blank" rel="noopener">Medicare levy reduction</a> · <a href="https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy-surcharge/medicare-levy-surcharge-income-thresholds-and-rates" target="_blank" rel="noopener">Medicare levy surcharge</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/study-and-training-support-loans-rates-and-repayment-thresholds" target="_blank" rel="noopener">study loan thresholds</a></li>
     <li><a href="https://www.ato.gov.au/individuals-and-families/your-tax-return/how-to-lodge-your-tax-return/lodge-your-tax-return-online-with-mytax" target="_blank" rel="noopener">Lodge with myTax</a> · <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses" target="_blank" rel="noopener">Standard deduction (2026–27)</a></li>
+    <li><a href="https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/land-transfer-duty-non-principal-place-residence-current-rates" target="_blank" rel="noopener">SRO land transfer duty</a> · <a href="https://www.sro.vic.gov.au/buying-property/land-transfer-stamp-duty/concessions-exemptions-and-waivers/first-home-buyers/first-home-buyer-duty-exemption-or-concession" target="_blank" rel="noopener">first home buyer duty</a> · <a href="https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/land-tax-current-rates" target="_blank" rel="noopener">land tax</a> · <a href="https://www.vicroads.vic.gov.au/registrations/fees-and-charges/motor-vehicle-duty-fee" target="_blank" rel="noopener">VicRoads motor vehicle duty</a> · <a href="https://www.vicroads.vic.gov.au/registrations/fees-and-charges/vehicle-fees" target="_blank" rel="noopener">vehicle fees</a> · <a href="https://www.vic.gov.au/long-service-leave" target="_blank" rel="noopener">long service leave</a> · <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026" target="_blank" rel="noopener">public holidays</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/luxury-car-tax-rate-and-thresholds" target="_blank" rel="noopener">luxury car tax threshold</a></li>
+    <li><a href="basic-rate.html">Basic Rate Calculator (Centrelink)</a> · <a href="https://www.dss.gov.au/system/files/documents/2026-08/rates-list-20-september-2026.pdf" target="_blank" rel="noopener">DSS payment rates, 20 September 2026</a> · <a href="https://guides.dss.gov.au/family-assistance-guide/3/6/1" target="_blank" rel="noopener">FTB Part A rates</a> · <a href="https://guides.dss.gov.au/family-assistance-guide/3/6/3" target="_blank" rel="noopener">FTB Part B rates</a> · <a href="https://www.servicesaustralia.gov.au/paid-parental-leave-scheme-rate-changes-for-new-financial-year" target="_blank" rel="noopener">Parental Leave Pay</a></li>
+    <li><a href="https://ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/government-contributions" target="_blank" rel="noopener">Super co-contribution</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/contributions-caps" target="_blank" rel="noopener">Contribution caps</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/transfer-balance-cap" target="_blank" rel="noopener">transfer balance cap</a> · <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/employment-termination-payments" target="_blank" rel="noopener">Redundancy and termination payment limits</a> · <a href="https://ministers.dss.gov.au/node/19221" target="_blank" rel="noopener">Deeming rates</a></li>
     <li><a href="https://www.fairwork.gov.au/about-us/workplace-laws/annual-wage-review/annual-wage-review-2026" target="_blank" rel="noopener">Fair Work Annual Wage Review 2026</a> · <a href="https://www.ato.gov.au/businesses-and-organisations/super-for-employers/payday-super/about-payday-super" target="_blank" rel="noopener">Payday Super</a> · <a href="https://moneysmart.gov.au/budgeting/budget-planner" target="_blank" rel="noopener">Moneysmart budget planner</a></li>
   </ul>
 </footer>
@@ -856,7 +1016,7 @@ function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = fal
 })();
 
 /* ---------- tabs ---------- */
-const TABS = ['guide', 'refund', 'pay', 'award', 'budget'];
+const TABS = ['guide', 'refund', 'pay', 'award', 'budget', 'tools', 'saved'];
 function openTab(name, focus) {
   if (!TABS.includes(name)) name = 'guide';
   TABS.forEach(t => {
@@ -864,6 +1024,7 @@ function openTab(name, focus) {
     const b = $('#tabbtn-' + t); b.setAttribute('aria-selected', t === name ? 'true' : 'false'); b.tabIndex = t === name ? 0 : -1;
   });
   store.set('tab', name);
+  const sel = $('#tabbtn-' + name); if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   updateLivebar(name);
   if (focus) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1328,7 +1489,7 @@ $('#payToBudget').addEventListener('click', useTakeHome);
 function updateLivebar(tab) {
   tab = tab || store.get('tab', 'guide');
   const lb = $('#livebar');
-  const show = tab === 'refund' || tab === 'pay';
+  const show = tab === 'refund' || tab === 'pay' || (tab === 'tools' && !!curTool);
   lb.hidden = !show; document.body.classList.toggle('has-livebar', show);
   if (tab === 'refund' && lastEst) {
     const refund = lastEst.result < 0;
@@ -1342,9 +1503,855 @@ function updateLivebar(tab) {
     $('#liveV').textContent = money(lastPay.net / d);
     $('#liveV').className = 'lv good';
     $('#liveBtn').dataset.target = 'payResult';
+  } else if (tab === 'tools' && curTool && curRes) {
+    $('#liveK').textContent = curTool.name;
+    $('#liveV').textContent = curRes.big;
+    $('#liveV').className = 'lv good';
+    $('#liveBtn').dataset.target = 'toolResult';
   }
 }
 $('#liveBtn').addEventListener('click', e => { const t = $('#' + e.currentTarget.dataset.target); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+
+/* =========================================================
+   SHARE TOOLS: copy, save, CSV, email, print
+   ========================================================= */
+function copyText(text) {
+  const fallback = () => {
+    const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove(); toast(ok ? 'Copied' : 'Copy did not work. Select the text and copy it.');
+  };
+  try { navigator.clipboard.writeText(text).then(() => toast('Copied'), fallback); } catch (e) { fallback(); }
+}
+function csvOf(rows) { return rows.map(r => r.map(c => { c = String(c == null ? '' : c); return /[",\r\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(',')).join('\r\n'); }
+function downloadFile(name, text) {
+  try {
+    const url = URL.createObjectURL(new Blob(['﻿' + text], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 800);
+    toast('Downloaded ' + name);
+  } catch (e) { copyText(text); }
+}
+function emailText(subject, body) { window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body); }
+function stampNow() { return new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+function histGet() { const h = store.get('history', []); return Array.isArray(h) ? h : []; }
+function histAdd(entry) { const h = histGet(); h.unshift(Object.assign({ id: Date.now().toString(36), at: stampNow() }, entry)); store.set('history', h.slice(0, 100)); }
+const slugOf = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'result';
+const IC = {
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
+  save: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+  csv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>',
+  email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>'
+};
+function actionsHTML(kind) {
+  return `<div class="actions" data-actions="${kind}" aria-label="Result actions">` + [['copy', 'Copy'], ['save', 'Save'], ['csv', 'CSV'], ['email', 'Email'], ['print', 'Print']].map(([a, l]) => `<button class="btn" type="button" data-act="${a}">${IC[a]}${l}</button>`).join('') + '</div>';
+}
+function chipsHTML(forId, vals, also, labelFn) {
+  return `<div class="chips" data-for="${forId}"${also ? ` data-also="${also}"` : ''}>${vals.map(v => `<button type="button" data-v="${v}">${labelFn ? labelFn(v) : money(v)}</button>`).join('')}</div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.chips button'); if (!b) return;
+  const box = b.closest('.chips'), inp = $('#' + box.dataset.for); if (!inp) return;
+  if (box.dataset.also) { const [id, val] = box.dataset.also.split(':'); const o = $('#' + id); if (o) o.value = val; }
+  inp.value = b.dataset.v;
+  inp.dispatchEvent(new Event('input', { bubbles: true }));
+});
+
+/* =========================================================
+   CALCULATORS (Tools tab)
+   ========================================================= */
+const YR = [['2026-27', '2026–27'], ['2025-26', '2025–26']];
+const CATN = { vic: 'Victoria', tax: 'Tax', pay: 'Pay and work', super: 'Super', family: 'Family and Centrelink', money: 'Money' };
+function taxAll(ti, yk, res) {
+  res = res || 'resident'; ti = Math.max(0, ti);
+  const Y = YEARS[yk] || YEARS['2026-27'], t = tableFor(Y, res), g = incomeTax(ti, t);
+  if (res !== 'resident') return g;
+  return g - Math.min(litoFor(ti), g) + medicareLevy(ti, Y, 0);
+}
+function payOf(amt, yk, extra) {
+  return payCalc(Object.assign({ amt, freq: 'year', year: yk, hpw: 38, dpw: 5, superRate: 12, salSac: 0, incSuper: false, otHours: 0, otMult: 1.5, res: 'resident', phi: 'yes', medEx: 'none', tft: true, help: false, std: false }, extra || {}), yk);
+}
+const neg = v => (v < 0 ? '−' : '') + money(Math.abs(v));
+/* ----- Victorian rates ----- */
+const VIC = {
+  luxury: 80809,           // federal luxury car tax threshold 2026–27 (other vehicles)
+  rego: { metro: 958.80, outer: 897.10, rural: 824.60 },
+  fhog: 10000, fhogCap: 750000, fpad: 0.08
+};
+function vicGeneralDuty(v) {
+  v = Math.max(0, v);
+  if (v <= 25000) return v * 0.014;
+  if (v <= 130000) return 350 + 0.024 * (v - 25000);
+  if (v <= 960000) return 2870 + 0.06 * (v - 130000);
+  if (v <= 2000000) return 0.055 * v;
+  return 110000 + 0.065 * (v - 2000000);
+}
+function vicDuty(v, type) {
+  const gen = vicGeneralDuty(v);
+  if (type === 'ppr') {
+    if (v > 550000 || v <= 130000) return gen;
+    return v <= 440000 ? 2870 + 0.05 * (v - 130000) : 18370 + 0.06 * (v - 440000);
+  }
+  if (type === 'fhb' || type === 'pension') {
+    if (v <= 600000) return 0;
+    if (v <= 750000) return gen * (v - 600000) / 150000;
+  }
+  return gen;
+}
+function vicLandTax(v) {
+  if (v < 50000) return 0;
+  if (v < 100000) return 500;
+  if (v < 300000) return 975;
+  if (v < 600000) return 1350 + 0.003 * (v - 300000);
+  if (v < 1000000) return 2250 + 0.006 * (v - 600000);
+  if (v < 1800000) return 4650 + 0.009 * (v - 1000000);
+  if (v < 3000000) return 11850 + 0.0165 * (v - 1800000);
+  return 31650 + 0.0265 * (v - 3000000);
+}
+function vicCarDuty(value, type) {
+  let per;
+  if (type === 'pnew' || type === 'pused') per = value <= VIC.luxury ? 8.40 : value <= 100000 ? 10.40 : value <= 150000 ? 14.00 : 18.00;
+  else if (type === 'nnew') per = 5.40;
+  else per = 8.40;
+  return { per, duty: Math.ceil(Math.max(0, value) / 200) * per };
+}
+const VIC_HOLS = [
+  ['2026-01-01', "New Year's Day"], ['2026-01-26', 'Australia Day'], ['2026-03-09', 'Labour Day'], ['2026-04-03', 'Good Friday'],
+  ['2026-04-04', 'Saturday before Easter Sunday'], ['2026-04-05', 'Easter Sunday'], ['2026-04-06', 'Easter Monday'], ['2026-04-25', 'ANZAC Day'],
+  ['2026-06-08', "King's Birthday"], ['2026-09-25', 'Friday before the AFL Grand Final'], ['2026-11-03', 'Melbourne Cup'],
+  ['2026-12-25', 'Christmas Day'], ['2026-12-26', 'Boxing Day'], ['2026-12-28', 'Boxing Day (extra day)'],
+  ['2027-01-01', "New Year's Day"], ['2027-01-26', 'Australia Day'], ['2027-03-08', 'Labour Day'], ['2027-03-26', 'Good Friday'],
+  ['2027-03-27', 'Saturday before Easter Sunday'], ['2027-03-28', 'Easter Sunday'], ['2027-03-29', 'Easter Monday'], ['2027-04-25', 'ANZAC Day'],
+  ['2027-06-14', "King's Birthday"], ['2027-09-TBC', 'Friday before the AFL Grand Final (date to be confirmed)'], ['2027-11-02', 'Melbourne Cup'],
+  ['2027-12-25', 'Christmas Day'], ['2027-12-26', 'Boxing Day'], ['2027-12-27', 'Christmas Day (extra day)'], ['2027-12-28', 'Boxing Day (extra day)']
+];
+const hDate = d => new Date(d + 'T00:00:00');
+const hFmt = d => hDate(d).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+function todayISO() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+
+const TOOLS = [
+  /* ----- VICTORIA ----- */
+  { id: 'vicduty', cat: 'vic', name: 'Stamp duty (Victoria)', blurb: 'Land transfer duty on a Victorian property, with home buyer, first home buyer and pensioner concessions.', keys: 'stamp duty land transfer duty victoria vic sro property house unit buy ppr owner occupier pensioner foreign purchaser',
+    fields: [
+      { id: 'price', l: 'Property price or market value', t: 'money', d: 650000, c: [450000, 600000, 750000, 900000, 1200000], h: 'Duty is worked out on the higher of the price and the market value.' },
+      { id: 'buyer', l: 'Who is buying', t: 'sel', d: 'fhb', o: [['fhb', 'First home buyer'], ['ppr', 'Home I will live in'], ['pension', 'Pensioner or concession card holder'], ['gen', 'Investor or other purchase']] },
+      { id: 'foreign', l: 'Foreign purchaser', t: 'chk', d: false, g: 'Residency' }
+    ],
+    calc(v) {
+      const gen = vicGeneralDuty(v.price), duty = vicDuty(v.price, v.buyer), save = gen - duty, fp = v.foreign ? v.price * VIC.fpad : 0, tot = duty + fp;
+      const st = [];
+      if (v.buyer === 'ppr' && v.price > 550000) st.push(['info', 'Over $550,000: the home buyer rate does not apply']);
+      if ((v.buyer === 'fhb' || v.buyer === 'pension') && v.price <= 600000) st.push(['good', '✓ No duty: $600,000 or less']);
+      else if ((v.buyer === 'fhb' || v.buyer === 'pension') && v.price <= 750000) st.push(['good', '✓ Reduced duty: $600,001 to $750,000']);
+      else if (v.buyer === 'fhb' || v.buyer === 'pension') st.push(['info', 'Over $750,000: no concession']);
+      const L = [['Duty at general rates', money(gen)]];
+      if (save > 0.5) L.push(['Concession saving', '−' + money(save)]);
+      L.push(['Land transfer duty', money(duty)]);
+      if (fp) L.push(['Foreign purchaser additional duty (8%)', money(fp), 'bad']);
+      L.push(['Duty as a share of the price', v.price ? pct(tot / v.price) : '0%'], ['Total duty to pay', money(tot), 'total']);
+      return { big: money(tot), label: 'Stamp duty to pay', statuses: st, lines: L, note: 'Concessions need you to move in within 12 months of settlement and live there for 12 months in a row. Pensioner duty uses the same sliding scale as first home buyers in this estimate. Off-the-plan concessions, the land transfer registration fee and the mortgage registration fee are not included.' };
+    },
+    how: 'General rates: 1.4% up to $25,000; $350 + 2.4% to $130,000; $2,870 + 6% to $960,000; 5.5% of the whole value to $2 million; $110,000 + 6.5% above. Home buyers up to $550,000 pay 5% instead of 6% between $130,000 and $440,000. First home buyers pay nothing up to $600,000; from $600,001 to $750,000 they pay a share of the normal duty that rises from 0% to 100%.', rel: ['vicfhb', 'viclandtax', 'loan'] },
+
+  { id: 'vicfhb', cat: 'vic', name: 'First home buyer (Victoria)', blurb: 'Your stamp duty saving, the $10,000 First Home Owner Grant and the loan you need.', keys: 'first home buyer owner grant fhog victoria vic duty exemption concession deposit loan new home',
+    fields: [
+      { id: 'price', l: 'Purchase price', t: 'money', d: 620000, c: [500000, 600000, 700000, 750000] },
+      { id: 'newh', l: 'New home (never lived in)', t: 'chk', d: true, g: 'Home type', h: 'The grant is for new homes only, including house and land and off-the-plan.' },
+      { id: 'dep', l: 'Your deposit', t: 'money', d: 62000, c: [30000, 62000, 124000] }
+    ],
+    calc(v) {
+      const gen = vicGeneralDuty(v.price), duty = vicDuty(v.price, 'fhb'), save = gen - duty;
+      const grant = v.newh && v.price <= VIC.fhogCap ? VIC.fhog : 0, loan = Math.max(0, v.price - v.dep), lvr = v.price ? loan / v.price : 0;
+      const st = [grant ? ['good', '✓ First Home Owner Grant: $10,000'] : ['info', v.newh ? 'Over $750,000: no grant' : 'The grant is for new homes only']];
+      if (lvr > 0.8) st.push(['warn', `Deposit is ${pct(1 - lvr)} of the price: lenders mortgage insurance may apply`]);
+      return { big: money(save + grant), label: 'Government help with this purchase', statuses: st, lines: [['Stamp duty at normal rates', money(gen)], ['Stamp duty for a first home buyer', money(duty)], ['Duty you save', money(save)], ['First Home Owner Grant', money(grant)], ['Your deposit', money(v.dep)], ['Loan needed', money(loan)], ['Loan to value ratio', pct(lvr)], ['Total help', money(save + grant), 'total']], note: 'Each buyer must be 18 or over, must not have owned a home in Australia before, and must live in the home for 12 months, starting within 12 months of settlement. At least one buyer must be an Australian citizen or permanent resident.' };
+    },
+    how: 'First home buyers pay no duty up to $600,000 and reduced duty to $750,000. The $10,000 grant is for new homes valued up to $750,000. The State Revenue Office runs both.', rel: ['vicduty', 'loan', 'savings'] },
+
+  { id: 'viclandtax', cat: 'vic', name: 'Land tax (Victoria)', blurb: 'Yearly land tax on investment property and other land you own in Victoria.', keys: 'land tax victoria vic sro investment property rental site value covid debt levy absentee',
+    fields: [
+      { id: 'val', l: 'Total taxable site value', t: 'money', d: 650000, c: [300000, 650000, 1000000, 2000000], h: 'Add the site value of all your taxable land on 31 December. Do not include your home.' },
+      { id: 'abs', l: 'Absentee owner (live overseas)', t: 'chk', d: false, g: 'Residency' }
+    ],
+    calc(v) {
+      const lt = vicLandTax(v.val), sur = v.abs ? v.val * 0.04 : 0, tot = lt + sur;
+      const st = v.val < 50000 ? [['good', '✓ Under the $50,000 threshold: no land tax']] : [];
+      const L = [['Taxable site value', money(v.val)], ['General land tax', money(lt)]];
+      if (sur) L.push(['Absentee owner surcharge (4%)', money(sur), 'bad']);
+      L.push(['About per month', money(tot / 12)], ['Land tax for the year', money(tot), 'total']);
+      return { big: money(tot), label: 'Land tax for the year', statuses: st, lines: L, note: 'Includes the COVID debt temporary levy, which applies from the 2024 to the 2033 land tax years. Your home and most farm land are exempt. Land held in a trust has a different scale. Land tax is a deduction against rental income.' };
+    },
+    how: 'Land tax uses the total site value of all your taxable Victorian land at midnight on 31 December. The general scale starts at $50,000.', rel: ['vicduty', 'cgt'] },
+
+  { id: 'viccar', cat: 'vic', name: 'Car stamp duty and rego (Victoria)', blurb: 'Motor vehicle duty and 12 months of VicRoads registration for a car.', keys: 'car stamp duty motor vehicle duty rego registration vicroads victoria vic tac buy car ute luxury',
+    fields: [
+      { id: 'val', l: 'Market value or price', t: 'money', d: 45000, c: [20000, 45000, 80000, 120000] },
+      { id: 'type', l: 'Vehicle', t: 'sel', d: 'pnew', o: [['pnew', 'Passenger car, new'], ['pused', 'Passenger car, used'], ['green', 'Low emission car (120 g/km or less)'], ['primary', 'Primary producer car'], ['nnew', 'Ute, van or motorbike, new'], ['nused', 'Ute, van or motorbike, used']] },
+      { id: 'zone', l: 'Where it is garaged', t: 'sel', d: 'metro', o: [['metro', 'Metropolitan Melbourne'], ['outer', 'Outer metropolitan'], ['rural', 'Rural Victoria']] },
+      { id: 'rego', l: 'Add 12 months registration', t: 'chk', d: true, g: 'Registration' }
+    ],
+    calc(v) {
+      const d = vicCarDuty(v.val, v.type), rg = v.rego ? VIC.rego[v.zone] : 0, car = v.type === 'pnew' || v.type === 'pused' || v.type === 'green' || v.type === 'primary';
+      const st = (v.type === 'pnew' || v.type === 'pused') && v.val > VIC.luxury ? [['info', `Over ${money(VIC.luxury)}: higher luxury rate applies to the whole value`]] : [];
+      const L = [['Market value', money(v.val)], ['Duty rate', `${money2(d.per)} per $200`], ['Motor vehicle duty', money2(d.duty)]];
+      if (v.rego) L.push([`Registration and TAC charge, 12 months (${{ metro: 'metro', outer: 'outer metro', rural: 'rural' }[v.zone]})`, car ? money2(rg) : 'Check VicRoads']);
+      L.push(['Total government charges', money2(d.duty + (car ? rg : 0)), 'total']);
+      return { big: money2(d.duty + (car ? rg : 0)), label: v.rego ? 'Duty plus 12 months rego' : 'Motor vehicle duty', statuses: st, lines: L, note: `Duty is charged on each $200 of value or part of it. Passenger cars up to ${money(VIC.luxury)} (the 2026–27 luxury car tax threshold) pay $8.40 per $200. The rego fee shown is for a sedan, wagon, hatch or SUV; utes, vans and motorbikes cost a different amount.` };
+    },
+    how: 'Passenger cars pay $8.40 per $200 up to the luxury threshold, then $10.40 to $100,000, $14.00 to $150,000 and $18.00 above, on the whole value. Low emission and primary producer cars pay $8.40 at any value. New utes, vans and motorbikes pay $5.40.', rel: ['loan', 'vicduty'] },
+
+  { id: 'viclsl', cat: 'vic', name: 'Long service leave (Victoria)', blurb: 'Leave built up under the Long Service Leave Act 2018, and what it is worth.', keys: 'long service leave lsl victoria vic 7 years 60th accrual payout resign',
+    fields: [
+      { id: 'yrs', l: 'Years of continuous service', t: 'num', d: 8, c: [5, 7, 10, 15] },
+      { id: 'wks', l: 'Plus extra weeks', t: 'num', d: 0 },
+      { id: 'pay', l: 'Ordinary weekly pay', t: 'money', d: 1500, h: 'Your normal pay for a week, without overtime.' },
+      { id: 'taken', l: 'Weeks already taken', t: 'num', d: 0 }
+    ],
+    calc(v) {
+      const svc = Math.max(0, v.yrs) * 52 + Math.max(0, v.wks), acc = svc / 60, bal = Math.max(0, acc - v.taken), ok = svc >= 364, val = bal * v.pay;
+      const st = [ok ? ['good', '✓ You can take it now'] : ['info', `You can take it after 7 years: ${Math.ceil(364 - svc)} weeks to go`]];
+      return { big: bal.toFixed(2) + ' weeks', label: `Long service leave, worth ${money(val)}`, statuses: st, lines: [['Service', `${(svc / 52).toFixed(1)} years`], ['Leave built up (1 week per 60 weeks)', acc.toFixed(2) + ' weeks'], ['Taken', '−' + Math.max(0, v.taken).toFixed(2) + ' weeks'], ['Balance', bal.toFixed(2) + ' weeks'], ['Or at half pay', (bal * 2).toFixed(2) + ' weeks'], ['Paid out if you leave now', ok ? money(val) : '$0 (under 7 years)'], ['Value at ordinary pay', money(val), 'total']], note: 'Covers most Victorian employees, including part-time and casual staff. If your hours changed in the last two years, your pay rate can be an average over 52 weeks, 5 years or your whole service, whichever is highest. Construction workers use a separate scheme.' };
+    },
+    how: 'Leave builds up at 1 week for every 60 weeks of continuous service, about 8.67 weeks after 10 years. You can take it, or be paid it when you leave, after 7 years.', rel: ['leave', 'redundancy', 'etp'] },
+
+  { id: 'vichols', cat: 'vic', name: 'Public holidays (Victoria)', blurb: 'Upcoming Victorian public holidays, including Melbourne Cup and Grand Final Friday.', keys: 'public holidays victoria vic melbourne cup grand final friday easter christmas penalty rates calendar',
+    fields: [
+      { id: 'show', l: 'Show', t: 'sel', d: 'next', o: [['next', 'Next 12 months'], ['2026', '2026'], ['2027', '2027']] }
+    ],
+    calc(v) {
+      const t0 = todayISO(), end = new Date(t0); end.setFullYear(end.getFullYear() + 1);
+      const list = VIC_HOLS.filter(h => v.show === 'next' ? (h[0].includes('TBC') ? h[0].slice(0, 4) >= String(t0.getFullYear()) : hDate(h[0]) >= t0 && hDate(h[0]) < end) : h[0].startsWith(v.show));
+      const nx = VIC_HOLS.find(h => !h[0].includes('TBC') && hDate(h[0]) >= t0);
+      const days = nx ? Math.round((hDate(nx[0]) - t0) / 86400000) : 0;
+      return { big: nx ? nx[1] : '–', label: nx ? `${hFmt(nx[0])} · ${days === 0 ? 'today' : days === 1 ? 'tomorrow' : 'in ' + days + ' days'}` : '', lines: list.map(h => [h[1], h[0].includes('TBC') ? 'To be confirmed' : hFmt(h[0])]), note: 'Melbourne Cup is a holiday across Victoria unless your regional council has set a different local holiday. When Christmas or Boxing Day falls on a weekend, an extra day is added. Work on a public holiday usually earns a penalty rate: see Shift and overtime pay.' };
+    },
+    how: 'Dates from Business Victoria. The 2027 Grand Final Friday depends on the AFL fixture.', rel: ['shifts', 'leave'] },
+
+  /* ----- TAX ----- */
+  { id: 'gst', cat: 'tax', name: 'GST calculator', blurb: 'Add 10% GST to a price, or take it out.', keys: 'gst goods and services tax invoice add remove inclusive exclusive bas',
+    fields: [
+      { id: 'amt', l: 'Amount', t: 'money', d: 1100, c: [100, 550, 1100, 5000] },
+      { id: 'mode', l: 'This amount', t: 'sel', d: 'inc', o: [['inc', 'Includes GST'], ['ex', 'Does not include GST']] }
+    ],
+    calc(v) {
+      const ex = v.mode === 'inc' ? v.amt / 1.1 : v.amt, g = ex * 0.1;
+      return { big: money2(g), label: 'GST in this amount', lines: [['Price without GST', money2(ex)], ['GST at 10%', money2(g)], ['Price with GST', money2(ex + g), 'total']], note: 'To take GST out of a price that includes it, divide the price by 11.' };
+    },
+    how: 'GST is 10% of the price before GST. A price with GST is 110% of the price without it, so the GST is one-eleventh of that price.', rel: ['bonus', 'networth'] },
+
+  { id: 'hecs', cat: 'tax', name: 'Study loan repayment', blurb: 'Your compulsory HELP repayment under the marginal repayment system.', keys: 'hecs help study loan student debt repayment threshold vsl sfss university',
+    fields: [
+      { id: 'ri', l: 'Repayment income for the year', t: 'money', d: 85000, c: [60000, 80000, 100000, 150000], h: 'Taxable income plus reportable fringe benefits, reportable super and net investment losses.' },
+      { id: 'bal', l: 'Loan balance', t: 'money', d: 28000 },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const Y = YEARS[v.year], h = Y.help, rep = helpRepay(v.ri, Y);
+      const band = v.ri <= h.t1 ? `Under ${money(h.t1)}: nothing` : v.ri <= h.t2 ? `15c per $1 over ${money(h.t1)}` : v.ri <= h.t3 ? `${money(h.b2)} + 17c per $1 over ${money(h.t2)}` : '10% of all repayment income';
+      const yrs = rep > 0 && v.bal > 0 ? v.bal / rep : 0;
+      return { big: money(rep), label: `Compulsory repayment for ${Y.label}`, lines: [['Repayment income', money(v.ri)], ['How it is worked out', band], ['About per fortnight', money2(rep / 26)], ['Years to clear the balance', yrs ? (yrs < 1 ? 'Under 1 year' : yrs.toFixed(1) + ' years') : '–'], ['Repayment for the year', money(rep), 'total']], note: 'The repayment is worked out when you lodge your return. Years to clear the balance does not include indexation or voluntary repayments.' };
+    },
+    how: 'From 2025–26 you repay only on income above the threshold: 15c in the dollar, then 17c above the second threshold. Above the top threshold you repay 10% of all your repayment income.', rel: ['bonus', 'compare'] },
+
+  { id: 'bonus', cat: 'tax', name: 'Tax on a bonus', blurb: 'How much of a bonus or back pay you keep after tax.', keys: 'bonus back pay commission tax withholding schedule 5 one-off payment',
+    fields: [
+      { id: 'sal', l: 'Taxable income without the bonus', t: 'money', d: 80000, c: [50000, 80000, 120000] },
+      { id: 'bonus', l: 'Bonus amount', t: 'money', d: 5000, c: [1000, 2500, 5000, 10000] },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR },
+      { id: 'help', l: 'I have a study loan', t: 'chk', d: false, g: 'Study loan' }
+    ],
+    calc(v) {
+      const Y = YEARS[v.year], tax = taxAll(v.sal + v.bonus, v.year) - taxAll(v.sal, v.year);
+      const hl = v.help ? helpRepay(v.sal + v.bonus, Y) - helpRepay(v.sal, Y) : 0, keep = v.bonus - tax - hl;
+      const L = [['Bonus', money(v.bonus)], ['Extra income tax and Medicare', '−' + money(tax), 'bad']];
+      if (v.help) L.push(['Extra study loan repayment', '−' + money(hl), 'bad']);
+      L.push(['Tax rate on the bonus', v.bonus > 0 ? pct((tax + hl) / v.bonus) : '0%'], ['You keep', money(keep), 'total']);
+      return { big: money(keep), label: 'You keep after tax', lines: L, note: "Your employer withholds tax on a bonus with the ATO's Schedule 5 method, so the payslip amount can differ. Your real tax is settled when you lodge." };
+    },
+    how: 'The tool works out tax on your income with and without the bonus. The difference is the tax on the bonus. It includes the Medicare levy and the low income tax offset.', rel: ['compare', 'payslip', 'hecs'] },
+
+  { id: 'cgt', cat: 'tax', name: 'Capital gains tax', blurb: 'Tax when you sell shares, crypto or an investment property.', keys: 'cgt capital gains tax shares crypto bitcoin property sell discount 50%',
+    fields: [
+      { id: 'cost', l: 'What it cost you', t: 'money', d: 10000, h: 'Purchase price plus buying costs, such as brokerage and stamp duty.' },
+      { id: 'sale', l: 'What you sold it for', t: 'money', d: 16000, h: 'Sale price less selling costs.' },
+      { id: 'held', l: 'I owned it for 12 months or more', t: 'chk', d: true, g: 'Discount' },
+      { id: 'other', l: 'Your other taxable income', t: 'money', d: 70000, c: [40000, 70000, 100000] },
+      { id: 'year', l: 'Year you sold it', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const gain = v.sale - v.cost;
+      if (gain <= 0) return { big: money(0), label: 'No tax on this sale', statuses: gain < 0 ? [['info', `Capital loss of ${money(-gain)}`]] : [], lines: [['Capital gain', neg(gain)]], note: 'A capital loss cannot reduce your salary. You carry it forward to reduce future capital gains.' };
+      const disc = v.held ? gain * 0.5 : 0, net = gain - disc, tax = taxAll(v.other + net, v.year) - taxAll(v.other, v.year);
+      return { big: money(tax), label: 'Extra tax on the gain', lines: [['Capital gain', money(gain)], ['50% discount', disc ? '−' + money(disc) : 'Not eligible'], ['Net capital gain', money(net)], ['Extra tax and Medicare', money(tax)], ['Tax as a share of the gain', pct(tax / gain)], ['Gain you keep after tax', money(gain - tax), 'total']], note: 'Individuals get the 50% discount on assets owned for 12 months or more. Your main home is usually exempt. Capital losses from earlier years reduce the gain before the discount.' };
+    },
+    how: 'The net capital gain is added to your taxable income. The tax on it is the difference between your tax with and without the gain.', rel: ['franking', 'bonus'] },
+
+  { id: 'franking', cat: 'tax', name: 'Franking credits', blurb: 'Tax on dividends, and the credit for company tax already paid.', keys: 'franking credits dividends imputation shares refund grossed up',
+    fields: [
+      { id: 'div', l: 'Cash dividend received', t: 'money', d: 1400, c: [500, 1400, 5000] },
+      { id: 'fr', l: 'Franked part (%)', t: 'num', d: 100 },
+      { id: 'corp', l: 'Company tax rate', t: 'sel', d: '0.30', o: [['0.30', '30% (large company)'], ['0.25', '25% (base rate entity)']] },
+      { id: 'other', l: 'Your other taxable income', t: 'money', d: 45000, c: [18000, 45000, 90000, 150000] },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const c = +v.corp, fr = Math.min(100, Math.max(0, v.fr)) / 100, credit = v.div * fr * c / (1 - c), gross = v.div + credit;
+      const tax = taxAll(v.other + gross, v.year) - taxAll(v.other, v.year), net = tax - credit;
+      return { big: money(Math.abs(net)), label: net < 0 ? 'Extra refund from the credits' : 'Extra tax to pay on the dividend', lines: [['Cash dividend', money(v.div)], ['Franking credit', money(credit)], ['Grossed-up dividend', money(gross)], ['Tax and Medicare on it', money(tax)], ['Less the franking credit', '−' + money(credit)], [net < 0 ? 'Refund' : 'Tax to pay', money(Math.abs(net)), 'total'], ['You keep from the dividend', money(v.div - net)]], note: 'Residents get unused franking credits back as a refund. Hold the shares for 45 days around the dividend to claim the credit, unless your credits total $5,000 or less.' };
+    },
+    how: 'The franking credit is company tax already paid on the dividend. You add it to your income, then take it off your tax.', rel: ['cgt', 'savings'] },
+
+  /* ----- PAY AND WORK ----- */
+  { id: 'compare', cat: 'pay', name: 'Compare two pays', blurb: 'A pay rise or a job offer: how your take-home pay changes.', keys: 'pay rise salary comparison job offer compare two salaries take home difference',
+    fields: [
+      { id: 'a', l: 'Current pay per year', t: 'money', d: 75000, c: [60000, 75000, 90000] },
+      { id: 'b', l: 'New pay per year', t: 'money', d: 85000, c: [80000, 95000, 110000] },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR },
+      { id: 'help', l: 'I have a study loan', t: 'chk', d: false, g: 'Study loan' },
+      { id: 'phi', l: 'I have private hospital cover', t: 'chk', d: true, g: 'Health cover' }
+    ],
+    calc(v) {
+      const x = { help: v.help, phi: v.phi ? 'yes' : 'no' }, A = payOf(v.a, v.year, x), B = payOf(v.b, v.year, x), d = B.net - A.net, g = v.b - v.a;
+      return { big: neg(d), label: d >= 0 ? 'More take-home a year' : 'Less take-home a year', lines: [['Current pay: take-home a year', money(A.net)], ['New pay: take-home a year', money(B.net)], ['Difference a fortnight', money2(d / 26)], ['Difference a week', money2(d / 52)], ['Share of the change you keep', g ? pct(d / g) : '–'], ['Change in employer super a year', neg(B.sg - A.sg)], ['Difference a year', neg(d), 'total']], note: 'Pay is before tax and does not include super. The result includes income tax, Medicare, the surcharge when you have no hospital cover, and study loan repayments.' };
+    },
+    how: 'The tool runs the Pay tab calculation for each amount, then compares the take-home pay.', rel: ['payslip', 'bonus', 'salsac'] },
+
+  { id: 'payslip', cat: 'pay', name: 'Payslip check', blurb: 'Check the tax withheld and the super on one payslip.', keys: 'payslip check tax withheld payg withholding super guarantee underpaid',
+    fields: [
+      { id: 'per', l: 'Pay period', t: 'sel', d: 'fortnight', o: [['week', 'Weekly'], ['fortnight', 'Fortnightly'], ['month', 'Monthly']] },
+      { id: 'gross', l: 'Gross pay this period', t: 'money', d: 2800, c: [1000, 2000, 2800, 4000] },
+      { id: 'wh', l: 'Tax withheld', t: 'money', d: 530 },
+      { id: 'sup', l: 'Super paid', t: 'money', d: 336, h: 'Shown on the payslip as superannuation or SG.' },
+      { id: 'tft', l: 'I claim the tax-free threshold from this employer', t: 'chk', d: true, g: 'Tax-free threshold' },
+      { id: 'help', l: 'I have a study loan', t: 'chk', d: false, g: 'Study loan' },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const n = { week: 52, fortnight: 26, month: 12 }[v.per] || 26, r = payOf(v.gross * n, v.year, { tft: v.tft, help: v.help });
+      const exp = (r.tax + r.ml + r.help) / n, diff = v.wh - exp, tol = Math.max(5, exp * 0.04), supExp = v.gross * 0.12, sd = v.sup - supExp;
+      const st = [Math.abs(diff) <= tol ? ['good', '✓ Tax withheld looks right'] : diff > 0 ? ['warn', `Tax withheld is ${money2(diff)} more than expected`] : ['bad', `Tax withheld is ${money2(-diff)} less than expected`],
+        sd >= -1 ? ['good', '✓ Super is at least 12%'] : ['bad', `Super may be ${money2(-sd)} short`]];
+      return { big: money2(exp), label: 'Expected tax withheld this pay (about)', statuses: st, lines: [['Gross pay', money2(v.gross)], ['Tax withheld on the payslip', money2(v.wh)], ['Expected withholding', money2(exp)], ['Difference', (diff >= 0 ? '+' : '−') + money2(Math.abs(diff)), Math.abs(diff) <= tol ? '' : 'bad'], ['Super paid', money2(v.sup)], ['Super at 12% of gross pay', money2(supExp)], ['Expected take-home this pay', money2(v.gross - exp), 'total']], note: 'The tool spreads your yearly tax evenly over the pays. ATO withholding tables round differently, so a gap of a few dollars is normal. Overtime does not attract super, so the super check reads low if the pay includes overtime.' };
+    },
+    how: 'Expected withholding is your yearly income tax, Medicare levy and any study loan repayment, divided by the number of pays. Without the tax-free threshold, tax starts from the first dollar.', rel: ['compare', 'shifts', 'leave'] },
+
+  { id: 'shifts', cat: 'pay', name: 'Shift and overtime pay', blurb: 'Pay for a week with weekend, public holiday and overtime hours.', keys: 'overtime penalty rates weekend saturday sunday public holiday shift casual loading time and a half double time',
+    fields: [
+      { id: 'rate', l: 'Base hourly rate', t: 'money', d: 30, h: 'Your ordinary rate, without loadings.' },
+      { id: 'cas', l: 'Casual: add 25% loading to ordinary hours', t: 'chk', d: false, g: 'Casual' },
+      { id: 'ord', l: 'Ordinary weekday hours', t: 'num', d: 30 },
+      { id: 'sat', l: 'Saturday hours', t: 'num', d: 6 },
+      { id: 'satm', l: 'Saturday rate', t: 'sel', d: '125', o: [['125', '125%'], ['150', '150%'], ['175', '175%']] },
+      { id: 'sun', l: 'Sunday hours', t: 'num', d: 0 },
+      { id: 'sunm', l: 'Sunday rate', t: 'sel', d: '150', o: [['150', '150%'], ['175', '175%'], ['200', '200%']] },
+      { id: 'ph', l: 'Public holiday hours', t: 'num', d: 0 },
+      { id: 'phm', l: 'Public holiday rate', t: 'sel', d: '225', o: [['200', '200%'], ['225', '225%'], ['250', '250%']] },
+      { id: 'ot1', l: 'Overtime hours at 150%', t: 'num', d: 2, h: 'Often the first 2 or 3 hours.' },
+      { id: 'ot2', l: 'Overtime hours at 200%', t: 'num', d: 0 }
+    ],
+    calc(v) {
+      const b = v.rate, ord = v.ord * b * (v.cas ? 1.25 : 1), sat = v.sat * b * v.satm / 100, sun = v.sun * b * v.sunm / 100, ph = v.ph * b * v.phm / 100, ot = v.ot1 * b * 1.5 + v.ot2 * b * 2;
+      const gross = ord + sat + sun + ph + ot, hrs = v.ord + v.sat + v.sun + v.ph + v.ot1 + v.ot2, ote = ord + sat + sun + ph;
+      const L = [[`Ordinary hours (${v.ord} h)${v.cas ? ' with casual loading' : ''}`, money2(ord)]];
+      if (v.sat) L.push([`Saturday (${v.sat} h at ${v.satm}%)`, money2(sat)]);
+      if (v.sun) L.push([`Sunday (${v.sun} h at ${v.sunm}%)`, money2(sun)]);
+      if (v.ph) L.push([`Public holiday (${v.ph} h at ${v.phm}%)`, money2(ph)]);
+      if (v.ot1 || v.ot2) L.push([`Overtime (${v.ot1 + v.ot2} h)`, money2(ot)]);
+      L.push(['Average per hour', hrs ? money2(gross / hrs) : '–'], ['Super at 12% (not on overtime)', money2(ote * 0.12)], ['Gross pay for the week', money2(gross), 'total']);
+      return { big: money2(gross), label: `Gross pay for ${hrs} hours`, lines: L, note: 'Penalty rates come from your award or agreement. For Victorian public holiday dates, see Public holidays (Victoria). For casuals, many awards set weekend and overtime rates that already include the casual loading, so choose the percentage your award lists.' };
+    },
+    how: 'Each type of hour is paid at its percentage of the base rate. The casual loading applies to ordinary hours only.', rel: ['vichols', 'payslip', 'leave'] },
+
+  { id: 'leave', cat: 'pay', name: 'Annual leave and loading', blurb: 'The leave you have built up, and what it is worth with leave loading.', keys: 'annual leave accrual holiday pay leave loading 17.5% balance nes',
+    fields: [
+      { id: 'hpw', l: 'Ordinary hours per week', t: 'num', d: 38 },
+      { id: 'wks', l: 'Weeks worked since your balance was zero', t: 'num', d: 52 },
+      { id: 'taken', l: 'Leave hours already taken', t: 'num', d: 40 },
+      { id: 'rate', l: 'Base hourly rate', t: 'money', d: 35 },
+      { id: 'load', l: 'Leave loading (%)', t: 'num', d: 17.5, h: 'Often 17.5%. Check your award or contract.' },
+      { id: 'shift', l: 'Shift worker: 5 weeks a year', t: 'chk', d: false, g: 'Shift work' }
+    ],
+    calc(v) {
+      const per = v.hpw * (v.shift ? 5 : 4), acc = per * v.wks / 52, bal = acc - v.taken, val = Math.max(0, bal) * v.rate, ld = val * v.load / 100, dayH = v.hpw / 5 || 7.6;
+      return { big: bal.toFixed(1) + ' h', label: `Leave balance, about ${(bal / dayH).toFixed(1)} days`, statuses: bal < 0 ? [['bad', 'More leave taken than built up']] : [], lines: [['Leave per year', per.toFixed(1) + ' h'], ['Built up so far', acc.toFixed(1) + ' h'], ['Taken', '−' + v.taken.toFixed(1) + ' h'], ['Balance', bal.toFixed(1) + ' h'], ['Value at base rate', money2(val)], [`Leave loading (${v.load}%)`, money2(ld)], ['Total value before tax', money2(val + ld), 'total']], note: 'Full-time and part-time employees get 4 weeks of annual leave a year under the National Employment Standards, or 5 weeks for some shift workers. Casuals do not get paid leave.' };
+    },
+    how: 'Leave builds up with each hour you work, at 4 weeks of your ordinary hours a year.', rel: ['viclsl', 'redundancy', 'etp'] },
+
+  { id: 'redundancy', cat: 'pay', name: 'Redundancy pay', blurb: 'The minimum redundancy pay under the National Employment Standards.', keys: 'redundancy pay nes minimum weeks service retrenchment made redundant',
+    fields: [
+      { id: 'yrs', l: 'Completed years of continuous service', t: 'num', d: 6, c: [1, 3, 5, 10] },
+      { id: 'wk', l: 'Base pay per week', t: 'money', d: 1500, h: 'Ordinary hours at your base rate. No overtime or allowances.' },
+      { id: 'small', l: 'My employer has fewer than 15 employees', t: 'chk', d: false, g: 'Small business' }
+    ],
+    calc(v) {
+      const y = Math.max(0, Math.floor(v.yrs)), T = [0, 4, 6, 7, 8, 10, 11, 13, 14, 16], w = v.small ? 0 : y >= 10 ? 12 : T[y];
+      const st = v.small ? [['info', 'Small business employers usually do not have to pay redundancy pay']] : y < 1 ? [['info', 'Under 1 year of service: no minimum redundancy pay']] : [];
+      return { big: money(w * v.wk), label: `${w} weeks of base pay`, statuses: st, lines: [['Completed years of service', String(y)], ['Weeks of pay', String(w)], ['Base pay per week', money2(v.wk)], ['Minimum redundancy pay', money(w * v.wk), 'total']], note: 'This is the minimum. Your award, agreement or contract can give more. You also get notice or pay instead of notice, and unused annual leave. From 10 years the minimum is 12 weeks because long service leave usually applies.' };
+    },
+    how: 'National Employment Standards scale: 4 weeks for 1 year of service, rising to 16 weeks for 9 years, then 12 weeks from 10 years.', rel: ['etp', 'viclsl', 'leave'] },
+
+  { id: 'etp', cat: 'pay', name: 'Redundancy and final pay tax', blurb: 'Tax on a genuine redundancy payment, notice pay and unused leave.', keys: 'redundancy tax etp employment termination payment final pay tax free genuine redundancy unused leave',
+    fields: [
+      { id: 'red', l: 'Redundancy pay and pay instead of notice', t: 'money', d: 45000 },
+      { id: 'yrs', l: 'Completed years of service', t: 'num', d: 6 },
+      { id: 'al', l: 'Unused annual leave paid out', t: 'money', d: 6000 },
+      { id: 'lsl', l: 'Unused long service leave paid out', t: 'money', d: 0 },
+      { id: 'age', l: 'I am 60 or older', t: 'chk', d: false, g: 'Age' },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const P = v.year === '2026-27' ? { b: 13598, p: 6801, cap: 270000, lab: '2026–27' } : { b: 13100, p: 6552, cap: 260000, lab: '2025–26' };
+      const lim = P.b + P.p * Math.max(0, Math.floor(v.yrs)), free = Math.min(v.red, lim), etp = v.red - free, rt = v.age ? 0.17 : 0.32;
+      const etpTax = Math.min(etp, P.cap) * rt + Math.max(0, etp - P.cap) * 0.47, lv = v.al + v.lsl, lvTax = lv * 0.32, tot = v.red + lv, tax = etpTax + lvTax;
+      return { big: money(tot - tax), label: 'Take-home from the final payment', lines: [['Tax-free limit for your service', money(lim)], ['Tax-free redundancy amount', money(free)], ['Taxable part (termination payment)', money(etp)], [`Tax on that part at ${pct(rt)}`, '−' + money(etpTax), 'bad'], ['Unused leave paid out', money(lv)], ['Tax on unused leave at 32%', '−' + money(lvTax), 'bad'], ['Total paid before tax', money(tot)], ['Take-home', money(tot - tax), 'total']], note: `Genuine redundancy only. Tax-free limit for ${P.lab}: ${money(P.b)} plus ${money(P.p)} for each completed year. The taxable part is taxed at 17% from age 60, or 32% under 60, up to the ${money(P.cap)} cap. Rates include the Medicare levy. Unused leave paid on a genuine redundancy is taxed at no more than 32%.` };
+    },
+    how: 'The tax-free part of a genuine redundancy depends on your years of service. The rest is an employment termination payment with its own tax rates.', rel: ['redundancy', 'leave'] },
+
+  /* ----- SUPER ----- */
+  { id: 'superproj', cat: 'super', name: 'Super at retirement', blurb: 'Project your super balance to the age you plan to retire.', keys: 'super superannuation retirement balance projection grow compound',
+    fields: [
+      { id: 'age', l: 'Your age now', t: 'num', d: 35 },
+      { id: 'ret', l: 'Retirement age', t: 'num', d: 67 },
+      { id: 'bal', l: 'Super balance now', t: 'money', d: 60000 },
+      { id: 'sal', l: 'Salary per year', t: 'money', d: 80000, c: [60000, 80000, 100000] },
+      { id: 'extra', l: 'Extra before-tax contributions a year', t: 'money', d: 0, h: 'Salary sacrifice or personal deductible contributions.' },
+      { id: 'rtn', l: 'Return after investment fees (%)', t: 'num', d: 7 },
+      { id: 'fee', l: 'Admin fees per year', t: 'money', d: 150 },
+      { id: 'grow', l: 'Salary growth per year (%)', t: 'num', d: 3.5 },
+      { id: 'infl', l: 'Inflation (%)', t: 'num', d: 2.5 }
+    ],
+    calc(v) {
+      const n = Math.max(0, Math.round(v.ret - v.age)); let b = v.bal, s = v.sal, C = 0, E = 0, F = 0, over = false;
+      for (let y = 0; y < n; y++) { const conc = s * 0.12 + v.extra; if (conc > 32500) over = true; const c = conc * 0.85, e = b * v.rtn / 100; b = Math.max(0, b + e + c - v.fee); C += c; E += e; F += v.fee; s *= 1 + v.grow / 100; }
+      const today = b / Math.pow(1 + v.infl / 100, n);
+      return { big: money(b), label: `Super at age ${v.ret}`, statuses: over ? [['warn', 'Contributions go over the $32,500 cap in some years']] : [], lines: [['Years to retirement', String(n)], ['Balance now', money(v.bal)], ['Contributions after 15% tax', money(C)], ['Investment earnings', money(E)], ['Admin fees', '−' + money(F), 'bad'], [`In today's dollars (${v.infl}% inflation)`, money(today)], [`Balance at ${v.ret}`, money(b), 'total']], note: 'A projection, not a promise. Returns go up and down. Employer super is 12% of salary. Contributions tax is 15%.' };
+    },
+    how: 'Each year the tool adds employer and extra contributions after 15% tax, adds the return on the balance, takes off fees, then grows the salary.', rel: ['salsac', 'caps', 'cocontrib'] },
+
+  { id: 'salsac', cat: 'super', name: 'Salary sacrifice', blurb: 'Swap some pay for extra super, and see the tax you save.', keys: 'salary sacrifice super concessional before tax contributions save tax',
+    fields: [
+      { id: 'sal', l: 'Salary per year', t: 'money', d: 90000, c: [60000, 90000, 120000, 180000] },
+      { id: 'amt', l: 'Amount to sacrifice per year', t: 'money', d: 5000, c: [2000, 5000, 10000] },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR },
+      { id: 'help', l: 'I have a study loan', t: 'chk', d: false, g: 'Study loan' }
+    ],
+    calc(v) {
+      const a = payOf(v.sal, v.year, { help: v.help }), b = payOf(v.sal, v.year, { help: v.help, salSac: v.amt });
+      const drop = a.net - b.net, add = Math.min(v.amt, v.sal) * 0.85, gain = add - drop, conc = a.sg + v.amt;
+      const st = [conc > 32500 ? ['bad', `Over the $32,500 cap by ${money(conc - 32500)}`] : ['good', `${money(32500 - conc)} left under the concessional cap`]];
+      if (v.sal > 250000) st.push(['warn', 'Division 293 tax may apply. See Contribution caps.']);
+      return { big: neg(gain), label: 'Better off each year (take-home plus super)', statuses: st, lines: [['Take-home pay falls by', '−' + money(drop), 'bad'], ['Per fortnight', '−' + money2(drop / 26), 'bad'], ['Super rises by, after 15% tax', '+' + money(add)], ['Employer super', money(a.sg)], ['Total concessional contributions', money(conc)], ['Net gain', neg(gain), 'total']], note: 'Salary sacrifice is taxed at 15% in super instead of at your marginal rate. On low incomes the saving is small or nil. Check that your employer still pays super on your full salary.' };
+    },
+    how: 'The tool compares your take-home pay with and without the sacrifice, then adds the extra super after 15% contributions tax.', rel: ['caps', 'superproj'] },
+
+  { id: 'caps', cat: 'super', name: 'Contribution caps and Division 293', blurb: 'Check your contributions against the 2026–27 caps.', keys: 'contribution caps concessional non-concessional division 293 div 293 carry forward bring forward high income super tax',
+    fields: [
+      { id: 'sal', l: 'Salary per year', t: 'money', d: 120000 },
+      { id: 'ss', l: 'Salary sacrifice', t: 'money', d: 8000 },
+      { id: 'pd', l: 'Personal deductible contributions', t: 'money', d: 0 },
+      { id: 'cf', l: 'Unused cap carried forward', t: 'money', d: 0, h: 'Only if your total super was under $500,000 on 30 June.' },
+      { id: 'ncc', l: 'After-tax (non-concessional) contributions', t: 'money', d: 0 },
+      { id: 'ti', l: 'Taxable income', t: 'money', d: 112000, h: 'Used for the Division 293 check.' }
+    ],
+    calc(v) {
+      const sg = v.sal * 0.12, conc = sg + v.ss + v.pd, capC = 32500 + v.cf, roomC = capC - conc, roomN = 130000 - v.ncc;
+      const inc293 = v.ti + conc, d293 = inc293 > 250000 ? 0.15 * Math.min(conc, inc293 - 250000) : 0;
+      const st = [roomC >= 0 ? ['good', `${money(roomC)} left under the concessional cap`] : ['bad', `Over the concessional cap by ${money(-roomC)}`], roomN >= 0 ? ['good', '✓ Under the non-concessional cap'] : ['bad', `Over the non-concessional cap by ${money(-roomN)}`]];
+      if (d293 > 0) st.push(['warn', `Division 293 tax of about ${money(d293)}`]);
+      return { big: money(Math.abs(roomC)), label: roomC >= 0 ? 'Concessional cap left this year' : 'Over the concessional cap by', statuses: st, lines: [['Employer super (12%)', money(sg)], ['Salary sacrifice and deductible', money(v.ss + v.pd)], ['Concessional contributions', money(conc)], ['Concessional cap with carry-forward', money(capC)], ['Non-concessional contributions', money(v.ncc)], ['Non-concessional cap', money(130000)], ['Income for Division 293', money(inc293)], ['Division 293 tax (extra 15%)', money(d293), d293 ? 'bad' : '']], note: 'Caps for 2026–27: $32,500 concessional and $130,000 non-concessional (up to $390,000 with the bring-forward rule when your total super balance allows it). Division 293 adds 15% tax on contributions when income plus concessional contributions is over $250,000.' };
+    },
+    how: 'Concessional contributions are employer super, salary sacrifice and personal contributions you claim as a deduction.', rel: ['salsac', 'cocontrib', 'spouse'] },
+
+  { id: 'cocontrib', cat: 'super', name: 'Government co-contribution', blurb: 'Up to $500 from the government when you add after-tax money to super.', keys: 'co-contribution government super low income 500 after tax',
+    fields: [
+      { id: 'inc', l: 'Total income', t: 'money', d: 45000, c: [40000, 50000, 60000], h: 'Assessable income plus reportable fringe benefits and reportable employer super.' },
+      { id: 'amt', l: 'Your after-tax contribution', t: 'money', d: 1000, c: [250, 500, 1000] },
+      { id: 'year', l: 'Income year', t: 'sel', d: '2026-27', o: YR }
+    ],
+    calc(v) {
+      const [lo, hi] = v.year === '2026-27' ? [49293, 64293] : [47488, 62488];
+      const mx = v.inc <= lo ? 500 : v.inc >= hi ? 0 : 500 - (v.inc - lo) * (500 / (hi - lo)), co = Math.max(0, Math.min(v.amt * 0.5, mx));
+      return { big: money2(co), label: 'Co-contribution paid into your super', lines: [['Most you can get at your income', money2(mx)], ['50c for each $1 you contribute', money2(v.amt * 0.5)], ['Contribute this much to get the most', money(mx * 2)], ['Full amount when income is under', money(lo)], ['Nothing from', money(hi)], ['Co-contribution', money2(co), 'total']], note: 'You must earn at least 10% of your income from work or a business, be under 71 at the end of the year, lodge a tax return, and have a total super balance under the transfer balance cap. Do not claim a tax deduction for the contribution.' };
+    },
+    how: 'The government pays 50c for each $1 of after-tax contributions, up to $500. The maximum falls as your income goes over the lower threshold, and stops at the higher threshold.', rel: ['spouse', 'caps'] },
+
+  { id: 'spouse', cat: 'super', name: 'Spouse contribution offset', blurb: "A tax offset of up to $540 for adding to a low-income partner's super.", keys: 'spouse contribution tax offset partner super 540',
+    fields: [
+      { id: 'si', l: "Partner's income", t: 'money', d: 25000, c: [20000, 37000, 39000] },
+      { id: 'amt', l: 'Your contribution to their super', t: 'money', d: 3000, c: [1000, 3000] }
+    ],
+    calc(v) {
+      const base = v.si >= 40000 ? 0 : Math.max(0, 3000 - Math.max(0, v.si - 37000)), off = 0.18 * Math.min(v.amt, base);
+      return { big: money2(off), label: 'Tax offset for you', lines: [["Partner's income", money(v.si)], ['Contribution that counts', money(Math.min(v.amt, base))], ['Offset rate', '18%'], ['Tax offset', money2(off), 'total']], note: 'The full offset applies when your partner earns $37,000 or less. It phases out at $40,000. Your partner must be under 75 and have a total super balance under the transfer balance cap.' };
+    },
+    how: 'The offset is 18% of up to $3,000 of contributions. The $3,000 limit falls by $1 for each $1 your partner earns over $37,000.', rel: ['cocontrib', 'caps'] },
+
+  /* ----- FAMILY ----- */
+  { id: 'plp', cat: 'family', name: 'Parental Leave Pay', blurb: 'Government Parental Leave Pay for a baby born or adopted from 1 July 2026.', keys: 'parental leave pay paid parental leave ppl baby maternity paternity 26 weeks',
+    fields: [
+      { id: 'days', l: 'Days of Parental Leave Pay', t: 'num', d: 130, h: 'Up to 130 days (26 weeks) for the family. 20 days are reserved for each parent.' },
+      { id: 'ati', l: 'Your adjusted taxable income in 2025–26', t: 'money', d: 75000 },
+      { id: 'fam', l: 'Combined family income in 2025–26', t: 'money', d: 0, h: 'Only needed when your own income is over $186,487.' }
+    ],
+    calc(v) {
+      const d = Math.min(130, Math.max(0, Math.floor(v.days))), okI = v.ati <= 186487, okF = v.fam > 0 && v.fam <= 386525, ok = okI || okF, gross = ok ? d * 200.94 : 0;
+      return { big: money2(gross), label: `${d} days, before tax`, statuses: [ok ? ['good', okI ? '✓ Meets the individual income test' : '✓ Meets the family income test'] : ['bad', 'Over the income limits']], lines: [['Daily rate', money2(200.94)], ['Weekly rate (5 days)', money2(1004.70)], ['Days', String(d)], ['Super (12%, paid by the ATO later)', money2(gross * 0.12)], ['Parental Leave Pay before tax', money2(gross), 'total']], note: 'Parental Leave Pay is taxable income. You must also meet the work test. The income test uses the financial year before the birth or your claim, whichever is earlier.' };
+    },
+    how: 'Parental Leave Pay is paid at the National Minimum Wage: $200.94 a day from 1 July 2026, for up to 130 days.', rel: ['ftb', 'basic'] },
+
+  { id: 'ftb', cat: 'family', name: 'Family Tax Benefit', blurb: 'An estimate of FTB Part A and Part B at 2026–27 rates.', keys: 'family tax benefit ftb part a part b children centrelink supplement',
+    fields: [
+      { id: 'single', l: 'I am a single parent', t: 'chk', d: false, g: 'Family' },
+      { id: 'ati', l: 'Your adjusted taxable income', t: 'money', d: 60000, show: v => v.single },
+      { id: 'hi', l: 'Higher earner income', t: 'money', d: 75000, show: v => !v.single },
+      { id: 'lo', l: 'Lower earner income', t: 'money', d: 15000, show: v => !v.single },
+      { id: 'u13', l: 'Children under 13', t: 'num', d: 2 },
+      { id: 't13', l: 'Children 13 to 15', t: 'num', d: 0 },
+      { id: 't16', l: 'Children 16 to 19 in secondary school', t: 'num', d: 0 },
+      { id: 'yg', l: 'Youngest child', t: 'sel', d: 'u5', o: [['u5', 'Under 5'], ['u13', '5 to 12'], ['u16', '13 to 15'], ['u19', '16 to 18, at school']] }
+    ],
+    calc(v) {
+      const k = x => Math.max(0, Math.floor(x)), n = k(v.u13) + k(v.t13) + k(v.t16), F = 365 / 14;
+      if (!n) return { big: money(0), label: 'Add at least one child', lines: [], note: '' };
+      const inc = v.single ? v.ati : v.hi + v.lo;
+      const maxFn = k(v.u13) * 235.48 + (k(v.t13) + k(v.t16)) * 306.46, baseFn = n * 75.60, supp = inc <= 80000 ? n * 970.90 : 0;
+      const aOf = s => Math.max(0, maxFn * F + s - 0.2 * Math.max(0, inc - 69131), baseFn * F + s - 0.3 * Math.max(0, inc - 123078));
+      const A = aOf(supp), aFn = aOf(0) / F, bMax = v.yg === 'u5' ? 200.34 : 139.86;
+      const hiE = v.single ? v.ati : Math.max(v.hi, v.lo), loE = v.single ? 0 : Math.min(v.hi, v.lo);
+      let B = 0, bFn = 0, why = '';
+      if (!v.single && (v.yg === 'u16' || v.yg === 'u19')) why = 'Couples get Part B only while the youngest child is under 13';
+      else if (hiE > 124327) why = 'Over the $124,327 Part B income limit';
+      else { const red = v.single ? 0 : 0.2 * Math.max(0, loE - 7154); B = Math.max(0, bMax * F + 478.15 - red); bFn = Math.max(0, bMax * F - red) / F; }
+      return { big: money(A + B), label: 'FTB for the year, with supplements', statuses: why ? [['info', why]] : [], lines: [['Family income', money(inc)], ['Part A per fortnight', money2(aFn)], ['Part A for the year, with supplement', money(A)], ['Part B per fortnight', money2(bFn)], ['Part B for the year, with supplement', money(B)], ['Total for the year', money(A + B), 'total']], note: 'Estimate only. Supplements ($970.90 a child for Part A and $478.15 for Part B) are paid after you lodge. The Part A supplement needs family income of $80,000 or less. Child support, Rent Assistance, shared care, and the immunisation and health check rules are not included.' };
+    },
+    how: 'Part A falls by 20c for each $1 of family income over $69,131 until it reaches the base rate, then by 30c for each $1 over $123,078. Part B for couples falls by 20c for each $1 the lower earner earns over $7,154.', rel: ['plp', 'basic'] },
+
+  /* ----- MONEY ----- */
+  { id: 'loan', cat: 'money', name: 'Loan repayments', blurb: 'Repayments and total interest for a car, personal or home loan.', keys: 'loan repayment car loan personal loan mortgage home loan interest',
+    fields: [
+      { id: 'amt', l: 'Loan amount', t: 'money', d: 30000, c: [10000, 30000, 50000, 600000] },
+      { id: 'rate', l: 'Interest rate (% a year)', t: 'num', d: 8.5 },
+      { id: 'yrs', l: 'Loan term (years)', t: 'num', d: 5 },
+      { id: 'freq', l: 'Repay every', t: 'sel', d: 'month', o: [['month', 'Month'], ['fortnight', 'Fortnight'], ['week', 'Week']] }
+    ],
+    calc(v) {
+      const ppy = { month: 12, fortnight: 26, week: 52 }[v.freq] || 12, i = v.rate / 100 / ppy, n = Math.max(1, Math.round(v.yrs * ppy));
+      const p = i > 0 ? v.amt * i / (1 - Math.pow(1 + i, -n)) : v.amt / n, tot = p * n;
+      return { big: money2(p), label: `Repayment each ${v.freq}`, lines: [['Number of repayments', String(n)], ['Total repaid', money(tot)], ['Total interest', money(tot - v.amt), 'bad'], ['Interest as a share of the loan', v.amt ? pct((tot - v.amt) / v.amt) : '0%'], [`Repayment each ${v.freq}`, money2(p), 'total']], note: 'Assumes a fixed rate for the whole term and no fees.' };
+    },
+    how: 'The standard formula for a loan with equal repayments at a fixed rate.', rel: ['savings', 'networth'] },
+
+  { id: 'savings', cat: 'money', name: 'Savings and compound interest', blurb: 'How savings grow with regular deposits and interest.', keys: 'savings compound interest deposit grow goal high interest account',
+    fields: [
+      { id: 'start', l: 'Starting balance', t: 'money', d: 5000 },
+      { id: 'dep', l: 'Regular deposit', t: 'money', d: 200, c: [50, 100, 200, 500] },
+      { id: 'freq', l: 'Deposit every', t: 'sel', d: 'fortnight', o: [['week', 'Week'], ['fortnight', 'Fortnight'], ['month', 'Month']] },
+      { id: 'rate', l: 'Interest rate (% a year)', t: 'num', d: 4.5 },
+      { id: 'yrs', l: 'Years', t: 'num', d: 5 }
+    ],
+    calc(v) {
+      const ppy = { month: 12, fortnight: 26, week: 52 }[v.freq] || 26, i = v.rate / 100 / ppy, n = Math.max(0, Math.round(v.yrs * ppy));
+      const g = Math.pow(1 + i, n), fv = v.start * g + (i > 0 ? v.dep * (g - 1) / i : v.dep * n), put = v.start + v.dep * n;
+      return { big: money(fv), label: `Balance after ${v.yrs} years`, lines: [['You put in', money(put)], ['Interest earned', money(fv - put)], ['Number of deposits', String(n)], [`Balance after ${v.yrs} years`, money(fv), 'total']], note: 'Interest is added each deposit period. Interest is taxable income: enter it at item 10 in myTax.' };
+    },
+    how: 'Each period the balance earns interest, then the deposit is added.', rel: ['loan', 'networth'] },
+
+  { id: 'networth', cat: 'money', name: 'Net worth', blurb: 'What you own minus what you owe.', keys: 'net worth assets liabilities debts wealth',
+    fields: [
+      { id: 'home', l: 'Home value', t: 'money', d: 0 },
+      { id: 'sup', l: 'Super', t: 'money', d: 85000 },
+      { id: 'cash', l: 'Cash and savings', t: 'money', d: 12000 },
+      { id: 'inv', l: 'Shares and investments', t: 'money', d: 5000 },
+      { id: 'car', l: 'Cars and other things', t: 'money', d: 15000 },
+      { id: 'mort', l: 'Mortgage', t: 'money', d: 0 },
+      { id: 'carl', l: 'Car and personal loans', t: 'money', d: 8000 },
+      { id: 'cc', l: 'Credit cards and buy now pay later', t: 'money', d: 1500 },
+      { id: 'hecs', l: 'Study loan', t: 'money', d: 18000 },
+      { id: 'oth', l: 'Other debts', t: 'money', d: 0 }
+    ],
+    calc(v) {
+      const a = v.home + v.sup + v.cash + v.inv + v.car, d = v.mort + v.carl + v.cc + v.hecs + v.oth, nw = a - d;
+      return { big: neg(nw), label: 'Net worth', lines: [['Total you own', money(a)], ['Total you owe', '−' + money(d), 'bad'], ['Net worth without super', neg(nw - v.sup)], ['Net worth', neg(nw), 'total']], note: "Use today's values. Work it out once a year to see your progress." };
+    },
+    how: 'Add up what you own, then take away what you owe.', rel: ['savings', 'loan'] }
+];
+
+const LINKS = [
+  { id: 'basic', cat: 'family', name: 'Basic Rate Calculator', blurb: 'Centrelink payment rates after the income and assets tests: JobSeeker, Age Pension, DSP, Carer and Parenting Payment.', keys: 'centrelink basic rate jobseeker age pension dsp disability carer parenting payment rent assistance deeming work bonus newstart', href: 'basic-rate.html', feature: true },
+  { id: 'refund', cat: 'tax', name: 'Refund estimator', blurb: 'Your 2025–26 refund or tax bill, item by item.', keys: 'refund tax return estimate mytax deductions medicare', tab: 'refund' },
+  { id: 'pay', cat: 'pay', name: 'Pay calculator', blurb: 'Take-home pay per week, fortnight, month and year.', keys: 'pay take home salary hourly wage tax', tab: 'pay' },
+  { id: 'award', cat: 'pay', name: 'Award pay check', blurb: 'Check your rate against the National Minimum Wage and find your award.', keys: 'award minimum wage fair work rate check', tab: 'award' },
+  { id: 'budget', cat: 'money', name: 'Budget planner', blurb: 'Income and spending by category.', keys: 'budget spending planner moneysmart', tab: 'budget' },
+  { id: 'guide', cat: 'tax', name: 'myTax guide', blurb: 'Lodge your return in 18 steps.', keys: 'guide mytax lodge steps checklist', tab: 'guide' }
+];
+const hubItems = () => TOOLS.filter(t => t.cat === 'vic').concat([LINKS[0]], TOOLS.filter(t => t.cat !== 'vic'), LINKS.slice(1));
+
+const KEYFIG = [
+  ['VIC stamp duty, general rate', '$2,870 + 6% over $130,000 (to $960,000)', 'Current', 'SRO', 'https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/land-transfer-duty-non-principal-place-residence-current-rates'],
+  ['VIC first home buyer duty', 'Nil to $600,000; reduced to $750,000', 'Current', 'SRO', 'https://www.sro.vic.gov.au/buying-property/land-transfer-stamp-duty/concessions-exemptions-and-waivers/first-home-buyers/first-home-buyer-duty-exemption-or-concession'],
+  ['VIC First Home Owner Grant', '$10,000, new homes to $750,000', 'Current', 'SRO', 'https://www.sro.vic.gov.au/buyer-grants-concessions'],
+  ['VIC land tax threshold', '$50,000', '2024 to 2033 land tax years', 'SRO', 'https://www.sro.vic.gov.au/about-us/rates-and-statistics/current-rates/land-tax-current-rates'],
+  ['VIC motor vehicle duty, car', '$8.40 per $200 to $80,809', '1 Jul 2026', 'VicRoads', 'https://www.vicroads.vic.gov.au/registrations/fees-and-charges/motor-vehicle-duty-fee'],
+  ['VIC car rego with TAC, metro', '$958.80 a year', 'Current', 'VicRoads', 'https://www.vicroads.vic.gov.au/registrations/fees-and-charges/vehicle-fees'],
+  ['VIC long service leave', '1 week per 60 weeks; after 7 years', 'Ongoing', 'Victorian Government', 'https://www.vic.gov.au/long-service-leave'],
+  ['Melbourne Cup public holiday', 'Tuesday 3 November 2026', '2026', 'Business Victoria', 'https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026'],
+  ['Tax-free threshold', '$18,200', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents'],
+  ['Tax rate from $18,201 to $45,000', '15%', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents'],
+  ['Medicare levy', '2%', 'Ongoing', 'ATO', 'https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-reduction/medicare-levy-reduction-for-low-income-earners'],
+  ['Study loan repayment threshold', '$69,528', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/study-and-training-support-loans-rates-and-repayment-thresholds'],
+  ['Standard deduction for work expenses', 'Up to $1,000', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses'],
+  ['GST', '10%', 'Ongoing', 'ATO', ''],
+  ['Super guarantee', '12%', '1 Jul 2025', 'ATO', 'https://www.ato.gov.au/businesses-and-organisations/super-for-employers/payday-super/about-payday-super'],
+  ['Concessional contributions cap', '$32,500', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/contributions-caps'],
+  ['Non-concessional contributions cap', '$130,000', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/contributions-caps'],
+  ['General transfer balance cap', '$2.1 million', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/transfer-balance-cap'],
+  ['Division 293 threshold', '$250,000', 'Ongoing', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds'],
+  ['Super co-contribution', '$500 under $49,293; nil from $64,293', '1 Jul 2026', 'ATO', 'https://ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/government-contributions'],
+  ['Genuine redundancy tax-free amount', '$13,598 + $6,801 a year', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/employment-termination-payments'],
+  ['Employment termination payment cap', '$270,000', '1 Jul 2026', 'ATO', 'https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/employment-termination-payments'],
+  ['National Minimum Wage', '$26.44 an hour', '1 Jul 2026', 'Fair Work', 'https://www.fairwork.gov.au/about-us/workplace-laws/annual-wage-review/annual-wage-review-2026'],
+  ['Parental Leave Pay', '$200.94 a day, up to 130 days', '1 Jul 2026', 'Services Australia', 'https://www.servicesaustralia.gov.au/paid-parental-leave-scheme-rate-changes-for-new-financial-year'],
+  ['FTB Part A, child under 13', 'Up to $235.48 a fortnight', '1 Jul 2026', 'DSS', 'https://guides.dss.gov.au/family-assistance-guide/3/6/1'],
+  ['FTB Part B, youngest under 5', 'Up to $200.34 a fortnight', '1 Jul 2026', 'DSS', 'https://guides.dss.gov.au/family-assistance-guide/3/6/3'],
+  ['JobSeeker Payment, single', '$833.70 a fortnight', '20 Sep 2026', 'DSS', 'https://www.dss.gov.au/system/files/documents/2026-08/rates-list-20-september-2026.pdf'],
+  ['Age Pension, single', '$1,237.70 a fortnight', '20 Sep 2026', 'DSS', 'https://www.dss.gov.au/system/files/documents/2026-08/rates-list-20-september-2026.pdf'],
+  ['Deeming rates', '1.75% and 3.75%', '20 Sep 2026', 'DSS', 'https://ministers.dss.gov.au/node/19221']
+];
+$('#keyFigures').innerHTML = KEYFIG.map(k => `<tr><td>${esc(k[0])}</td><td>${esc(k[1])}</td><td>${esc(k[2])}</td><td>${k[4] ? `<a href="${k[4]}" target="_blank" rel="noopener">${esc(k[3])}</a>` : esc(k[3])}</td></tr>`).join('');
+
+/* ---------- hub ---------- */
+let hubCat = store.get('hubCat', 'all');
+let favs = store.get('favs', []); if (!Array.isArray(favs)) favs = [];
+var curTool = null, curRes = null, curVals = null;
+function renderHub() {
+  const words = $('#toolSearch').value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const items = hubItems().filter(t => (hubCat === 'all' || (hubCat === 'star' ? favs.includes(t.id) : t.cat === hubCat))
+    && words.every(w => (t.name + ' ' + t.blurb + ' ' + t.keys + ' ' + CATN[t.cat]).toLowerCase().includes(w)));
+  $$('#toolCats button').forEach(b => b.setAttribute('aria-pressed', b.dataset.c === hubCat ? 'true' : 'false'));
+  $('#toolGrid').innerHTML = items.length ? items.map(t => {
+    const fav = favs.includes(t.id), kind = t.href ? 'Opens its own page' : t.tab ? 'Tab on this page' : 'Calculator';
+    return `<div class="tcard ${t.feature ? 'feature' : t.tab ? 'link' : ''}" role="button" tabindex="0" data-open="${t.id}"><span class="tk">${CATN[t.cat]}</span><span class="tn2">${esc(t.name)}</span><span class="tb">${esc(t.blurb)}</span><span class="tg">${kind} →</span><button type="button" class="star" data-star="${t.id}" aria-pressed="${fav}" aria-label="${fav ? 'Unstar' : 'Star'} ${esc(t.name)}">${fav ? '★' : '☆'}</button></div>`;
+  }).join('') : `<div class="nores">${hubCat === 'star' && !favs.length ? 'No starred calculators yet. Press ☆ on a calculator to star it.' : 'No calculators match. Try another word, such as tax, super or pay.'}</div>`;
+}
+function toggleFav(id) {
+  favs = favs.includes(id) ? favs.filter(x => x !== id) : favs.concat(id);
+  store.set('favs', favs);
+  const t = hubItems().find(x => x.id === id);
+  toast(favs.includes(id) ? `Starred ${t ? t.name : ''}` : 'Star removed');
+}
+function openItem(id) {
+  const t = hubItems().find(x => x.id === id); if (!t) return;
+  if (t.href) { window.location.href = t.href; return; }
+  if (t.tab) { openTab(t.tab, true); return; }
+  openTool(id);
+}
+$('#toolSearch').addEventListener('input', renderHub);
+$('#toolCats').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; hubCat = b.dataset.c; store.set('hubCat', hubCat); renderHub(); });
+$('#toolGrid').addEventListener('click', e => {
+  const s = e.target.closest('[data-star]'); if (s) { e.stopPropagation(); toggleFav(s.dataset.star); renderHub(); return; }
+  const c = e.target.closest('[data-open]'); if (c) openItem(c.dataset.open);
+});
+$('#toolGrid').addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.tcard')) { e.preventDefault(); openItem(e.target.dataset.open); }
+});
+
+/* ---------- one calculator ---------- */
+function toolVals(t) { const s = store.get('tool.' + t.id, null), v = {}; t.fields.forEach(f => v[f.id] = s && s[f.id] !== undefined ? s[f.id] : f.d); return { v, example: !s }; }
+function fieldHTML(t, f, v) {
+  const id = `t-${t.id}-${f.id}`, hint = f.h ? `<span class="hint">${esc(f.h)}</span>` : '';
+  const chips = f.c ? chipsHTML(id, f.c, '', f.t === 'money' ? null : x => String(x)) : '';
+  if (f.t === 'chk') return `<div class="f" data-fid="${f.id}"><span class="lab">${esc(f.g || '')}</span><label class="toggle" for="${id}"><input type="checkbox" id="${id}"${v ? ' checked' : ''}> ${esc(f.l)}</label>${hint}</div>`;
+  let ctl;
+  if (f.t === 'sel') ctl = `<select id="${id}">${f.o.map(o => `<option value="${o[0]}"${String(v) === String(o[0]) ? ' selected' : ''}>${esc(o[1])}</option>`).join('')}</select>`;
+  else { const inp = `<input type="number" inputmode="decimal" step="any" id="${id}" value="${v === 0 || v === '' ? '' : v}"${f.t === 'money' ? ' min="0"' : ''}>`; ctl = f.t === 'money' ? `<div class="money-in">${inp}</div>` : inp; }
+  return `<div class="f" data-fid="${f.id}"><label for="${id}">${esc(f.l)}</label>${ctl}${hint}${chips}</div>`;
+}
+function readTool(t) {
+  const v = {};
+  t.fields.forEach(f => { const el = $(`#t-${t.id}-${f.id}`); v[f.id] = !el ? f.d : f.t === 'chk' ? el.checked : f.t === 'sel' ? el.value : num(el.value); });
+  return v;
+}
+function openTool(id, quiet) {
+  const t = TOOLS.find(x => x.id === id); if (!t) return;
+  if (store.get('tab', 'guide') !== 'tools' || $('#tab-tools').hidden) openTab('tools');
+  curTool = t; store.set('openTool', id);
+  const { v, example } = toolVals(t), fav = favs.includes(id);
+  const rel = (t.rel || []).map(r => hubItems().find(x => x.id === r)).filter(Boolean);
+  $('#toolView').innerHTML = `
+    <div class="toolhead"><button class="btn small" type="button" id="toolBack">← All calculators</button><button class="btn small" type="button" id="toolStar" aria-pressed="${fav}"><span class="s">${fav ? '★' : '☆'}</span>${fav ? 'Starred' : 'Star'}</button></div>
+    <div class="panel-head"><span class="eyebrow">${CATN[t.cat]} · calculator</span><h2>${esc(t.name)}</h2><p class="lede">${esc(t.blurb)}</p></div>
+    <div class="split">
+      <form class="box formbox" id="toolForm" autocomplete="off">
+        <div class="examples" id="toolExample"${example ? '' : ' hidden'}><span>Example figures. Replace them with yours.</span><button class="btn small" type="button" id="toolClear">Clear</button></div>
+        <div class="fields">${t.fields.map(f => fieldHTML(t, f, v[f.id])).join('')}</div>
+      </form>
+      <div class="stick">
+        <div class="result" id="toolResult" aria-live="polite"><span class="k">${CATN[t.cat]} · ${esc(t.name)}</span><div class="big money" id="toolBig">$0</div><div class="bigsub" id="toolLabel"></div></div>
+        ${actionsHTML('tool')}
+        <div class="box" style="display:grid; gap:12px">
+          <h3>Breakdown</h3>
+          <div class="statuses" id="toolStatus"></div>
+          <div class="lines" id="toolLines"></div>
+          <p class="small" id="toolNote"></p>
+          <details class="more"><summary>How this works</summary><p class="small">${esc(t.how || '')}</p></details>
+        </div>
+        ${rel.length ? `<div class="box" style="display:grid; gap:10px"><h3>Related</h3><div class="related">${rel.map(r => `<a href="${r.href || '#tool-' + r.id}" data-open="${r.id}">${esc(r.name)}</a>`).join('')}</div></div>` : ''}
+      </div>
+    </div>`;
+  $('#toolHub').hidden = true; $('#toolView').hidden = false;
+  calcTool();
+  if (!quiet) window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { history.replaceState(null, '', '#tool-' + id); } catch (e) {}
+}
+function closeTool() {
+  curTool = null; curRes = null; store.del('openTool');
+  $('#toolView').hidden = true; $('#toolView').innerHTML = ''; $('#toolHub').hidden = false;
+  renderHub(); updateLivebar();
+  try { history.replaceState(null, '', '#tools'); } catch (e) {}
+}
+function calcTool() {
+  const t = curTool; if (!t) return;
+  const v = readTool(t); curVals = v;
+  t.fields.forEach(f => { if (f.show) { const w = $(`#toolView [data-fid="${f.id}"]`); if (w) w.hidden = !f.show(v); } });
+  let r; try { r = t.calc(v); } catch (e) { r = { big: '–', label: 'Check the figures you entered', lines: [], note: '' }; }
+  curRes = r;
+  $('#toolBig').textContent = r.big; $('#toolLabel').textContent = r.label || '';
+  const st = r.statuses || [];
+  $('#toolStatus').innerHTML = st.map(s => `<span class="chip ${s[0]}">${esc(s[1])}</span>`).join(''); $('#toolStatus').hidden = !st.length;
+  $('#toolLines').innerHTML = (r.lines || []).map(l => `<div class="line ${l[2] || ''}"><span class="lab">${esc(l[0])}</span><span class="val">${esc(l[1])}</span></div>`).join('');
+  $('#toolNote').textContent = r.note || '';
+  updateLivebar();
+}
+$('#toolView').addEventListener('input', e => {
+  if (!curTool || !e.target.closest('#toolForm')) return;
+  store.set('tool.' + curTool.id, readTool(curTool)); $('#toolExample').hidden = true; calcTool();
+});
+$('#toolView').addEventListener('change', e => { if (curTool && e.target.closest('#toolForm')) { store.set('tool.' + curTool.id, readTool(curTool)); calcTool(); } });
+$('#toolView').addEventListener('submit', e => e.preventDefault());
+$('#toolView').addEventListener('click', e => {
+  if (e.target.closest('#toolBack')) { closeTool(); return; }
+  if (e.target.closest('#toolStar')) { toggleFav(curTool.id); const f = favs.includes(curTool.id), b = $('#toolStar'); b.setAttribute('aria-pressed', f); b.innerHTML = `<span class="s">${f ? '★' : '☆'}</span>${f ? 'Starred' : 'Star'}`; return; }
+  if (e.target.closest('#toolClear')) {
+    curTool.fields.forEach(f => { const el = $(`#t-${curTool.id}-${f.id}`); if (el && (f.t === 'money' || f.t === 'num')) el.value = ''; });
+    store.set('tool.' + curTool.id, readTool(curTool)); $('#toolExample').hidden = true; calcTool(); toast('Example cleared'); return;
+  }
+  const a = e.target.closest('.related [data-open]'); if (a) { e.preventDefault(); openItem(a.dataset.open); }
+});
+
+/* ---------- result actions (Refund, Pay, calculators) ---------- */
+function fmtIn(f, v) {
+  if (f.t === 'chk') return v ? 'Yes' : 'No';
+  if (f.t === 'sel') { const o = f.o.find(o => String(o[0]) === String(v)); return o ? o[1] : String(v); }
+  return f.t === 'money' ? money2(v) : String(v);
+}
+const EXPORT = {
+  refund() {
+    return { tool: 'Refund estimator', open: 'refund', title: 'Refund estimate · ' + (lastEst ? lastEst.Y.label : ''), big: $('#estBig').textContent + ' · ' + $('#estBigSub').textContent,
+      lines: $$('#estLines .line').map(l => [l.querySelector('.lab').textContent.trim(), l.querySelector('.val').textContent.trim()]) };
+  },
+  pay() {
+    const r = lastPay, L = [['Gross pay a year', money2(r.gross)], ['Income tax a year', money2(r.tax)], ['Medicare levy a year', money2(r.ml)]];
+    if (r.mls) L.push(['Medicare levy surcharge a year', money2(r.mls)]);
+    if (r.help) L.push(['Study loan repayment a year', money2(r.help)]);
+    if (r.salSac) L.push(['Salary sacrifice a year', money2(r.salSac)]);
+    L.push(['Take-home a year', money2(r.net)], ['Take-home a month', money2(r.net / 12)], ['Take-home a fortnight', money2(r.net / 26)], ['Take-home a week', money2(r.net / 52)], ['Employer super a year', money2(r.sg)]);
+    return { tool: 'Pay calculator', open: 'pay', title: 'Take-home pay · ' + r.Y.label, big: $('#payBig').textContent + ' · ' + $('#payBigSub').textContent, lines: L };
+  },
+  tool() {
+    const t = curTool, r = curRes;
+    return { tool: t.name, open: 'tool-' + t.id, title: t.name, big: r.big + ' · ' + (r.label || ''),
+      inputs: t.fields.filter(f => !f.show || f.show(curVals)).map(f => [f.l, fmtIn(f, curVals[f.id])]),
+      lines: (r.statuses || []).map(s => ['Check', s[1].replace(/^✓\s*/, '')]).concat((r.lines || []).map(l => [l[0], l[1]])) };
+  }
+};
+function exportText(x) {
+  return `${x.title}\n${x.big}\n\n` + (x.inputs && x.inputs.length ? 'Details used\n' + x.inputs.map(i => `${i[0]}: ${i[1]}`).join('\n') + '\n\nResult\n' : '')
+    + x.lines.map(l => `${l[0]}: ${l[1]}`).join('\n') + '\n\nEstimate from Wolf Harrold\'s GitHub Tools - Finance and Taxation. Not financial advice.';
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const box = b.closest('[data-actions]'); if (!box || !EXPORT[box.dataset.actions]) return;
+  const x = EXPORT[box.dataset.actions](), act = b.dataset.act;
+  if (act === 'copy') copyText(exportText(x));
+  else if (act === 'save') { histAdd({ tool: x.tool, page: 'index.html', open: x.open, title: x.title, big: x.big, inputs: x.inputs || [], lines: x.lines }); renderSaved(); toast('Saved. Find it in the Saved tab.'); }
+  else if (act === 'csv') downloadFile(slugOf(x.title) + '.csv', csvOf([['Item', 'Value']].concat(x.inputs || [], x.lines)));
+  else if (act === 'email') emailText(x.title, exportText(x));
+  else if (act === 'print') window.print();
+});
+$('#estResult').insertAdjacentHTML('afterend', actionsHTML('refund'));
+$('#payResult').insertAdjacentHTML('afterend', actionsHTML('pay'));
+$('#est-salary').closest('.f').insertAdjacentHTML('beforeend', chipsHTML('est-salary', [45000, 60000, 80000, 100000, 150000]));
+$('#pay-amt').closest('.f').insertAdjacentHTML('beforeend', chipsHTML('pay-amt', [50000, 75000, 100000, 150000], 'pay-freq:year', v => '$' + (v / 1000) + 'k a year'));
+
+/* ---------- saved ---------- */
+function savedLines(arr) { return (arr || []).map(l => `<div class="line"><span class="lab">${esc(l[0])}</span><span class="val">${esc(l[1])}</span></div>`).join(''); }
+function renderSaved() {
+  const h = histGet();
+  $('#savedList').innerHTML = h.length ? h.map(e => {
+    const parts = String(e.big || '').split(' · '), open = e.page === 'basic-rate.html' ? `<a class="btn small" href="basic-rate.html">Open Basic Rate Calculator</a>` : e.open ? `<button class="btn small" type="button" data-sopen="${esc(e.open)}">Open</button>` : '';
+    return `<article class="hcard">
+      <div class="hh"><span class="ht">${esc(e.title || e.tool)}</span><span class="hv">${esc(parts[0])}</span><span class="hm">${esc(e.tool || '')} · saved ${esc(e.at || '')}${parts.length > 1 ? ' · ' + esc(parts.slice(1).join(' · ')) : ''}</span></div>
+      <details class="more"><summary>Show details</summary>${e.inputs && e.inputs.length ? `<div class="lines"><div class="line sec"><span class="lab">Details used</span><span class="val"></span></div>${savedLines(e.inputs)}<div class="line sec"><span class="lab">Result</span><span class="val"></span></div></div>` : ''}<div class="lines">${savedLines(e.lines)}</div></details>
+      <div class="btn-row"><button class="btn small" type="button" data-scopy="${esc(e.id)}">Copy</button>${open}<button class="btn small" type="button" data-sdel="${esc(e.id)}">Delete</button></div>
+    </article>`;
+  }).join('') : '<div class="empty">No saved results yet. Press <b>Save</b> under any result to keep it here.</div>';
+  $('#savedCsv').disabled = $('#savedClear').disabled = !h.length;
+  $('#tabbtn-saved').lastChild.textContent = h.length ? `Saved (${h.length})` : 'Saved';
+}
+$('#savedList').addEventListener('click', e => {
+  const c = e.target.closest('[data-scopy]'), d = e.target.closest('[data-sdel]'), o = e.target.closest('[data-sopen]');
+  if (c) { const x = histGet().find(y => y.id === c.dataset.scopy); if (x) copyText(exportText({ title: x.title, big: x.big, inputs: x.inputs, lines: x.lines || [] })); }
+  if (d) { store.set('history', histGet().filter(y => y.id !== d.dataset.sdel)); renderSaved(); toast('Deleted'); }
+  if (o) { const k = o.dataset.sopen; if (k.startsWith('tool-')) openTool(k.slice(5)); else openTab(k, true); }
+});
+$('#savedCsv').addEventListener('click', () => {
+  const rows = [['Saved', 'Tool', 'Result', 'Headline', 'Section', 'Item', 'Value']];
+  histGet().forEach(e => {
+    (e.inputs || []).forEach(l => rows.push([e.at, e.tool, e.title, e.big, 'Details used', l[0], l[1]]));
+    (e.lines || []).forEach(l => rows.push([e.at, e.tool, e.title, e.big, 'Result', l[0], l[1]]));
+  });
+  downloadFile('finance-and-taxation-saved-results.csv', csvOf(rows));
+});
+$('#savedClear').addEventListener('click', () => {
+  const c = $('#savedConfirm');
+  c.innerHTML = `<div class="confirm"><span>Delete every saved result on this device?</span><button class="btn small" type="button" id="sYes">Delete all</button><button class="btn small" type="button" id="sNo">Keep them</button></div>`;
+  c.hidden = false;
+  $('#sYes').onclick = () => { store.set('history', []); c.hidden = true; renderSaved(); toast('Saved results cleared'); };
+  $('#sNo').onclick = () => { c.hidden = true; };
+});
+window.addEventListener('storage', e => {
+  if (e.key === 'tt26.history') renderSaved();
+  if (e.key === 'tt26.budget') {
+    bud = store.get('budget', null) || { period: 'month', items: {}, custom: {} };
+    bud.period = PER[bud.period] ? bud.period : 'month'; bud.items = bud.items || {}; bud.custom = bud.custom || {};
+    renderBudgetForm(); renderBudgetTotals();
+  }
+});
+
+/* ---------- print: list the details used ---------- */
+window.addEventListener('beforeprint', () => {
+  const panel = $('#tab-' + store.get('tab', 'guide')); if (!panel) return;
+  let box = $('#printInputs');
+  if (!box) { box = document.createElement('div'); box.id = 'printInputs'; box.className = 'print-only'; }
+  panel.prepend(box);
+  const form = $$('form', panel).find(f => !f.closest('[hidden]'));
+  if (!form) { box.innerHTML = ''; return; }
+  const rows = $$('input, select', form).filter(el => el.id && !el.closest('[hidden]')).map(el => {
+    const lab = el.type === 'checkbox' ? (el.closest('label') || {}).textContent : (form.querySelector(`label[for="${el.id}"]`) || {}).textContent;
+    const val = el.type === 'checkbox' ? (el.checked ? 'Yes' : 'No') : el.tagName === 'SELECT' ? (el.options[el.selectedIndex] || {}).text : el.value;
+    return [String(lab || '').trim(), val];
+  }).filter(r => r[0] && r[1] && r[1] !== 'No');
+  box.innerHTML = `<div class="box"><h3>Details used · printed ${esc(stampNow())}</h3><div class="lines">${rows.map(r => `<div class="line"><span class="lab">${esc(r[0])}</span><span class="val">${esc(r[1])}</span></div>`).join('')}</div></div>`;
+});
+
+$('#tabbtn-tools').addEventListener('click', () => { if (store.get('tab', 'guide') === 'tools' && curTool) closeTool(); }, true);
+window.addEventListener('hashchange', () => {
+  const h = (location.hash || '').replace('#', '');
+  if (h.startsWith('tool-') && TOOLS.some(t => t.id === h.slice(5))) { if (!curTool || curTool.id !== h.slice(5)) openTool(h.slice(5)); }
+  else if (TABS.includes(h)) { if (h === 'tools' && curTool) closeTool(); openTab(h, true); }
+});
 
 /* ---------- boot ---------- */
 renderGuide();
@@ -1352,8 +2359,14 @@ fillForm(null, estData, 'est-'); renderEstimate();
 fillForm(null, payData, 'pay-'); renderPay();
 renderAward();
 renderBudgetForm(); renderBudgetTotals();
+renderHub();
+renderSaved();
 const hash = (location.hash || '').replace('#', '');
-openTab(TABS.includes(hash) ? hash : store.get('tab', 'guide'));
+if (hash.startsWith('tool-') && TOOLS.some(t => t.id === hash.slice(5))) openTool(hash.slice(5), true);
+else {
+  openTab(TABS.includes(hash) ? hash : store.get('tab', 'guide'));
+  if (store.get('tab', 'guide') === 'tools' && store.get('openTool', null)) openTool(store.get('openTool', null), true);
+}
 </script>
 </body>
 </html>
