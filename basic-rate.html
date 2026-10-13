@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Basic Rate Calculator - Wolf Harrold's GitHub Tools</title>
+<meta name="description" content="Work out a Centrelink basic rate of payment after the income and assets tests, with Rent Assistance, deeming and the Work Bonus. DSS rates from 20 September 2026.">
+<meta name="theme-color" content="#0A5C42">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A5C42'/%3E%3Crect x='14' y='30' width='36' height='18' rx='4' fill='%23FFC72C'/%3E%3Ctext x='32' y='25' font-family='Arial' font-weight='900' font-size='15' text-anchor='middle' fill='%23FFFFFF'%3ERATE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: same green-and-gold system as the Finance and Taxation page. Sticky jump bar; form left, live result and breakdown right on wide screens; result bar pinned to the bottom on phones. */
+:root {
+  --bg: #F3F6EE; --surface: #FFFFFF; --surface-2: #EAF0E3;
+  --ink: #0D1A13; --ink-2: #3F4D45; --muted: #66746B; --line: #D5DDCF;
+  --brand: #0A5C42; --brand-ink: #FFFFFF; --brand-soft: #D9EEE3;
+  --gold: #FFC72C; --on-gold: #241B00; --gold-soft: #FFF0BF; --hl: #FFD84D;
+  --good: #087A3B; --good-soft: #DCF3E4;
+  --bad: #B9322A;  --bad-soft: #FBE2DE;
+  --warn: #8F5400; --warn-soft: #FFEBC6;
+  --info: #1C5BA8; --info-soft: #E0EBF9;
+  --shadow: 0 1px 2px rgba(13,26,19,.06), 0 8px 24px rgba(13,26,19,.07);
+  --f-display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1411; --surface: #16201A; --surface-2: #1D2A22; --ink: #EAF1EC; --ink-2: #B8C6BD; --muted: #8B998F; --line: #2A3830;
+    --brand: #4FC79A; --brand-ink: #04140D; --brand-soft: #16352A; --gold: #FFC72C; --on-gold: #241B00; --gold-soft: #3A3112; --hl: rgba(255,199,44,.38);
+    --good: #4BD08B; --good-soft: #12301F; --bad: #FF8073; --bad-soft: #3A1915; --warn: #FFB547; --warn-soft: #382910; --info: #84B6F5; --info-soft: #15253B;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1411; --surface: #16201A; --surface-2: #1D2A22; --ink: #EAF1EC; --ink-2: #B8C6BD; --muted: #8B998F; --line: #2A3830;
+  --brand: #4FC79A; --brand-ink: #04140D; --brand-soft: #16352A; --gold: #FFC72C; --on-gold: #241B00; --gold-soft: #3A3112; --hl: rgba(255,199,44,.38);
+  --good: #4BD08B; --good-soft: #12301F; --bad: #FF8073; --bad-soft: #3A1915; --warn: #FFB547; --warn-soft: #382910; --info: #84B6F5; --info-soft: #15253B;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+img { max-width: 100%; }
+a { color: var(--brand); text-underline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1140px; margin-inline: auto; padding-inline: 16px; }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+td, .money, .num { font-variant-numeric: tabular-nums; }
+
+/* ---------- header ---------- */
+.top { background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-in { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px 20px; padding-block: 14px 16px; align-items: end; }
+.back { display: inline-flex; gap: 6px; align-items: center; font: 700 14px var(--f-body); color: var(--ink-2); text-decoration: none; margin-bottom: 6px; }
+.back:hover { color: var(--brand); }
+.brand { font-family: var(--f-display); font-weight: 900; font-stretch: 125%; font-size: clamp(2rem, 7.4vw, 3.4rem); line-height: .92; letter-spacing: -.01em; text-transform: uppercase; }
+.brand .yr { display: inline-block; background: var(--gold); color: var(--on-gold); padding: .02em .16em .04em; border-radius: 6px; transform: rotate(-2deg); margin-left: .08em; }
+.sub { color: var(--ink-2); margin-top: 8px; max-width: 52ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--f-mono); letter-spacing: .04em; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+.badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+.top-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.deadline { display: inline-flex; align-items: baseline; gap: 8px; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 14px; font-weight: 700; white-space: nowrap; }
+.deadline b { font-family: var(--f-display); font-stretch: 112%; font-size: 1.25rem; color: var(--gold); }
+.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 6px 12px; font: 600 13px var(--f-body); cursor: pointer; white-space: nowrap; }
+.ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+@media (max-width: 640px) {
+  .top-in { grid-template-columns: 1fr; align-items: start; }
+  .top-meta { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+/* ---------- jump bar ---------- */
+.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.jump-in { display: flex; gap: 6px; padding-block: 10px; overflow-x: auto; scrollbar-width: none; }
+.jump a { flex: 1 0 auto; text-align: center; color: var(--ink-2); font: 700 15px var(--f-body); padding: 10px 14px; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.jump a .tn { font-family: var(--f-mono); font-size: 11px; font-weight: 600; opacity: .7; }
+.jump a:hover { background: var(--surface-2); color: var(--ink); }
+.jump a.on { background: var(--ink); color: var(--bg); }
+.jump a.on .tn { color: var(--gold); opacity: 1; }
+@media (max-width: 480px) { .jump a { padding: 10px 8px; font-size: 14px; } .jump a .tn { display: none; } }
+
+/* ---------- panels ---------- */
+main { padding-block: 26px 60px; display: grid; gap: 54px; }
+.panel { display: grid; gap: 22px; scroll-margin-top: 76px; }
+.panel-head { display: grid; gap: 8px; }
+.eyebrow { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
+.panel-head h2 { font-family: var(--f-display); font-weight: 850; font-stretch: 112%; font-size: clamp(1.6rem, 4.4vw, 2.4rem); line-height: 1.05; }
+.lede { color: var(--ink-2); max-width: 64ch; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.box h3 { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.15rem; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.stick { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 74px); display: grid; gap: 16px; }
+@media (max-width: 900px) { .split { grid-template-columns: minmax(0,1fr); } .stick { position: static; } }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: 700 15px var(--f-body); cursor: pointer; text-decoration: none; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.small { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions .btn { min-height: 38px; padding: 6px 12px; font-size: 14px; }
+.actions .btn svg { width: 16px; height: 16px; flex: none; }
+
+/* ---------- callouts ---------- */
+.callout { border: 2px solid var(--c); background: var(--cs); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.callout .tag { font: 600 11.5px var(--f-mono); letter-spacing: .12em; color: var(--c); }
+.callout.warning { --c: var(--bad); --cs: var(--bad-soft); }
+.callout.caution { --c: var(--warn); --cs: var(--warn-soft); }
+.callout.note { --c: var(--info); --cs: var(--info-soft); border-width: 0 0 0 4px; border-radius: 4px 10px 10px 4px; }
+
+/* ---------- forms ---------- */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 14px; }
+legend { font-family: var(--f-display); font-stretch: 108%; font-weight: 800; font-size: 1.15rem; padding: 0; margin-bottom: 4px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+legend .eyebrow { font-size: 11px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px 14px; }
+.f { display: grid; gap: 5px; min-width: 0; align-content: start; }
+.f label, .f .lab { font-weight: 700; font-size: 14.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.f .hint { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.f.wide { grid-column: 1 / -1; }
+input[type="number"], input[type="text"], select { width: 100%; min-height: 46px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 9px 12px; font: 400 16px var(--f-body); font-variant-numeric: tabular-nums; }
+input[type="number"]:focus, input[type="text"]:focus, select:focus { border-color: var(--brand); outline: 3px solid color-mix(in srgb, var(--brand) 25%, transparent); outline-offset: 0; }
+select:disabled { opacity: .7; }
+.money-in { position: relative; }
+.money-in::before { content: "$"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 700; pointer-events: none; }
+.money-in input { padding-left: 26px; }
+.toggle { display: flex; gap: 10px; align-items: center; min-height: 46px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); cursor: pointer; font-weight: 700; font-size: 14.5px; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--brand); margin: 0; flex: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { border: 1.5px solid var(--line); background: var(--surface-2); color: var(--ink-2); font: 700 13px var(--f-body); font-variant-numeric: tabular-nums; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.chips button:hover { border-color: var(--brand); color: var(--ink); }
+.chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.formbox { display: grid; gap: 26px; }
+.examples { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: space-between; background: var(--gold-soft); border: 1.5px dashed color-mix(in srgb, var(--gold) 70%, var(--ink) 10%); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+
+/* ---------- result ---------- */
+.result { background: var(--brand); color: var(--brand-ink); border-radius: 18px; padding: 20px; display: grid; gap: 12px; box-shadow: var(--shadow); }
+.result .k { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.result .big { font-family: var(--f-display); font-stretch: 118%; font-weight: 900; font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.result .bigsub { font-weight: 700; opacity: .92; }
+.result.nil { background: var(--bad); }
+.result .pill { justify-self: start; background: var(--gold); color: var(--on-gold); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: 14px; }
+.result .per { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; border-top: 1px solid color-mix(in srgb, var(--brand-ink) 25%, transparent); padding-top: 12px; }
+.result .per div { display: grid; }
+.result .per span { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+.result .per b { font-family: var(--f-display); font-stretch: 110%; font-size: 1.15rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.lines { display: grid; }
+.line { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; padding-block: 7px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.line .lab { min-width: 0; }
+.line .val { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; }
+.line.minus .val { color: var(--bad); }
+.line.plus .val { color: var(--good); }
+.line.sub .lab { color: var(--muted); font-size: 14px; padding-left: 12px; }
+.line.sub .val { font-weight: 400; color: var(--muted); font-size: 14px; }
+.line.subtot { border-bottom: 2px solid var(--ink); }
+.line.sec { border-bottom: 0; padding-top: 16px; padding-bottom: 2px; }
+.line.sec .lab { font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
+.line.total { border-bottom: 0; border-top: 3px solid var(--ink); font-size: 1.05rem; padding-top: 10px; margin-top: 6px; }
+.rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rate { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.rate b { display: block; font-family: var(--f-display); font-stretch: 112%; font-size: 1.4rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.rate span { font-size: 13px; color: var(--muted); }
+details.more { border-top: 1px solid var(--line); padding-top: 10px; }
+details.more summary { cursor: pointer; font-weight: 700; color: var(--brand); }
+details.more[open] summary { margin-bottom: 10px; }
+.small { font-size: 13.5px; color: var(--muted); }
+.chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px; font-weight: 700; font-size: 13px; }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.info { background: var(--info-soft); color: var(--info); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+
+/* ---------- tables ---------- */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+td b { font-weight: 700; }
+.ratetable td:first-child { font-weight: 700; min-width: 190px; }
+.ratetable td.r { white-space: nowrap; }
+tr.on td { background: var(--gold-soft); }
+
+/* ---------- saved ---------- */
+.hist { display: grid; gap: 10px; }
+.hcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 8px; }
+.hcard .hh { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; align-items: baseline; }
+.hcard .ht { font-family: var(--f-display); font-stretch: 106%; font-weight: 800; font-size: 1.05rem; }
+.hcard .hv { font-family: var(--f-display); font-stretch: 112%; font-weight: 900; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.hcard .hm { font-size: 13px; color: var(--muted); }
+.empty { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 22px; text-align: center; color: var(--muted); }
+.confirm { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--bad-soft); border: 2px solid var(--bad); border-radius: 12px; padding: 10px 14px; font-weight: 700; }
+
+/* ---------- faq ---------- */
+.faq { display: grid; gap: 8px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.faq summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: minmax(0,1fr) 20px; gap: 12px; padding: 14px 16px; font-family: var(--f-display); font-stretch: 104%; font-weight: 800; font-size: 1.02rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); font-size: 20px; color: var(--muted); text-align: center; line-height: 1.2; }
+.faq details[open] summary::after { content: "–"; }
+.faq .a { padding: 0 16px 14px; color: var(--ink-2); max-width: 72ch; display: grid; gap: 8px; }
+.numlist { margin: 0; padding: 0; list-style: none; counter-reset: n; display: grid; gap: 10px; }
+.numlist li { counter-increment: n; display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; align-items: start; }
+.numlist li::before { content: counter(n); font-family: var(--f-display); font-stretch: 120%; font-weight: 900; font-size: 1.05rem; width: 30px; height: 30px; border-radius: 8px; background: var(--ink); color: var(--bg); display: grid; place-items: center; }
+.plain { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 700; z-index: 60; box-shadow: var(--shadow); max-width: calc(100% - 32px); text-align: center; }
+.livebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--ink); color: var(--bg); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.livebar .lk { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
+.livebar .lv { font-family: var(--f-display); font-stretch: 112%; font-weight: 900; font-size: 1.4rem; line-height: 1.1; color: var(--gold); }
+.livebar button { background: var(--gold); color: var(--on-gold); border: 0; border-radius: 999px; padding: 8px 14px; font: 700 14px var(--f-body); cursor: pointer; }
+@media (min-width: 901px) { .livebar { display: none; } }
+@media (max-width: 900px) { main { padding-bottom: 110px; } }
+.foot { padding-block: 26px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; display: grid; gap: 10px; }
+.foot ul { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; }
+.print-only { display: none; }
+.brand .owner { display: block; font-size: clamp(.95rem, 2.4vw, 1.12rem); font-stretch: 112%; font-weight: 800; letter-spacing: .06em; color: var(--brand); line-height: 1.2; margin-bottom: 8px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+@media print {
+  :root, body { background: #fff !important; color: #000 !important; }
+  .jump, .top-meta, .back, .badges, .livebar, .toast, .actions, .formbox, #rates, #saved, #faq, #how, .examples, details.more summary { display: none !important; }
+  .print-only { display: block; }
+  main { padding: 0; gap: 16px; }
+  .split { grid-template-columns: 1fr; }
+  .stick { position: static; }
+  .result { background: #fff !important; color: #000 !important; border: 3px solid #000; box-shadow: none; }
+  .box { border-color: #999; }
+  details.more > * { display: block; }
+  .foot { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div>
+      <a class="back" href="index.html">← Finance and Taxation</a>
+      <h1 class="brand"><span class="owner">Wolf Harrold's GitHub Tools<span class="vh"> - </span></span>Basic <span class="yr">rate</span></h1>
+      <p class="sub">Work out a Centrelink payment rate. The tool applies the income test, the assets test, deeming, the Work Bonus and Rent Assistance.</p>
+      <div class="badges">
+        <span class="badge"><i></i>DSS rates from 20 Sep 2026</span>
+        <span class="badge">Checked 13 Oct 2026</span>
+        <span class="badge">Stays on your device</span>
+      </div>
+    </div>
+    <div class="top-meta">
+      <span class="deadline"><b>20 Mar</b> next rate change</span>
+      <button class="ghost" id="themeBtn" type="button">Dim mode</button>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Sections">
+  <div class="wrap jump-in">
+    <a href="#calc" class="on"><span class="tn">01</span>Calculator</a>
+    <a href="#rates"><span class="tn">02</span>Rates</a>
+    <a href="#saved"><span class="tn">03</span>Saved</a>
+    <a href="#faq"><span class="tn">04</span>FAQ</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= CALCULATOR ================= -->
+<section class="panel" id="calc">
+  <div class="panel-head">
+    <span class="eyebrow">Centrelink · basic rate of payment</span>
+    <h2>How much is paid each fortnight?</h2>
+    <p class="lede">Choose the payment. Enter income and assets for one fortnight, before tax. The rate updates as you type.</p>
+  </div>
+  <div class="print-only" id="printInputs"></div>
+  <div class="split">
+    <form class="box formbox" id="brForm" autocomplete="off">
+      <div class="examples" id="exampleBar" hidden>
+        <span>Example figures: a single JobSeeker renter who earns $300 a fortnight.</span>
+        <button class="btn small" type="button" id="clearExample">Clear example</button>
+      </div>
+
+      <fieldset>
+        <legend>Payment</legend>
+        <div class="fields">
+          <div class="f"><label for="br-pay">Payment type</label>
+            <select id="br-pay">
+              <optgroup label="Allowances">
+                <option value="jsp">JobSeeker Payment</option>
+                <option value="ppp">Parenting Payment Partnered</option>
+              </optgroup>
+              <optgroup label="Pensions">
+                <option value="age">Age Pension</option>
+                <option value="dsp">Disability Support Pension (21 or over)</option>
+                <option value="carer">Carer Payment</option>
+                <option value="pps">Parenting Payment Single</option>
+              </optgroup>
+            </select></div>
+          <div class="f"><label for="br-rel">Relationship</label>
+            <select id="br-rel"><option value="single">Single</option><option value="couple">Partnered (member of a couple)</option></select>
+            <span class="hint" id="relHint" hidden></span></div>
+          <div class="f" id="wrap-sit"><label for="br-sit">JobSeeker situation</label>
+            <select id="br-sit">
+              <option value="nokids">No dependent children</option>
+              <option value="kids">Has dependent children</option>
+              <option value="pc">Principal carer of a dependent child</option>
+              <option value="s55">Aged 55 or over, 9+ months on payment</option>
+              <option value="pcw">Partial capacity to work, 0 to 14 hours</option>
+            </select></div>
+          <div class="f" id="wrap-kids"><label for="br-kids">Dependent children</label>
+            <select id="br-kids"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6 or more</option></select>
+            <span class="hint" id="kidsHint">Sets the Rent Assistance rate.</span></div>
+          <div class="f" id="wrap-wb"><span class="lab">Work Bonus</span>
+            <label class="toggle" for="br-wb"><input type="checkbox" id="br-wb"> Age Pension age: first $300 of work pay not counted</label></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Income <span class="eyebrow">per fortnight, before tax</span></legend>
+        <div class="fields">
+          <div class="f"><label for="br-emp">Pay from work</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-emp"></div>
+            <div class="chips" data-for="br-emp"><button type="button" data-v="0">$0</button><button type="button" data-v="150">$150</button><button type="button" data-v="300">$300</button><button type="button" data-v="500">$500</button><button type="button" data-v="1000">$1,000</button><button type="button" data-v="1500">$1,500</button></div></div>
+          <div class="f"><label for="br-oth">Other income</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-oth"></div>
+            <span class="hint">Rent received, business, overseas pensions. Do not add bank interest or shares here.</span></div>
+        </div>
+        <div class="fields" id="wrap-partner">
+          <div class="f"><label for="br-pemp">Partner's pay from work</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-pemp"></div></div>
+          <div class="f"><label for="br-poth">Partner's other income</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-poth"></div></div>
+          <div class="f" id="wrap-pwb"><span class="lab">Partner's Work Bonus</span>
+            <label class="toggle" for="br-pwb"><input type="checkbox" id="br-pwb"> Partner also gets the Work Bonus</label></div>
+          <div class="f"><span class="lab">Partner's payment</span>
+            <label class="toggle" for="br-pboth"><input type="checkbox" id="br-pboth"> Partner also gets a Centrelink payment</label></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Assets <span class="eyebrow" id="assetsEyebrow">your total</span></legend>
+        <div class="fields">
+          <div class="f"><label for="br-fin">Bank, shares and investments</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-fin"></div>
+            <span class="hint" id="finHint">Deemed to earn income at 1.75% and 3.75%.</span></div>
+          <div class="f"><label for="br-ast">Other assets</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-ast"></div>
+            <span class="hint">Cars, contents, investment property. Not the home you live in.</span></div>
+          <div class="f"><span class="lab">Home</span>
+            <label class="toggle" for="br-home"><input type="checkbox" id="br-home"> Owns the home they live in</label></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Rent</legend>
+        <div class="fields">
+          <div class="f"><span class="lab">Private rent</span>
+            <label class="toggle" for="br-rent"><input type="checkbox" id="br-rent"> Pays private rent or board</label></div>
+          <div class="f" id="wrap-rentamt"><label for="br-rentamt">Rent per fortnight</label>
+            <div class="money-in"><input type="number" inputmode="decimal" min="0" step="any" id="br-rentamt"></div>
+            <div class="chips" data-for="br-rentamt"><button type="button" data-v="400">$400</button><button type="button" data-v="600">$600</button><button type="button" data-v="800">$800</button><button type="button" data-v="1000">$1,000</button></div></div>
+          <div class="f" id="wrap-share"><span class="lab">Sharer</span>
+            <label class="toggle" for="br-share"><input type="checkbox" id="br-share"> Shares kitchen or bathroom with other adults</label></div>
+        </div>
+        <div class="callout note"><span class="tag">NOTE</span><span>Public housing tenants do not get Rent Assistance. With dependent children, Rent Assistance is paid with Family Tax Benefit Part A.</span></div>
+      </fieldset>
+    </form>
+
+    <div class="stick">
+      <div class="result" id="brResult" aria-live="polite">
+        <span class="k">Fortnightly rate · from 20 Sep 2026</span>
+        <div class="big" id="brBig">$0.00</div>
+        <div class="bigsub" id="brSub">JobSeeker Payment</div>
+        <span class="pill" id="brPill">Full rate</span>
+        <div class="per">
+          <div><span>Per week</span><b id="brWeek">$0</b></div>
+          <div><span>Per year</span><b id="brYear">$0</b></div>
+          <div><span>Maximum</span><b id="brMax">$0</b></div>
+        </div>
+      </div>
+      <div class="actions" aria-label="Result actions">
+        <button class="btn" type="button" id="aCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>Copy</button>
+        <button class="btn" type="button" id="aSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Save</button>
+        <button class="btn" type="button" id="aCsv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>CSV</button>
+        <button class="btn" type="button" id="aEmail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</button>
+        <button class="btn" type="button" id="aPrint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>Print</button>
+        <button class="btn primary" type="button" id="aBudget">Add to my budget</button>
+      </div>
+      <div class="box" style="display:grid; gap:14px">
+        <h3>How the rate is worked out</h3>
+        <div class="lines" id="brLines"></div>
+        <div class="rates">
+          <div class="rate"><b id="brCut">$0</b><span id="brCutL">Payment stops at this pay from work</span></div>
+          <div class="rate"><b id="brKeep">$0</b><span>Kept from $100 more pay</span></div>
+        </div>
+        <details class="more" open>
+          <summary>Income test for this payment</summary>
+          <div class="tablewrap"><table><thead><tr><th>Income per fortnight</th><th class="r">Payment reduces by</th></tr></thead><tbody id="brBands"></tbody></table></div>
+        </details>
+        <p class="small" id="brNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RATES ================= -->
+<section class="panel" id="rates">
+  <div class="panel-head">
+    <span class="eyebrow">DSS Social Security Payment Parameters · 20 Sep 2026</span>
+    <h2>Rates and limits</h2>
+    <p class="lede">Maximum rates per fortnight from 20 September 2026. Income free areas and asset limits from 1 July 2026. Rates change again on 20 March 2027.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="ratetable">
+      <thead><tr><th>Payment</th><th class="r">Basic rate</th><th class="r">Supplements</th><th class="r">Maximum rate</th><th>Income test</th></tr></thead>
+      <tbody>
+        <tr><td>JobSeeker · single, no children</td><td class="r">$824.90</td><td class="r">$8.80</td><td class="r"><b>$833.70</b></td><td>$150 free · 50c to $256 · 60c above</td></tr>
+        <tr><td>JobSeeker · single, with children</td><td class="r">$883.30</td><td class="r">$9.50</td><td class="r"><b>$892.80</b></td><td>$150 free · 50c to $256 · 60c above</td></tr>
+        <tr><td>JobSeeker · single principal carer</td><td class="r">$883.30</td><td class="r">$16.50</td><td class="r"><b>$899.80</b></td><td>$150 free · 40c above</td></tr>
+        <tr><td>JobSeeker · 55+ after 9 months, or partial capacity</td><td class="r">$883.30</td><td class="r">$16.50</td><td class="r"><b>$899.80</b></td><td>$150 free · 50c to $256 · 60c above</td></tr>
+        <tr><td>JobSeeker · partnered, each</td><td class="r">$755.10</td><td class="r">$7.90</td><td class="r"><b>$763.00</b></td><td>$150 free · 50c to $256 · 60c above · partner over $1,440: 60c</td></tr>
+        <tr><td>Parenting Payment Partnered, each</td><td class="r">$755.10</td><td class="r">$7.90</td><td class="r"><b>$763.00</b></td><td>As JobSeeker partnered</td></tr>
+        <tr><td>Parenting Payment Single</td><td class="r">$1,037.50</td><td class="r">$49.70</td><td class="r"><b>$1,087.20</b></td><td>$232.60 free (+$24.60 each extra child) · 40c above</td></tr>
+        <tr><td>Age Pension, DSP 21+, Carer Payment · single</td><td class="r">$1,135.40</td><td class="r">$102.30</td><td class="r"><b>$1,237.70</b></td><td>$226 free · 50c above</td></tr>
+        <tr><td>Age Pension, DSP 21+, Carer Payment · couple, each</td><td class="r">$855.90</td><td class="r">$77.10</td><td class="r"><b>$933.00</b></td><td>$396 combined free · 50c combined (25c each)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">Supplements are the Pension Supplement, Energy Supplement and Pharmaceutical Allowance that apply to each rate. The Work Bonus takes the first $300 a fortnight of work pay out of the pension income test.</p>
+  <div class="grid2">
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Assets test · from 1 July 2026</h3>
+      <div class="tablewrap"><table><thead><tr><th></th><th class="r">Homeowner</th><th class="r">Non-homeowner</th></tr></thead><tbody>
+        <tr><td>Single</td><td class="r">$333,000</td><td class="r">$600,000</td></tr>
+        <tr><td>Couple, combined</td><td class="r">$499,000</td><td class="r">$766,000</td></tr>
+      </tbody></table></div>
+      <p class="small">Allowances (JobSeeker, Parenting Payment) stop above these limits. Pensions reduce by $3 a fortnight for each $1,000 over (couples $1.50 each). Pensions stop at $745,750 single homeowner, $1,012,750 single non-homeowner, $1,121,000 couple homeowner and $1,388,000 couple non-homeowner.</p>
+    </div>
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Rent Assistance · from 20 Sep 2026</h3>
+      <div class="tablewrap"><table><thead><tr><th></th><th class="r">Rent above</th><th class="r">Maximum</th></tr></thead><tbody>
+        <tr><td>Single</td><td class="r">$157.80</td><td class="r">$223.80</td></tr>
+        <tr><td>Single sharer</td><td class="r">$157.80</td><td class="r">$149.20</td></tr>
+        <tr><td>Couple, combined</td><td class="r">$255.80</td><td class="r">$211.00</td></tr>
+        <tr><td>Single, 1–2 children</td><td class="r">$207.34</td><td class="r">$263.06</td></tr>
+        <tr><td>Single, 3+ children</td><td class="r">$207.34</td><td class="r">$297.36</td></tr>
+        <tr><td>Couple, 1–2 children</td><td class="r">$306.60</td><td class="r">$263.06</td></tr>
+        <tr><td>Couple, 3+ children</td><td class="r">$306.60</td><td class="r">$297.36</td></tr>
+      </tbody></table></div>
+      <p class="small">Rent Assistance pays 75c for each dollar of rent above the threshold, up to the maximum.</p>
+    </div>
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Deeming · from 20 Sep 2026</h3>
+      <div class="tablewrap"><table><thead><tr><th></th><th class="r">1.75% on the first</th><th class="r">3.75% above</th></tr></thead><tbody>
+        <tr><td>Single</td><td class="r">$66,800</td><td class="r">$66,800</td></tr>
+        <tr><td>Pensioner couple, combined</td><td class="r">$110,600</td><td class="r">$110,600</td></tr>
+        <tr><td>Non-pensioner couple, each</td><td class="r">$55,300</td><td class="r">$55,300</td></tr>
+      </tbody></table></div>
+      <p class="small">Centrelink counts this deemed income instead of the interest or dividends you actually get.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SAVED ================= -->
+<section class="panel" id="saved">
+  <div class="panel-head">
+    <span class="eyebrow">Saved results · this device</span>
+    <h2>Saved results</h2>
+    <p class="lede">Press <b>Save</b> on a result to keep it here. The Finance and Taxation page shows the same list in its Saved tab.</p>
+  </div>
+  <div class="btn-row">
+    <button class="btn small" type="button" id="hCsv">Export all as CSV</button>
+    <button class="btn small" type="button" id="hClear">Clear saved results</button>
+  </div>
+  <div id="hConfirm" hidden></div>
+  <div class="hist" id="hist"></div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="panel" id="faq">
+  <div class="panel-head">
+    <span class="eyebrow">Questions</span>
+    <h2>Common questions</h2>
+  </div>
+  <div class="faq">
+    <details><summary>What is the "basic rate"?</summary><div class="a"><p>The basic rate is the core part of a payment before supplements. Centrelink adds supplements, such as the Energy Supplement and Pension Supplement, to make the maximum rate. The income test and assets test then reduce the maximum rate. This tool shows each part.</p></div></details>
+    <details><summary>How does the income test work?</summary><div class="a"><p>Each payment has an income free area. Income below it does not change the payment. Above it, each extra dollar reduces the payment by a set amount: 50c or 60c for JobSeeker, 40c for Parenting Payment Single and principal carers, and 50c for pensions.</p><p>Income is gross, before tax. Report it for the fortnight you earned it.</p></div></details>
+    <details><summary>Which test applies, income or assets?</summary><div class="a"><p>Centrelink works out the rate under both tests and pays the lower result. For allowances such as JobSeeker, the assets test is a limit: above it, no payment. For pensions, the payment reduces by $3 a fortnight for each $1,000 over the limit.</p></div></details>
+    <details><summary>What is deeming?</summary><div class="a"><p>Centrelink assumes bank accounts, shares and other financial investments earn a set rate. From 20 September 2026 the rates are 1.75% on the first $66,800 (single) and 3.75% above. Enter the value of the investments, not the interest you get.</p></div></details>
+    <details><summary>What is the Work Bonus?</summary><div class="a"><p>For people over Age Pension age, the first $300 a fortnight of pay from work is not counted. Unused amounts build up to $11,800. This tool applies the $300 a fortnight only. It does not use a saved-up balance.</p></div></details>
+    <details><summary>Does a partner's income matter?</summary><div class="a"><p>Yes. For pensions, the couple's income and assets are added together. For JobSeeker and Parenting Payment Partnered, the partner's income above $1,440 a fortnight reduces the payment by 60c for each dollar.</p></div></details>
+    <details><summary>Why is my real payment different?</summary><div class="a"><p>This is an estimate. Waiting periods, the Income Maintenance Period, Working Credit, the income bank, compensation, overseas pensions and the Work Bonus balance can change the real amount. Use the Payment and Service Finder or your Centrelink online account for the exact figure.</p></div></details>
+  </div>
+</section>
+
+<section class="panel" id="how">
+  <div class="panel-head">
+    <span class="eyebrow">Method</span>
+    <h2>How this calculator works</h2>
+  </div>
+  <div class="grid2">
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Steps</h3>
+      <ol class="numlist">
+        <li><span><b>Build the maximum rate.</b> Basic rate, plus supplements, plus Rent Assistance for people without children.</span></li>
+        <li><span><b>Count income.</b> Pay from work (less the Work Bonus for pensioners), other income and deemed income from investments.</span></li>
+        <li><span><b>Apply the income test.</b> Take away the reduction for income above the free area, and for partner income where it applies.</span></li>
+        <li><span><b>Apply the assets test.</b> Compare assets with the limit for a homeowner or non-homeowner.</span></li>
+        <li><span><b>Pay the lower result.</b> The rate is the lower of the two tests.</span></li>
+      </ol>
+    </div>
+    <div class="box" style="display:grid; gap:12px">
+      <h3>Not included</h3>
+      <ul class="plain">
+        <li>Youth Allowance, Austudy, ABSTUDY and Special Benefit</li>
+        <li>Waiting periods and the Income Maintenance Period</li>
+        <li>Working Credit, the student income bank and the Work Bonus balance</li>
+        <li>Partners who get a pension when the claimant gets an allowance</li>
+        <li>Over Age Pension age rules for allowances</li>
+        <li>Remote Area Allowance and other add-ons</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap foot">
+  <p><b>Estimate only.</b> This is not financial advice. Centrelink decides the actual rate. Check with the <a href="https://www.servicesaustralia.gov.au/payment-and-service-finder" target="_blank" rel="noopener">Payment and Service Finder</a> or your Centrelink online account.</p>
+  <p><b>Your figures stay on your device.</b> They are saved in your browser only. Figures checked 13 October 2026 against:</p>
+  <ul>
+    <li><a href="https://www.dss.gov.au/system/files/documents/2026-08/rates-list-20-september-2026.pdf" target="_blank" rel="noopener">DSS Social Security Payment Parameters, 20 September 2026</a></li>
+    <li><a href="https://www.servicesaustralia.gov.au/individuals/services/centrelink/jobseeker-payment/how-much-you-can-get/income-and-assets-tests" target="_blank" rel="noopener">Services Australia: JobSeeker income and assets tests</a> · <a href="https://www.servicesaustralia.gov.au/individuals/services/centrelink/parenting-payment/who-can-get-it/assets-test" target="_blank" rel="noopener">Parenting Payment assets test</a></li>
+    <li><a href="https://www.servicesaustralia.gov.au/individuals/services/centrelink/work-bonus/how-it-works" target="_blank" rel="noopener">Services Australia: Work Bonus</a> · <a href="https://ministers.dss.gov.au/node/19221" target="_blank" rel="noopener">DSS: September 2026 indexation and deeming rates</a></li>
+    <li><a href="https://guides.dss.gov.au/guide-social-security-law/4/3/4/10" target="_blank" rel="noopener">Guide to Social Security Law: Income Maintenance Period</a></li>
+  </ul>
+</footer>
+
+<div class="livebar" id="livebar">
+  <div><div class="lk" id="liveK">Fortnightly rate</div><div class="lv" id="liveV">$0</div></div>
+  <button type="button" id="liveBtn">See breakdown</button>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/*CALC-START*/
+const R = {
+  pen: { single: { basic: 1135.40, ps: 88.20, es: 14.10 }, couple: { basic: 855.90, ps: 66.50, es: 10.60 } },
+  jsp: {
+    nokids: { label: 'single, no children', basic: 824.90, es: 8.80, pha: 0 },
+    kids:   { label: 'single, with dependent children', basic: 883.30, es: 9.50, pha: 0 },
+    pc:     { label: 'single principal carer', basic: 883.30, es: 9.50, pha: 7.00, taper40: true },
+    s55:    { label: 'single, 55 or over', basic: 883.30, es: 9.50, pha: 7.00 },
+    pcw:    { label: 'single, partial capacity to work', basic: 883.30, es: 9.50, pha: 7.00 },
+    couple: { label: 'partnered', basic: 755.10, es: 7.90, pha: 0 }
+  },
+  pps: { basic: 1037.50, ps: 30.70, pha: 7.00, es: 12.00 },
+  ppp: { basic: 755.10, es: 7.90 },
+  inc: { penSingle: 226, penCouple: 396, alFree: 150, alBand: 256, ppsFree: 232.60, ppsChild: 24.60, partnerFree: 1440, wb: 300 },
+  ast: { home: { single: 333000, couple: 499000 }, rent: { single: 600000, couple: 766000 } },
+  deem: { low: 0.0175, high: 0.0375, single: 66800, couple: 110600, each: 55300 },
+  ra: { single: { th: 157.80, max: 223.80 }, sharer: { th: 157.80, max: 149.20 }, couple: { th: 255.80, max: 211.00 },
+        famSingle: 207.34, famCouple: 306.60, fam12: 263.06, fam3: 297.36 }
+};
+const PAYS = {
+  jsp: { name: 'JobSeeker Payment', kind: 'allow' },
+  ppp: { name: 'Parenting Payment Partnered', kind: 'allow', rel: 'couple', kids: true },
+  pps: { name: 'Parenting Payment Single', kind: 'pps', rel: 'single', kids: true },
+  age: { name: 'Age Pension', kind: 'pen' },
+  dsp: { name: 'Disability Support Pension', kind: 'pen' },
+  carer: { name: 'Carer Payment', kind: 'pen' }
+};
+const r2 = v => Math.round((v + (v >= 0 ? 1e-9 : -1e-9)) * 100) / 100;
+const pos = v => Math.max(0, +v || 0);
+function deemed(fin, threshold) { fin = pos(fin); return (Math.min(fin, threshold) * R.deem.low + Math.max(0, fin - threshold) * R.deem.high) / 26; }
+
+function basicRate(i) {
+  const P = PAYS[i.pay] || PAYS.jsp, kind = P.kind;
+  const couple = P.rel ? P.rel === 'couple' : i.rel === 'couple';
+  const sitKey = couple ? 'couple' : (R.jsp[i.sit] ? i.sit : 'nokids');
+  let kids = Math.max(0, Math.floor(+i.kids || 0));
+  if (P.kids && kids < 1) kids = 1;
+  const hasKids = kids > 0 || (i.pay === 'jsp' && !couple && (i.sit === 'kids' || i.sit === 'pc'));
+  const nKids = Math.max(kids, hasKids ? 1 : 0);
+
+  // 1. maximum rate
+  let comp;
+  if (kind === 'pen') { const c = couple ? R.pen.couple : R.pen.single; comp = [['Basic rate', c.basic], ['Pension Supplement', c.ps], ['Energy Supplement', c.es]]; }
+  else if (kind === 'pps') comp = [['Basic rate', R.pps.basic], ['Pension Supplement (basic amount)', R.pps.ps], ['Pharmaceutical Allowance', R.pps.pha], ['Energy Supplement', R.pps.es]];
+  else if (i.pay === 'ppp') comp = [['Basic rate', R.ppp.basic], ['Energy Supplement', R.ppp.es]];
+  else { const s = R.jsp[sitKey]; comp = [['Basic rate', s.basic]]; if (s.pha) comp.push(['Pharmaceutical Allowance', s.pha]); comp.push(['Energy Supplement', s.es]); }
+
+  // rent assistance
+  const rent = i.rent ? pos(i.rentAmt) : 0;
+  let ra = 0, raFam = 0, raNote = '';
+  if (rent > 0) {
+    if (hasKids) {
+      const th = couple ? R.ra.famCouple : R.ra.famSingle, mx = nKids >= 3 ? R.ra.fam3 : R.ra.fam12;
+      raFam = r2(Math.min(mx, 0.75 * Math.max(0, rent - th)));
+    } else {
+      const t = couple ? R.ra.couple : (i.share ? R.ra.sharer : R.ra.single);
+      let v = Math.min(t.max, 0.75 * Math.max(0, rent - t.th));
+      if (couple && i.pboth) { v /= 2; raNote = 'half the couple amount'; }
+      ra = r2(v);
+    }
+  }
+  const basicTotal = r2(comp.reduce((s, c) => s + c[1], 0));
+  const max = r2(basicTotal + ra);
+
+  // 2. income
+  const wb = kind === 'pen' && !!i.wb;
+  const emp = pos(i.emp), oth = pos(i.oth);
+  const pemp = couple ? pos(i.pemp) : 0, poth = couple ? pos(i.poth) : 0;
+  const wbOwn = wb ? Math.min(R.inc.wb, emp) : 0;
+  const wbP = wb && couple && i.pwb ? Math.min(R.inc.wb, pemp) : 0;
+  const fin = pos(i.fin), other = pos(i.ast);
+  let deemOwn = 0, deemP = 0, deemCouple = 0;
+  if (kind === 'pen') { if (couple) deemCouple = deemed(fin, R.deem.couple); else deemOwn = deemed(fin, R.deem.single); }
+  else if (couple) { deemOwn = deemed(fin / 2, R.deem.each); deemP = deemed(fin / 2, R.deem.each); }
+  else deemOwn = deemed(fin, R.deem.single);
+
+  let assess, free, red = 0, pAssess = 0, pRed = 0, bands = [];
+  if (kind === 'pen') {
+    if (couple) {
+      assess = emp - wbOwn + oth + pemp - wbP + poth + deemCouple; free = R.inc.penCouple;
+      red = 0.25 * Math.max(0, assess - free);
+      bands = [[`$0 – $${free} combined`, 'Nothing'], [`Over $${free} combined`, '25c each ($1 per $2 combined)']];
+    } else {
+      assess = emp - wbOwn + oth + deemOwn; free = R.inc.penSingle;
+      red = 0.5 * Math.max(0, assess - free);
+      bands = [[`$0 – $${free}`, 'Nothing'], [`Over $${free}`, '50c per $1']];
+    }
+  } else if (kind === 'pps') {
+    assess = emp + oth + deemOwn; free = r2(R.inc.ppsFree + R.inc.ppsChild * Math.max(0, kids - 1));
+    red = 0.4 * Math.max(0, assess - free);
+    bands = [[`$0 – ${money2(free)}`, 'Nothing'], [`Over ${money2(free)}`, '40c per $1']];
+  } else {
+    assess = emp + oth + deemOwn; free = R.inc.alFree;
+    if (!couple && R.jsp[sitKey].taper40 && i.pay === 'jsp') {
+      red = 0.4 * Math.max(0, assess - free);
+      bands = [['$0 – $150', 'Nothing'], ['Over $150', '40c per $1']];
+    } else {
+      red = 0.5 * Math.min(Math.max(0, assess - free), R.inc.alBand - free) + 0.6 * Math.max(0, assess - R.inc.alBand);
+      bands = [['$0 – $150', 'Nothing'], ['$150 – $256', '50c per $1'], ['Over $256', '60c per $1']];
+    }
+    if (couple) {
+      pAssess = pemp + poth + deemP;
+      pRed = 0.6 * Math.max(0, pAssess - R.inc.partnerFree);
+      bands.push([`Partner's income over $${R.inc.partnerFree.toLocaleString('en-AU')}`, '60c per $1']);
+    }
+  }
+  const redRaw = red + pRed;
+  red = r2(redRaw);
+  const incRate = r2(Math.max(0, max - red));
+
+  // 3. assets
+  const assets = fin + other;
+  const limit = (i.home ? R.ast.home : R.ast.rent)[couple ? 'couple' : 'single'];
+  let aRed = 0, over = false, astRate;
+  let aRaw = 0;
+  if (kind === 'pen') { aRaw = (couple ? 1.5 : 3) * Math.max(0, assets - limit) / 1000; aRed = r2(aRaw); astRate = r2(Math.max(0, max - aRed)); }
+  else { over = assets > limit; astRate = over ? 0 : max; }
+  const rawRate = Math.min(max - redRaw, kind === 'pen' ? max - aRaw : (over ? 0 : max));
+
+  const rate = Math.min(incRate, astRate);
+  const test = rate >= max - 0.004 ? 'full' : (astRate < incRate ? 'assets' : 'income');
+  return { P, kind, couple, kids, hasKids, sitKey, comp, basicTotal, ra, raFam, raNote, rent, max,
+    wb, emp, oth, pemp, poth, wbOwn, wbP, fin, deemOwn, deemP, deemCouple, assess, pAssess, free, red, pRed, incRate,
+    assets, limit, aRed, over, astRate, rate, rawRate, test, bands };
+}
+function cutOff(i) {
+  const at = e => basicRate(Object.assign({}, i, { emp: e })).rawRate;
+  if (at(0) <= 1e-9) return 0;
+  let lo = 0, hi = 20000;
+  if (at(hi) > 1e-9) return null;
+  for (let k = 0; k < 60; k++) { const m = (lo + hi) / 2; if (at(m) > 1e-9) lo = m; else hi = m; }
+  return Math.ceil(lo * 100) / 100;
+}
+/*CALC-END*/
+
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('tt26.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('tt26.' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const fmt0 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 });
+const fmt2 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function money(v) { return fmt0.format(Math.round(v)); }
+function money2(v) { return fmt2.format(v); }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2600); }
+
+/* ---------- share tools (copy, CSV, email, history) ---------- */
+function copyText(text) {
+  const fallback = () => {
+    const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove(); toast(ok ? 'Copied' : 'Copy did not work. Select the text and copy it.');
+  };
+  try { navigator.clipboard.writeText(text).then(() => toast('Copied'), fallback); } catch (e) { fallback(); }
+}
+function csvOf(rows) { return rows.map(r => r.map(c => { c = String(c == null ? '' : c); return /[",\r\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(',')).join('\r\n'); }
+function downloadFile(name, text, type) {
+  try {
+    const url = URL.createObjectURL(new Blob(['﻿' + text], { type: type || 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 800);
+    toast('Downloaded ' + name);
+  } catch (e) { copyText(text); }
+}
+function emailText(subject, body) { window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body); }
+function stamp() { return new Date().toLocaleString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+function histGet() { const h = store.get('history', []); return Array.isArray(h) ? h : []; }
+function histAdd(entry) { const h = histGet(); h.unshift(Object.assign({ id: Date.now().toString(36), at: stamp() }, entry)); store.set('history', h.slice(0, 100)); }
+
+/* ---------- theme ---------- */
+(function theme() {
+  const root = document.documentElement;
+  const apply = m => { root.dataset.theme = m; $('#themeBtn').textContent = m === 'dark' ? 'Bright mode' : 'Dim mode'; };
+  apply(store.get('theme', 'light'));
+  $('#themeBtn').addEventListener('click', () => { const m = root.dataset.theme === 'dark' ? 'light' : 'dark'; apply(m); store.set('theme', m); });
+})();
+
+/* ---------- form state ---------- */
+const DEF = { pay: 'jsp', rel: 'single', sit: 'nokids', kids: '0', wb: true, pwb: false, pboth: true, emp: 0, oth: 0, pemp: 0, poth: 0, fin: 0, ast: 0, home: false, rent: false, rentamt: 0, share: false };
+const EXAMPLE = Object.assign({}, DEF, { emp: 300, fin: 4000, ast: 9000, rent: true, rentamt: 620 });
+let saved = store.get('br', null);
+let isExample = !saved;
+let state = Object.assign({}, DEF, saved || EXAMPLE);
+
+function fill(s) {
+  for (const [k, v] of Object.entries(s)) {
+    const el = $('#br-' + k); if (!el) continue;
+    if (el.type === 'checkbox') el.checked = !!v; else el.value = (el.type === 'number' && (v === 0 || v === '')) ? '' : v;
+  }
+}
+function read() {
+  const o = {};
+  for (const [k, v] of Object.entries(DEF)) {
+    const el = $('#br-' + k); if (!el) { o[k] = v; continue; }
+    if (el.type === 'checkbox') o[k] = el.checked;
+    else if (typeof v === 'number') { const n = parseFloat(el.value); o[k] = isFinite(n) ? n : 0; }
+    else o[k] = el.value;
+  }
+  return o;
+}
+function inputsOf(s) {
+  return { pay: s.pay, rel: s.rel, sit: s.sit, kids: +s.kids, wb: s.wb, pwb: s.pwb, pboth: s.pboth, emp: s.emp, oth: s.oth, pemp: s.pemp, poth: s.poth,
+    fin: s.fin, ast: s.ast, home: s.home, rent: s.rent, rentAmt: s.rentamt, share: s.share };
+}
+
+/* ---------- render ---------- */
+let last = null;
+function render() {
+  const s = read();
+  const P = PAYS[s.pay];
+  // force relationship for Parenting Payment
+  const relSel = $('#br-rel');
+  if (P.rel) { relSel.value = P.rel; relSel.disabled = true; $('#relHint').hidden = false; $('#relHint').textContent = P.rel === 'single' ? 'Parenting Payment Single is for single parents.' : 'Parenting Payment Partnered is for people with a partner.'; s.rel = P.rel; }
+  else { relSel.disabled = false; $('#relHint').hidden = true; }
+  if (P.kids && +s.kids < 1) { $('#br-kids').value = '1'; s.kids = '1'; }
+  const couple = s.rel === 'couple';
+  $('#wrap-sit').hidden = !(s.pay === 'jsp' && !couple);
+  $('#wrap-wb').hidden = P.kind !== 'pen';
+  $('#wrap-partner').hidden = !couple;
+  $('#wrap-pwb').hidden = !(P.kind === 'pen' && s.wb);
+  $('#wrap-rentamt').hidden = !s.rent;
+  $('#wrap-share').hidden = !s.rent || couple || +s.kids > 0;
+  $('#assetsEyebrow').textContent = couple ? 'you and your partner, combined' : 'your total';
+  $('#finHint').textContent = 'Deemed to earn 1.75% on the first ' + (P.kind === 'pen' && couple ? '$110,600' : couple ? '$55,300 each' : '$66,800') + ', then 3.75%.';
+  $('#kidsHint').textContent = P.kind === 'pps' ? 'Each child after the first adds $24.60 to the income free area.' : 'Sets the Rent Assistance rate.';
+
+  const i = inputsOf(s);
+  const r = basicRate(i); last = { r, s, i };
+  const cut = cutOff(i);
+  const plus = basicRate(Object.assign({}, i, { emp: i.emp + 100 }));
+  const keep = 100 - (r.rate - plus.rate);
+
+  // result card
+  const who = s.pay === 'jsp' ? R.jsp[r.sitKey].label : (couple ? 'partnered, each' : 'single');
+  $('#brBig').textContent = money2(r.rate);
+  $('#brSub').textContent = `${P.name} · ${who}`;
+  $('#brResult').classList.toggle('nil', r.rate <= 0);
+  $('#brPill').textContent = r.test === 'full' ? 'Full rate' : r.rate <= 0 ? (r.test === 'assets' ? 'Not payable: assets test' : 'Not payable: income test') : r.test === 'assets' ? 'Part rate: assets test applies' : 'Part rate: income test applies';
+  $('#brWeek').textContent = money2(r.rate / 2);
+  $('#brYear').textContent = money(r.rate * 26);
+  $('#brMax').textContent = money2(r.max);
+
+  // breakdown
+  const L = [];
+  const line = (lab, val, cls = '') => L.push(`<div class="line ${cls}"><span class="lab">${lab}</span><span class="val">${val}</span></div>`);
+  line('Maximum rate', '', 'sec');
+  r.comp.forEach(c => line(esc(c[0]), money2(c[1]), 'sub'));
+  if (r.ra > 0) line('Rent Assistance' + (r.raNote ? ` (${r.raNote})` : ''), '+' + money2(r.ra), 'sub');
+  line('<b>Maximum rate</b>', '<b>' + money2(r.max) + '</b>', 'subtot');
+  line('Income test', '', 'sec');
+  if (r.emp > 0) line('Pay from work', money2(r.emp), 'sub');
+  if (r.wbOwn > 0) line('Work Bonus', '−' + money2(r.wbOwn), 'sub');
+  if (r.oth > 0) line('Other income', money2(r.oth), 'sub');
+  const deem = r.deemOwn + r.deemCouple;
+  if (deem > 0) line(`Deemed income on ${money(r.fin)}${r.couple && r.kind !== 'pen' ? ' (your half)' : ''}`, money2(deem), 'sub');
+  if (r.couple && r.kind === 'pen') {
+    if (r.pemp > 0) line("Partner's pay from work", money2(r.pemp), 'sub');
+    if (r.wbP > 0) line("Partner's Work Bonus", '−' + money2(r.wbP), 'sub');
+    if (r.poth > 0) line("Partner's other income", money2(r.poth), 'sub');
+  }
+  line(r.couple && r.kind === 'pen' ? 'Combined income counted' : 'Income counted', money2(r.assess));
+  line('Income free area', money2(r.free), 'sub');
+  if (r.couple && r.kind !== 'pen') {
+    line("Partner's income counted", money2(r.pAssess), 'sub');
+    if (r.pRed > 0) line("Reduction for partner's income", '−' + money2(r.pRed), 'sub minus');
+  }
+  line('Income test reduction', r.red > 0 ? '−' + money2(r.red) : '$0.00', r.red > 0 ? 'minus' : '');
+  line('<b>Rate under the income test</b>', '<b>' + money2(r.incRate) + '</b>', 'subtot');
+  line('Assets test', '', 'sec');
+  line('Assets counted', money(r.assets), 'sub');
+  line(r.kind === 'pen' ? 'Full-rate limit' : 'Asset limit', money(r.limit), 'sub');
+  if (r.kind === 'pen') line('Assets test reduction', r.aRed > 0 ? '−' + money2(r.aRed) : '$0.00', r.aRed > 0 ? 'minus' : '');
+  else line(r.over ? 'Over the limit: no payment' : 'Under the limit', r.over ? '−' + money2(r.max) : '$0.00', r.over ? 'minus' : '');
+  line('<b>Rate under the assets test</b>', '<b>' + money2(r.astRate) + '</b>', 'subtot');
+  line('<b>Payable rate (lower of the two)</b>', '<b>' + money2(r.rate) + '</b>', 'total');
+  if (r.raFam > 0) line(`Rent Assistance with Family Tax Benefit Part A (estimate)`, '+' + money2(r.raFam), 'plus');
+  $('#brLines').innerHTML = L.join('');
+
+  // insight tiles
+  if (cut === 0) { $('#brCut').textContent = 'Nil'; $('#brCutL').textContent = 'The assets test stops the payment'; }
+  else if (cut === null) { $('#brCut').textContent = 'Over $20k'; $('#brCutL').textContent = 'Payment stops at this pay from work'; }
+  else { $('#brCut').textContent = money2(cut); $('#brCutL').textContent = 'Payment stops at this pay from work, a fortnight'; }
+  $('#brKeep').textContent = money2(Math.max(0, Math.min(100, keep)));
+
+  // bands
+  $('#brBands').innerHTML = r.bands.map(b => `<tr><td>${esc(b[0])}</td><td class="r">${esc(b[1])}</td></tr>`).join('') + (cut ? `<tr class="on"><td><b>Payment stops</b></td><td class="r"><b>${money2(cut)} a fortnight</b></td></tr>` : '');
+
+  let note = 'Estimate only. ';
+  if (r.kind === 'pen' && r.wb) note += 'The Work Bonus balance (up to $11,800) is not used. ';
+  if (r.kind === 'allow' && r.couple) note += "Assumes the partner is aged 22 to Age Pension age and does not get a pension. ";
+  if (r.raFam > 0) note += 'With children, Rent Assistance is part of Family Tax Benefit Part A, so it is not in the fortnightly rate above. ';
+  note += 'Rates are DSS figures from 20 September 2026.';
+  $('#brNote').textContent = note;
+
+  // live bar
+  $('#liveV').textContent = money2(r.rate);
+  $('#liveK').textContent = P.name;
+
+  // chips state
+  $$('.chips').forEach(c => { const v = num($('#' + c.dataset.for).value); $$('button', c).forEach(b => b.setAttribute('aria-pressed', +b.dataset.v === v && $('#' + c.dataset.for).value !== '' ? 'true' : 'false')); });
+  $('#exampleBar').hidden = !isExample;
+  $('#aBudget').disabled = r.rate <= 0;
+}
+function num(v) { const n = parseFloat(v); return isFinite(n) ? n : 0; }
+
+function onInput() { isExample = false; state = read(); store.set('br', state); render(); }
+$('#brForm').addEventListener('input', onInput);
+$('#brForm').addEventListener('change', onInput);
+$('#brForm').addEventListener('submit', e => e.preventDefault());
+$('#brForm').addEventListener('click', e => {
+  const b = e.target.closest('.chips button'); if (!b) return;
+  const inp = $('#' + b.closest('.chips').dataset.for); inp.value = b.dataset.v;
+  if (inp.id === 'br-rentamt') $('#br-rent').checked = true;
+  onInput();
+});
+$('#br-pay').addEventListener('change', () => { if ($('#br-pay').value === 'age') $('#br-wb').checked = true; onInput(); });
+$('#clearExample').addEventListener('click', () => { fill(DEF); onInput(); toast('Example cleared'); });
+
+/* ---------- result actions ---------- */
+function resultRows() {
+  const { r, s } = last;
+  const rows = [['Item', 'Amount']];
+  $$('#brLines .line').forEach(l => { const lab = l.querySelector('.lab').textContent.trim(), val = l.querySelector('.val').textContent.trim(); if (val) rows.push([lab, val]); });
+  rows.push(['Per week', money2(r.rate / 2)], ['Per year', money2(r.rate * 26)]);
+  return rows;
+}
+function resultText() {
+  const { r } = last;
+  const head = `${$('#brSub').textContent}\nFortnightly rate: ${money2(r.rate)} (${$('#brPill').textContent})\nRates from 20 September 2026. Estimate only.\n`;
+  return head + '\n' + resultRows().slice(1).map(x => `${x[0]}: ${x[1]}`).join('\n');
+}
+$('#aCopy').addEventListener('click', () => copyText(resultText()));
+$('#aCsv').addEventListener('click', () => downloadFile('basic-rate-' + new Date().toISOString().slice(0, 10) + '.csv', csvOf(resultRows())));
+$('#aEmail').addEventListener('click', () => emailText('Centrelink rate estimate: ' + $('#brSub').textContent, resultText()));
+$('#aPrint').addEventListener('click', () => window.print());
+$('#aSave').addEventListener('click', () => {
+  histAdd({ tool: 'Basic rate', page: 'basic-rate.html', title: $('#brSub').textContent, big: money2(last.r.rate) + ' a fortnight', lines: resultRows().slice(1) });
+  renderHist(); toast('Saved. See it under Saved.');
+});
+$('#aBudget').addEventListener('click', () => {
+  const b = store.get('budget', null) || { period: 'month', items: {}, custom: {} };
+  b.items = b.items || {}; b.custom = b.custom || {};
+  b.items['income.govt'] = [r2(last.r.rate + (last.r.raFam || 0)), 'F'];
+  store.set('budget', b);
+  toast('Added ' + money2(last.r.rate + (last.r.raFam || 0)) + ' a fortnight to your budget on the Finance and Taxation page');
+});
+window.addEventListener('beforeprint', () => {
+  const s = last.s, P = PAYS[s.pay];
+  const items = [['Payment', $('#brSub').textContent], ['Pay from work', money2(s.emp)], ['Other income', money2(s.oth)]];
+  if (s.rel === 'couple') items.push(["Partner's pay from work", money2(s.pemp)], ["Partner's other income", money2(s.poth)]);
+  items.push(['Bank, shares and investments', money(s.fin)], ['Other assets', money(s.ast)], ['Homeowner', s.home ? 'Yes' : 'No'], ['Rent per fortnight', s.rent ? money2(s.rentamt) : 'None']);
+  if (P.kind === 'pen') items.push(['Work Bonus', s.wb ? 'Yes' : 'No']);
+  $('#printInputs').innerHTML = `<div class="box"><h3>Details used · printed ${esc(stamp())}</h3><div class="lines">${items.map(x => `<div class="line"><span class="lab">${esc(x[0])}</span><span class="val">${esc(x[1])}</span></div>`).join('')}</div></div>`;
+});
+
+/* ---------- saved ---------- */
+function renderHist() {
+  const h = histGet();
+  $('#hist').innerHTML = h.length ? h.map(e => `
+    <article class="hcard">
+      <div class="hh"><span class="ht">${esc(e.title || e.tool)}</span><span class="hv">${esc(e.big || '')}</span>
+        <span class="hm">${esc(e.tool || '')} · saved ${esc(e.at || '')}</span></div>
+      <details class="more"><summary>Show details</summary><div class="lines">${(e.lines || []).map(l => `<div class="line"><span class="lab">${esc(l[0])}</span><span class="val">${esc(l[1])}</span></div>`).join('')}</div></details>
+      <div class="btn-row"><button class="btn small" type="button" data-hcopy="${esc(e.id)}">Copy</button><button class="btn small" type="button" data-hdel="${esc(e.id)}">Delete</button>${e.page && e.page !== 'basic-rate.html' ? `<a class="btn small" href="${esc(e.page)}">Open tool</a>` : ''}</div>
+    </article>`).join('') : '<div class="empty">No saved results yet. Press <b>Save</b> on a result to keep it here.</div>';
+  $('#hCsv').disabled = $('#hClear').disabled = !h.length;
+}
+$('#hist').addEventListener('click', e => {
+  const c = e.target.closest('[data-hcopy]'), d = e.target.closest('[data-hdel]');
+  if (c) { const x = histGet().find(y => y.id === c.dataset.hcopy); if (x) copyText(`${x.title}\n${x.big}\n\n` + (x.lines || []).map(l => `${l[0]}: ${l[1]}`).join('\n')); }
+  if (d) { store.set('history', histGet().filter(y => y.id !== d.dataset.hdel)); renderHist(); toast('Deleted'); }
+});
+$('#hCsv').addEventListener('click', () => {
+  const rows = [['Saved', 'Tool', 'Result', 'Headline', 'Item', 'Amount']];
+  histGet().forEach(e => (e.lines && e.lines.length ? e.lines : [['', '']]).forEach(l => rows.push([e.at, e.tool, e.title, e.big, l[0], l[1]])));
+  downloadFile('saved-results.csv', csvOf(rows));
+});
+$('#hClear').addEventListener('click', () => {
+  const c = $('#hConfirm');
+  c.innerHTML = `<div class="confirm"><span>Delete every saved result on this device?</span><button class="btn small" type="button" id="hYes">Delete all</button><button class="btn small" type="button" id="hNo">Keep them</button></div>`;
+  c.hidden = false;
+  $('#hYes').onclick = () => { store.set('history', []); c.hidden = true; renderHist(); toast('Saved results cleared'); };
+  $('#hNo').onclick = () => { c.hidden = true; };
+});
+window.addEventListener('storage', e => { if (e.key === 'tt26.history') renderHist(); });
+
+/* ---------- jump bar ---------- */
+const sections = ['calc', 'rates', 'saved', 'faq'];
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(ents => {
+  ents.forEach(en => { if (en.isIntersecting) $$('.jump a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id)); });
+}, { rootMargin: '-40% 0px -55% 0px' }) : null;
+if (io) sections.forEach(id => io.observe($('#' + id)));
+$('#liveBtn').addEventListener('click', () => $('#brResult').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+
+/* ---------- boot ---------- */
+fill(state);
+render();
+renderHist();
+</script>
+</body>
+</html>
